@@ -28,13 +28,13 @@
                 <ul class="nav navbar-nav">
                     {% if current_user.is_anonymous %}
                     <li class="nav-item active ">
-                        <a href=" ">Login</a>
+                        <a href="{{ url_for_security('login')}}">Login</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link " href="{{url_for('register')}}">Click to register</a>
+                        <a class="nav-link " href="{{ url_for_security('register')}}">Click to register</a>
                     </li>
                     {% else %}
-                    <li class="nav-item "><a href="">Profile</a></li>
+                    <li class="nav-item "><a href="{{ url_for_security('logout') }}">Profile</a></li>
                     <li class="nav-item "><a class="nav-link " href=" ">Logout</a></li>
                     {% endif %}
                 </ul>

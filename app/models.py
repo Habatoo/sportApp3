@@ -3,8 +3,6 @@ from time import time
 import re
 import os
 import jwt
-from werkzeug.security import generate_password_hash, check_password_hash
-# from flask_login import UserMixin
 from flask_security import UserMixin, RoleMixin
 import jwt
 
@@ -22,7 +20,6 @@ roles_users = db.Table(
     'roles_users',
     db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
     db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
-
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -57,7 +54,7 @@ class User(UserMixin, db.Model):
         #return avatar_url
         return 'user_data/{}/avatar/avatar.png'.format(self.username + self.timestamp)
  
-#### FLASK SECURIT
+#### FLASK SECURITY #############
 class Role(db.Model, RoleMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True)

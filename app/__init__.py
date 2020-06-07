@@ -52,11 +52,21 @@ from app.models import *
 from app import view
 # from app import errors
 from wtforms.fields import HiddenField
+from app.forms import *
 
-
+app.config['SECURITY_REGISTERABLE'] = True # create a user registration endpoint
+app.config['SECURITY_RECOVERABLE'] = True # create a password reset/recover endpoint
+app.config['SECURITY_CONFIRMABLE'] = True
+#app.config['SECURITY_REGISTER_URL'] = '/register'
 ### Flask-security ###
-#user_datastore = SQLAlchemyUserDatastore(db, User, Role)
-#security = Security(app, user_datastore)
+user_datastore = SQLAlchemyUserDatastore(db, User, Role)
+# security = Security(app, user_datastore)
+security = Security(
+    app, 
+    user_datastore, 
+    register_form=ExtendedRegisterForm,
+    confirm_register_form=ExtendedConfirmRegisterForm,
+    )
 
 def is_hidden_field_filter(field):
     return isinstance(field, HiddenField)
@@ -87,12 +97,6 @@ class AdminUserView(ModelView):
     form_overrides = dict(password=HiddenField)
 
 admin = Admin(app, 'sportApp', url='/', index_view=HomeAdminView(name='Home'))
-
-# admin.add_view(ModelView(Post, db.session))
 admin.add_view(AdminView(User, db.session))
-#admin.add_view(AdminUserView(User))
 admin.add_view(ModelView(Role, db.session))
-#path = op.join(op.dirname(__file__), 'static')
-#admin.add_view(FileAdmin(path, '/static/', name='Files'))
-#admin.add_link(MenuLink(name='Logout', endpoint='security.logout'))
 
