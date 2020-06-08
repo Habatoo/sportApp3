@@ -23,6 +23,7 @@ from flask_security import current_user
 from flask import request, redirect, url_for
 
 from config import config
+from wtforms.fields import HiddenField
 
 
 app = Flask(__name__)
@@ -39,37 +40,34 @@ manager.add_command('db', MigrateCommand)
 login = LoginManager(app)
 login.login_view = 'login'
 
-
+######## logger ###################
 log = logging.getLogger('btb_Api')
 fh = logging.FileHandler(app.config['LOGGER_CONFIG']['file'])
 fh.setLevel(app.config['LOGGER_CONFIG']['level'])
 fh.setFormatter(app.config['LOGGER_CONFIG']['formatter'])
 log.addHandler(fh)
 log.setLevel(app.config['LOGGER_CONFIG']['level'])
+###################################
 
-
-from app.models import *
+# from app.models import *
 from app import view
-# from app import errors
-from wtforms.fields import HiddenField
-from app.forms import *
+from app.security import *
+# # from app import errors
 
-app.config['SECURITY_REGISTERABLE'] = True # create a user registration endpoint
-app.config['SECURITY_RECOVERABLE'] = True # create a password reset/recover endpoint
-app.config['SECURITY_CONFIRMABLE'] = True
-#app.config['SECURITY_REGISTER_URL'] = '/register'
-### Flask-security ###
-user_datastore = SQLAlchemyUserDatastore(db, User, Role)
-# security = Security(app, user_datastore)
-security = Security(
-    app, 
-    user_datastore, 
-    register_form=ExtendedRegisterForm,
-    confirm_register_form=ExtendedConfirmRegisterForm,
-    )
+# from app.forms import *
 
-def is_hidden_field_filter(field):
-    return isinstance(field, HiddenField)
+# ######## Flask-security ###########
+# app.config['SECURITY_REGISTERABLE'] = True # create a user registration endpoint
+# app.config['SECURITY_RECOVERABLE'] = True # create a password reset/recover endpoint
+# app.config['SECURITY_CONFIRMABLE'] = True
+
+# user_datastore = SQLAlchemyUserDatastore(db, User, Role)
+# security = Security(
+#     app, 
+#     user_datastore, 
+#     register_form=ExtendedRegisterForm,
+#     confirm_register_form=ExtendedConfirmRegisterForm,
+#     )
 
 
 from .blueprints.users.blueprint import users
@@ -91,6 +89,9 @@ class HomeAdminView(AdminMixin, AdminIndexView):
     pass
 
 # Setup Flask-admin
+def is_hidden_field_filter(field):
+    return isinstance(field, HiddenField)
+
 class AdminUserView(ModelView):
     can_create = False
     column_exclude_list = ('password')
@@ -99,4 +100,3 @@ class AdminUserView(ModelView):
 admin = Admin(app, 'sportApp', url='/', index_view=HomeAdminView(name='Home'))
 admin.add_view(AdminView(User, db.session))
 admin.add_view(ModelView(Role, db.session))
-

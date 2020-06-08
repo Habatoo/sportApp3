@@ -7,6 +7,11 @@ import logging
 from flask import render_template, flash, redirect, url_for, request
 from flask import Blueprint
 
+from flask_security import login_required, login_user, logout_user, current_user
+from flask_security import SQLAlchemyUserDatastore
+from flask_security import Security
+from flask_security.utils import hash_password
+
 from app.forms import LoginForm
 from app.forms import ExtendedRegisterForm
 from app import app
@@ -15,17 +20,15 @@ from app import log
 
 from app.models import *
 from app.copydir import copydir
-#from app import user_datastore
-from flask_security import login_required, login_user, logout_user, current_user
-from flask_security import SQLAlchemyUserDatastore
-from flask_security import Security
-from flask_security.utils import hash_password
+from app.security import *
 
-### Flask-security ###
-# user_datastore = SQLAlchemyUserDatastore(db, User, Role)
-# security = Security(app, user_datastore, register_form=ExtendedRegisterForm)
 
-# @app.before_first_request
+@app.before_first_request
+def create_user():
+    db.create_all()
+    user_datastore.create_user(email='test', password='test')
+    user_datastore.create_user(email='test2', password='test2')
+
 # def create_user():
 #     # db.create_all()
 #     if not user_datastore.get_user('admin@admin.com'):
@@ -60,22 +63,11 @@ def index():
     user = User.query.filter_by(username=current_user.username).first_or_404()
     return render_template('index.html', user=user)
 
-# @app.route('/login', methods=['GET', 'POST'])
-# def login():
-#     if current_user.is_authenticated:
-#         return redirect(url_for('index'))
-#     form = LoginForm()
-#     if form.validate_on_submit():
-#         user = User.query.filter_by(email=form.email.data).first()
-#         if user is None or not user.check_password(form.password.data):
-#             flash('Incorrect email or password.')
-#             return redirect(url_for('login'))
-#         login_user(user, remember=form.remember_me.data)
-
-#         log.info("User '%s' login." % (user.username))
-#         return redirect(next_page)
-#     return render_template('login.html', title='Sign In', form=form)
-
+@app.route('/logout/')
+def log_out():
+    logout_user()
+    return redirect(request.args.get('next') or '/')
+    
 # @app.route('/logout')
 # def logout():
 #     user = current_user.username

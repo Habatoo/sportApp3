@@ -3,10 +3,14 @@ from time import time
 import re
 import os
 import jwt
+
 from flask_security import UserMixin, RoleMixin
-import jwt
+from flask_security import SQLAlchemyUserDatastore
+from flask_security import Security
+from flask_security import current_user
 
 from app import app, login, db
+from app.forms import *
 
 @login.user_loader
 def load_user(id):
@@ -59,3 +63,4 @@ class Role(db.Model, RoleMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True)
     description = db.Column(db.String(255))
+
