@@ -14,6 +14,7 @@ class LoginForm(FlaskForm):
     pass
 
 class ExtendedRegisterForm(RegisterForm, FlaskForm):
+    username = StringField('Display name', validators=[DataRequired()])
     city = RadioField('Select your city', default = '', validators=[DataRequired()],
                     choices=[(city['label'], city['value']) for city in cities])
 

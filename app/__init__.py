@@ -49,25 +49,10 @@ log.addHandler(fh)
 log.setLevel(app.config['LOGGER_CONFIG']['level'])
 ###################################
 
-# from app.models import *
+
 from app import view
 from app.security import *
-# # from app import errors
-
-# from app.forms import *
-
-# ######## Flask-security ###########
-# app.config['SECURITY_REGISTERABLE'] = True # create a user registration endpoint
-# app.config['SECURITY_RECOVERABLE'] = True # create a password reset/recover endpoint
-# app.config['SECURITY_CONFIRMABLE'] = True
-
-# user_datastore = SQLAlchemyUserDatastore(db, User, Role)
-# security = Security(
-#     app, 
-#     user_datastore, 
-#     register_form=ExtendedRegisterForm,
-#     confirm_register_form=ExtendedConfirmRegisterForm,
-#     )
+from app import errors
 
 
 from .blueprints.users.blueprint import users

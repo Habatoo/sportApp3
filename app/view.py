@@ -2,12 +2,12 @@ from datetime import datetime
 from werkzeug.urls import url_parse
 import os
 import logging
-#from oauth import OAuthSignIn
+from oauth import OAuthSignIn
 
 from flask import render_template, flash, redirect, url_for, request
 from flask import Blueprint
 
-from flask_security import login_required, login_user, logout_user, current_user
+from flask_security import login_required, login_user, logout_user, current_user, url_for_security
 from flask_security import SQLAlchemyUserDatastore
 from flask_security import Security
 from flask_security.utils import hash_password
@@ -23,14 +23,9 @@ from app.copydir import copydir
 from app.security import *
 
 
-@app.before_first_request
-def create_user():
-    db.create_all()
-    user_datastore.create_user(email='test', password='test')
-    user_datastore.create_user(email='test2', password='test2')
-
+# @app.before_app_first_request
 # def create_user():
-#     # db.create_all()
+#     db.create_all()
 #     if not user_datastore.get_user('admin@admin.com'):
 #         user_datastore.create_role(name='admin', description='administrator')
 #         db.session.commit()
@@ -61,19 +56,39 @@ def before_request():
 @login_required
 def index():
     user = User.query.filter_by(username=current_user.username).first_or_404()
+    log.info("User '%s' login." % (user.username))
     return render_template('index.html', user=user)
 
-@app.route('/logout/')
-def log_out():
-    logout_user()
-    return redirect(request.args.get('next') or '/')
-    
+@app.route('/authorize/<provider>')
+def oauth_authorize(provider):
+    if not current_user.is_anonymous:
+        return redirect(url_for('index'))
+    oauth = OAuthSignIn.get_provider(provider)
+    return oauth.authorize()
+
+@app.route('/callback/<provider>')
+def oauth_callback(provider):
+    if not current_user.is_anonymous:
+        return redirect(url_for('index'))
+    oauth = OAuthSignIn.get_provider(provider)
+    social_id, username, email = oauth.callback()
+    if social_id is None:
+        flash('Authentication failed.')
+        return redirect(url_for('index'))
+    user = User.query.filter_by(social_id=social_id).first()
+    if not user:
+        user = User(social_id=social_id, username=username, email=email)
+        db.session.add(user)
+        db.session.commit()
+    login_user(user, True)
+    return redirect(url_for('index')) 
+       
 # @app.route('/logout')
 # def logout():
 #     user = current_user.username
 #     logout_user()
 #     log.info("User '%s' logout." % (user))
-#     return redirect(url_for('index'))
+#     return redirect(url_for_security('index'))
 
 # @app.route('/register', methods=['GET', 'POST'])
 # def register():
