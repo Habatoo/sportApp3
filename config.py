@@ -34,17 +34,21 @@ class Configuration(object):
     ############ Flask security ###############################
     SECURITY_PASSWORD_SALT = 'SALT'
     SECURITY_PASSWORD_HASH = 'sha512_crypt'
-    MAIL_SERVER = 'smtp.yandex.com'
-    MAIL_PORT = 465
+    MAIL_SERVER = 'smtp.yandex.ru'
+    MAIL_PORT = 465 # int(os.environ.get('MAIL_PORT') or 25)
+ 
     MAIL_USE_SSL = True
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME') 
-    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')   
+
     SECURITY_REGISTERABLE = True # create a user registration endpoint
     SECURITY_RECOVERABLE = True # create a password reset/recover endpoint
+    SECURITY_SEND_REGISTER_EMAIL = False # Specifies whether registration email is sent.
     # SECURITY_CONFIRMABLE = True # specifies if users are required to confirm their email address when registering a new account. 
      
     ############# Login config ################################
     OAUTH_CREDENTIALS = os.environ.get('OAUTH_CREDENTIALS')
+
 
 
 class DevConfig(Configuration):
