@@ -47,15 +47,13 @@ class User(UserMixin, db.Model):
     roles = db.relationship(
         'Role', secondary=roles_users, backref=db.backref('users_roles', lazy='dynamic'))
 
-    # def set_password(self, password):
-    #     self.password_hash = generate_password_hash(password)
-
-    # def check_password(self, password):
-    #     return check_password_hash(self.password_hash, password)
+    last_login_at = db.Column(db.DateTime, default=datetime.now)
+    current_login_at = db.Column(db.DateTime, default=datetime.now)
+    last_login_ip = db.Column(db.String(255))
+    current_login_ip = db.Column(db.String(255))
+    login_count = db.Column(db.Integer, default=0)
 
     def avatar(self):
-        #avatar_url = os.path.join('user_data', self.username + self.timestamp, 'avatar\\avatar.png')
-        #return avatar_url
         return 'user_data/{}/avatar/avatar.png'.format(self.username + self.timestamp)
  
 #### FLASK SECURITY #############

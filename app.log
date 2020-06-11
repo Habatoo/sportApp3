@@ -1,9 +1,8 @@
-2020-06-09 22:53:07,486 [INFO] - btb_Api:User 'old' login.
-2020-06-10 22:01:42,120 [INFO] - btb_Api:User 'new' login.
-2020-06-10 22:02:38,175 [INFO] - btb_Api:User 'new' login.
-2020-06-10 23:31:38,237 [INFO] - btb_Api:User 'None' login.
-2020-06-10 23:32:02,498 [INFO] - btb_Api:User 'None' login.
-2020-06-10 23:36:04,950 [INFO] - btb_Api:User 'administrator' login.
-2020-06-10 23:36:54,474 [INFO] - btb_Api:User 'administrator' login.
-2020-06-10 23:37:43,755 [INFO] - btb_Api:User 'administrator' login.
-2020-06-10 23:43:59,561 [INFO] - btb_Api:User 'new' login.
+2020-06-12 01:11:18,073 [INFO] - btb_Api:User 'new' login with ip '127.0.0.1'.
+2020-06-12 01:13:08,570 [INFO] - btb_Api:User 'old' login with ip '127.0.0.1'.
+2020-06-12 01:14:02,006 [INFO] - btb_Api:User 'old' login with ip '127.0.0.1'.
+2020-06-12 01:29:08,847 [INFO] - btb_Api:User 'new' login with ip '127.0.0.1'.
+2020-06-12 01:39:37,049 [INFO] - btb_Api:User 'new' login with ip '127.0.0.1'.
+2020-06-12 01:39:37,049 [INFO] - btb_Api:User 'new' login with ip '127.0.0.1'.
+2020-06-12 01:41:07,286 [INFO] - btb_Api:User 'administrator' login with ip '127.0.0.1'.
+2020-06-12 01:41:07,286 [INFO] - btb_Api:User 'administrator' login with ip '127.0.0.1'.

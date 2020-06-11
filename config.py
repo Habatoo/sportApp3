@@ -5,9 +5,7 @@ import logging
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-
-class Configuration(object):
-    
+class Configuration(object): 
     DEBUG = False
     DEVELOPMENT = False
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
@@ -44,22 +42,19 @@ class Configuration(object):
     SECURITY_REGISTERABLE = True # create a user registration endpoint
     SECURITY_RECOVERABLE = True # create a password reset/recover endpoint
     SECURITY_SEND_REGISTER_EMAIL = False # Specifies whether registration email is sent.
+    SECURITY_TRACKABLE = True
     # SECURITY_CONFIRMABLE = True # specifies if users are required to confirm their email address when registering a new account. 
      
     ############# Login config ################################
     OAUTH_CREDENTIALS = os.environ.get('OAUTH_CREDENTIALS')
 
-
-
 class DevConfig(Configuration):
     DEBUG = True
     DEVELOPMENT = True
-
 
 config = {
     'dev': DevConfig,
     #'prod': ProdConfig,
     'default': Configuration,
 }
-
  
