@@ -34,10 +34,13 @@ class Configuration(object):
     SECURITY_PASSWORD_HASH = 'sha512_crypt'
     MAIL_SERVER = 'smtp.yandex.ru'
     MAIL_PORT = 465 # int(os.environ.get('MAIL_PORT') or 25)
- 
+    MAIL_USE_TLS = True
     MAIL_USE_SSL = True
+
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME') 
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')   
+    MAIL_DEFAULT_SENDER = '"Your Name" <yourname@gmail.com>'
+    ADMINS = ['"Admin One" <admin1@gmail.com>',]
 
     SECURITY_REGISTERABLE = True # create a user registration endpoint
     SECURITY_RECOVERABLE = True # create a password reset/recover endpoint
@@ -47,6 +50,15 @@ class Configuration(object):
      
     ############# Login config ################################
     OAUTH_CREDENTIALS = os.environ.get('OAUTH_CREDENTIALS')
+
+    ############ Tags ####################
+    # for activity in ['jogging', 'workout', 'box', 'fitness']:
+    # if not Tag.query.filter(Tag.name==activity).first():
+    #     tag = Tag(name=activity)
+    #     db.session.add(tag)
+    #     db.session.commit()
+    # tag_choices = [(tag.name, tag.slug)  for tag in Tag.query.all()]
+    tag_choices = [('jogging', 'jogging'), ('workout', 'workout'), ('box', 'box'), ('fitness', 'fitness')]
 
 class DevConfig(Configuration):
     DEBUG = True

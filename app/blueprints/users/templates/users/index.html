@@ -1,7 +1,4 @@
-{% extends 'base.html' %} 
-{% block title %} User title {% endblock %} 
-{% block content_title %} {% endblock %} 
-{% block content %}
+{% extends 'base.html' %} {% block title %} User title {% endblock %} {% block content_title %} {% endblock %} {% block content %}
 <table>
     <tr>
         <td><img src="{{ url_for('static', filename=user.avatar()) }}" width="60" height="60" alt="avatar" />
@@ -12,7 +9,8 @@
     </tr>
 </table>
 {% if user.about_me %} About me: {{ user.about_me }} {% endif %}
-<br> 
+<br>
 
-<hr> {% if user.last_seen %} Last seen on: {{ user.last_seen }} {% endif %} 
-{% endblock %}
+<hr> {% if user.last_seen %} Last seen on: {{ user.last_seen }} {% endif %} {% if user.username == current_user.username %}
+<p><a href="{{ url_for('users.edit_profile') }}">Edit your profile</a></p>
+{% endif %} {% endblock %}
