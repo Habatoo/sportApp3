@@ -85,3 +85,4 @@ class AdminUserView(ModelView):
 admin = Admin(app, 'sportApp', url='/', index_view=HomeAdminView(name='Home'))
 admin.add_view(AdminView(User, db.session))
 admin.add_view(ModelView(Role, db.session))
+admin.add_view(ModelView(Tag, db.session))

@@ -27,3 +27,8 @@
 2020-06-13 13:13:48,281 [INFO] - btb_Api:User 'guest' register.
 2020-06-13 13:13:48,290 [DEBUG] - btb_Api:User after make folder: <User 4>
 2020-06-13 13:13:48,319 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.
+2020-06-13 23:35:30,214 [INFO] - btb_Api:User 'dog' register.
+2020-06-13 23:35:30,243 [DEBUG] - btb_Api:User after make folder: <User 5>
+2020-06-13 23:35:30,279 [INFO] - btb_Api:User 'dog' login with ip '127.0.0.1'.
+2020-06-13 23:37:49,530 [INFO] - btb_Api:User 'dog' edit profile.
+2020-06-13 23:48:17,544 [INFO] - btb_Api:User 'dog' edit profile.

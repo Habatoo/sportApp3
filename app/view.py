@@ -43,6 +43,12 @@ def create_initial_users():
                 db.session.commit()
     create_user(initial_users_list)
 
+    for activity in ['jogging', 'workout', 'box', 'fitness']:
+        if not Tag.query.filter(Tag.name==activity).first():
+            tag = Tag(name=activity, slug=slugify(activity))
+            db.session.add(tag)
+            db.session.commit()
+
 @app.before_request
 def before_request():
     if request.path.startswith('/admin'):

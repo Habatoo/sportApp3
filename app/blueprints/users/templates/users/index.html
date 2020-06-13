@@ -9,7 +9,12 @@
     </tr>
 </table>
 {% if user.about_me %} About me: {{ user.about_me }} {% endif %}
-<br>
+<br> {% for tag in user.tags %}
+<a href="{{ url_for('users.tag_detail', slug=tag.slug) }}">
+    <span class="label label-primary">
+        {{ tag.name }}
+    </span>
+</a> {% endfor %}
 
 <hr> {% if user.last_seen %} Last seen on: {{ user.last_seen }} {% endif %} {% if user.username == current_user.username %}
 <hr>

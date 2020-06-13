@@ -1,0 +1,9 @@
+{% extends 'base.html' %} {% block title %} {{ tag.name }} users {% endblock %} {% block content_title %} Users for "{{ tag.name }}" tag: {% endblock %} {% block content %} {% for user in users %}
+<div class="user">
+    <a href="{{ url_for('user', username=user.username) }}">{{ user.username }}</a>
+</div>
+{% endfor %}
+
+<div class="main-content">
+</div>
+{% endblock %}

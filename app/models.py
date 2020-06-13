@@ -25,6 +25,25 @@ roles_users = db.Table(
     db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
     db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
 
+user_tags = db.Table(
+    'user_tags', 
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'))
+)
+
+class Tag(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), unique=True)
+    slug = db.Column(db.String(100))
+
+    def __init__(self, *args, **kwargs):
+        super(Tag, self).__init__(*args, **kwargs)
+        self.slug = slugify(self.name)
+
+
+    def __repr__(self):
+        return '{}'.format(self.name)
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), index=True, unique=True)
@@ -46,6 +65,9 @@ class User(UserMixin, db.Model):
     
     roles = db.relationship(
         'Role', secondary=roles_users, backref=db.backref('users_roles', lazy='dynamic'))
+
+    tags = db.relationship(
+        'Tag', secondary=user_tags, backref=db.backref('users_tags', lazy='dynamic'))
 
     last_login_at = db.Column(db.DateTime, default=datetime.now)
     current_login_at = db.Column(db.DateTime, default=datetime.now)
