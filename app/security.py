@@ -8,4 +8,5 @@ security = Security(
     user_datastore, 
     register_form=ExtendedRegisterForm,
     confirm_register_form=ExtendedConfirmRegisterForm,
+    login_form=ExtendedLoginForm,
     )

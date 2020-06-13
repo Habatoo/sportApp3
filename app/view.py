@@ -24,17 +24,24 @@ from app.security import user_datastore, security
 
 
 @app.before_first_request
-def create_admin():
+def create_initial_users():
     db.create_all()
-    if not user_datastore.get_user('admin@admin.com'):
-        user_datastore.create_role(name='admin', description='administrator')
-        db.session.commit()
-        role = Role.query.first()
-        user_datastore.create_user(
-            email='admin@admin.com', username='administrator', password=hash_password('admin'))
-        user = User.query.first()
-        user_datastore.add_role_to_user(user, role)
-        db.session.commit()
+    initial_users_list = [
+        {'name': 'admin', 'description': 'administrator', 'email': 'admin@admin.com', 'password': 'admin'},
+        {'name': 'guest', 'description': 'guest', 'email': 'guest@guest.com', 'password': 'guest'},
+    ]
+    def create_user(initial_users_list):
+        for user in initial_users_list:
+            if not user_datastore.get_user(user['email']):
+                user_datastore.create_role(name=user['name'], description=user['description'])
+                db.session.commit()
+                role = Role.query.first()
+                user_datastore.create_user(
+                    email=user['email'], username=user['name'], password=hash_password(user['password']))
+                user = User.query.first()
+                user_datastore.add_role_to_user(user, role)
+                db.session.commit()
+    create_user(initial_users_list)
 
 @app.before_request
 def before_request():
@@ -81,8 +88,11 @@ def index():
 def oauth_authorize(provider):
     if not current_user.is_anonymous:
         return redirect(url_for('index'))
-    oauth = OAuthSignIn.get_provider(provider)
-    return oauth.authorize()
+    try:
+        oauth = OAuthSignIn.get_provider(provider)
+        return oauth.authorize()
+    except:
+        return redirect(url_for_security('login'))
 
 @app.route('/callback/<provider>')
 def oauth_callback(provider):

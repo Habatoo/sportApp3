@@ -5,6 +5,9 @@
     {% endif %} {% if security.confirmable %}
     <li><a href="{{ url_for_security('send_confirmation') }}">{{ _('Confirm account') }}</a></li>
     {% endif %}
+    <hr>
     <li><a href="{{ url_for('oauth_authorize', provider='facebook') }}">Login with Facebook</a></li>
+    <li><a href="{{ url_for('oauth_authorize', provider='vk') }}">Login with VK</a></li>
+    <li><a href="{{ url_for('oauth_authorize', provider='google') }}">Login with Google</a></li>
 </ul>
 {% endif %}

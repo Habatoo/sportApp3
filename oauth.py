@@ -33,6 +33,11 @@ class OAuthSignIn(object):
                 self.providers[provider.provider_name] = provider
         return self.providers[provider_name]
 
+class VKSignIn(OAuthSignIn):
+    pass
+
+class GoogleSignIn(OAuthSignIn):
+    pass
 
 class FacebookSignIn(OAuthSignIn):
     def __init__(self):

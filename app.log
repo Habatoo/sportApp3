@@ -15,3 +15,15 @@
 2020-06-12 23:50:21,400 [INFO] - btb_Api:User 'old' login with ip '127.0.0.1'.
 2020-06-12 23:50:21,400 [INFO] - btb_Api:User 'old' login with ip '127.0.0.1'.
 2020-06-12 23:51:48,713 [INFO] - btb_Api:User 'old' edit profile.
+2020-06-13 11:29:14,016 [INFO] - btb_Api:User 'old' login with ip '127.0.0.1'.
+2020-06-13 11:41:31,400 [INFO] - btb_Api:User 'old' login with ip '127.0.0.1'.
+2020-06-13 11:43:05,143 [INFO] - btb_Api:User 'old' login with ip '127.0.0.1'.
+2020-06-13 11:56:19,038 [INFO] - btb_Api:User 'old' login with ip '127.0.0.1'.
+2020-06-13 11:56:54,395 [INFO] - btb_Api:User 'old' login with ip '127.0.0.1'.
+2020-06-13 12:01:11,415 [INFO] - btb_Api:User 'old' login with ip '127.0.0.1'.
+2020-06-13 12:01:36,714 [INFO] - btb_Api:User 'old' login with ip '127.0.0.1'.
+2020-06-13 12:01:44,096 [INFO] - btb_Api:User 'old' login with ip '127.0.0.1'.
+2020-06-13 12:08:26,586 [INFO] - btb_Api:User 'old' login with ip '127.0.0.1'.
+2020-06-13 13:13:48,281 [INFO] - btb_Api:User 'guest' register.
+2020-06-13 13:13:48,290 [DEBUG] - btb_Api:User after make folder: <User 4>
+2020-06-13 13:13:48,319 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.

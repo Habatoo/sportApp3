@@ -44,12 +44,20 @@ class Configuration(object):
 
     SECURITY_REGISTERABLE = True # create a user registration endpoint
     SECURITY_RECOVERABLE = True # create a password reset/recover endpoint
+    SECURITY_CHANGEABLE = True # enable the change password endpoint
     SECURITY_SEND_REGISTER_EMAIL = False # Specifies whether registration email is sent.
-    SECURITY_TRACKABLE = True
+    SECURITY_TRACKABLE = True # should track basic user login statistics
     # SECURITY_CONFIRMABLE = True # specifies if users are required to confirm their email address when registering a new account. 
      
     ############# Login config ################################
-    OAUTH_CREDENTIALS = os.environ.get('OAUTH_CREDENTIALS')
+    OAUTH_CREDENTIALS = os.environ.get('OAUTH_CREDENTIALS') or {
+        'facebook': 
+        {'id': '0000', 'secret': 'qqqq'},
+        'vc': 
+        {'id': '0000', 'secret': 'qqqq'},
+        'google': 
+        {'id': '0000', 'secret': 'qqqq'},
+        }
 
     ############ Tags ####################
     # for activity in ['jogging', 'workout', 'box', 'fitness']:

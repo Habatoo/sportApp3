@@ -1,15 +1,15 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, RadioField
+from wtforms import StringField, RadioField, SubmitField
 from wtforms.validators import DataRequired
 from wtforms import TextAreaField
-from flask_security.forms import RegisterForm, ConfirmRegisterForm
+from flask_security.forms import RegisterForm, ConfirmRegisterForm, LoginForm
 
 from app import app
 from app.models import *
 
 
-class LoginForm(FlaskForm):
-    pass
+class ExtendedLoginForm(LoginForm, FlaskForm):
+    submit2 = SubmitField('Explore as Guest')
 
 class ExtendedRegisterForm(RegisterForm, FlaskForm):
     username = StringField('Display name', validators=[DataRequired()])
