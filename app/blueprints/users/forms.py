@@ -9,7 +9,11 @@ from app import app
 from app.models import *
 
 cities = app.config['CITIES']
-tag_choices = [(tag.name, tag.slug)  for tag in Tag.query.all()]
+try:
+    tag_choices = [(tag.name, tag.slug)  for tag in Tag.query.all()]
+except:
+    tag_choices = [('jogging', 'jogging')]
+
 
 class EditProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])  

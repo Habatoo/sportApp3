@@ -7,6 +7,8 @@ from oauth import OAuthSignIn
 from flask import render_template, flash, redirect, url_for, request
 from flask import Blueprint
 
+#from flask_user import roles_required
+
 from flask_security import login_required, login_user, logout_user, current_user, url_for_security
 from flask_security import SQLAlchemyUserDatastore
 from flask_security import Security
@@ -35,10 +37,10 @@ def create_initial_users():
             if not user_datastore.get_user(user['email']):
                 user_datastore.create_role(name=user['name'], description=user['description'])
                 db.session.commit()
-                role = Role.query.first()
+                role = Role.query.filter_by(name=user['name']).first()
                 user_datastore.create_user(
                     email=user['email'], username=user['name'], password=hash_password(user['password']))
-                user = User.query.first()
+                user = User.query.filter_by(username=user['name']).first()
                 user_datastore.add_role_to_user(user, role)
                 db.session.commit()
     create_user(initial_users_list)
@@ -89,6 +91,17 @@ def index():
     db.session.commit()
     log.info("User '%s' login with ip '%s'." % (user.username, user.current_login_ip)) 
     return render_template('index.html', user=user)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = ExtendedLoginForm()
+    if form.validate_on_submit():
+        user = User(username='guest', email='guest@guest.com', password='guest')
+        form = ExtendedLoginForm(formdata=request.form, obj=user)
+        login_user(user)
+        return redirect(url_for('index'))
 
 @app.route('/authorize/<provider>')
 def oauth_authorize(provider):
