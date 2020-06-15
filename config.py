@@ -59,15 +59,6 @@ class Configuration(object):
         {'id': '0000', 'secret': 'qqqq'},
         }
 
-    ############ Tags ####################
-    # for activity in ['jogging', 'workout', 'box', 'fitness']:
-    # if not Tag.query.filter(Tag.name==activity).first():
-    #     tag = Tag(name=activity)
-    #     db.session.add(tag)
-    #     db.session.commit()
-    # tag_choices = [(tag.name, tag.slug)  for tag in Tag.query.all()]
-    tag_choices = [('jogging', 'jogging'), ('workout', 'workout'), ('box', 'box'), ('fitness', 'fitness')]
-
 class DevConfig(Configuration):
     DEBUG = True
     DEVELOPMENT = True

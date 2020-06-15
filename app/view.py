@@ -7,8 +7,6 @@ from oauth import OAuthSignIn
 from flask import render_template, flash, redirect, url_for, request
 from flask import Blueprint
 
-#from flask_user import roles_required
-
 from flask_security import login_required, login_user, logout_user, current_user, url_for_security
 from flask_security import SQLAlchemyUserDatastore
 from flask_security import Security
@@ -27,10 +25,11 @@ from app.security import user_datastore, security
 
 @app.before_first_request
 def create_initial_users():
-    db.create_all()
+    # db.create_all()
     initial_users_list = [
         {'name': 'admin', 'description': 'administrator', 'email': 'admin@admin.com', 'password': 'admin'},
         {'name': 'guest', 'description': 'guest', 'email': 'guest@guest.com', 'password': 'guest'},
+        {'name': 'user', 'description': 'user', 'email': 'user@user.com', 'password': 'user'},
     ]
     def create_user(initial_users_list):
         for user in initial_users_list:
@@ -62,6 +61,12 @@ def before_request():
 
     if current_user.is_authenticated:
         current_user.last_seen = datetime.utcnow()
+        db.session.commit()
+
+    if current_user.is_authenticated and not user_datastore.find_user(email=current_user.email).roles:
+        role = Role.query.filter_by(name='user').first()
+        user = User.query.filter_by(username=current_user.username).first()
+        user_datastore.add_role_to_user(user, role)
         db.session.commit()
 
 @app.route('/')

@@ -9,6 +9,7 @@ from flask_admin import AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 from flask_mail import Mail
 from flask_moment import Moment
+from flask_babelex import Babel
 
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
@@ -28,6 +29,8 @@ from wtforms.fields import HiddenField
 
 app = Flask(__name__)
 app.config.from_object(config.get('dev'))
+
+babel = Babel(app)
 
 db  = SQLAlchemy(app)
 mail = Mail(app)
@@ -58,6 +61,7 @@ from app import errors
 from .blueprints.users.blueprint import users
 
 app.register_blueprint(users, url_prefix='/user')
+
 
 # #### ADMIN ####
 class AdminMixin:

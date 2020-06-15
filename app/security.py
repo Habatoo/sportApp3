@@ -10,3 +10,6 @@ security = Security(
     confirm_register_form=ExtendedConfirmRegisterForm,
     login_form=ExtendedLoginForm,
     )
+
+# Create all database tables
+db.create_all()

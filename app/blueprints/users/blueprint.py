@@ -1,6 +1,7 @@
 from flask import Blueprint
 from flask import render_template, flash, redirect, url_for, request, send_from_directory
-from flask_security import login_required, login_user, logout_user, current_user
+from flask_security import login_required, login_user, logout_user, current_user, roles_accepted
+
 from .forms import EditProfileForm
 
 from app import app, log
@@ -11,12 +12,14 @@ users = Blueprint('users', __name__, template_folder='templates')
 
 @app.route('/user/<username>')
 @login_required
+# @roles_accepted('admin', 'user')
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('users/index.html', user=user)
 
 @users.route('/tag/<slug>')
 @login_required
+@roles_accepted('admin', 'user')
 def tag_detail(slug):
     tag = Tag.query.filter(Tag.slug==slug).first()
     users = tag.users_tags.all()
@@ -24,6 +27,7 @@ def tag_detail(slug):
 
 @users.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
+@roles_accepted('admin', 'user')
 def edit_profile():
     form = EditProfileForm(current_user.username)
     if form.validate_on_submit():

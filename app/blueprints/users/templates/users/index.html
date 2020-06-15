@@ -17,7 +17,7 @@
 </a> {% endfor %}
 
 <hr> {% if user.last_seen %} Last seen on: {{ user.last_seen }} {% endif %} {% if user.username == current_user.username %}
-<hr>
+<hr> {% if not current_user.has_role('guest') %}
 <p><a href="{{ url_for('users.edit_profile') }}">Edit your profile</a></p>
 <p><a href="{{ url_for('security.change_password') }}">Change your password</a></p>
-{% endif %} {% endblock %}
+{% endif %} {% endif %} {% endblock %}
