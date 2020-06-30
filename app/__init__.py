@@ -52,16 +52,15 @@ log.addHandler(fh)
 log.setLevel(app.config['LOGGER_CONFIG']['level'])
 ###################################
 
-
 from app import view
 from app.security import *
 from app import errors
 
-
 from .blueprints.users.blueprint import users
+from .blueprints.posts.blueprint import posts
 
 app.register_blueprint(users, url_prefix='/user')
-
+app.register_blueprint(posts, url_prefix='/post')
 
 # #### ADMIN ####
 class AdminMixin:
@@ -90,3 +89,4 @@ admin = Admin(app, 'sportApp', url='/', index_view=HomeAdminView(name='Home'))
 admin.add_view(AdminView(User, db.session))
 admin.add_view(ModelView(Role, db.session))
 admin.add_view(ModelView(Tag, db.session))
+admin.add_view(ModelView(Post, db.session))

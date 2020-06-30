@@ -63,9 +63,13 @@ class DevConfig(Configuration):
     DEBUG = True
     DEVELOPMENT = True
 
+class ProdConfig(Configuration):
+    DEBUG = False
+    DEVELOPMENT = False
+
 config = {
     'dev': DevConfig,
-    #'prod': ProdConfig,
+    'prod': ProdConfig,
     'default': Configuration,
 }
  

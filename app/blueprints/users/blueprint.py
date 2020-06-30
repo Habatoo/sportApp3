@@ -12,7 +12,6 @@ users = Blueprint('users', __name__, template_folder='templates')
 
 @app.route('/user/<username>')
 @login_required
-# @roles_accepted('admin', 'user')
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('users/index.html', user=user)

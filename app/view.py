@@ -25,7 +25,6 @@ from app.security import user_datastore, security
 
 @app.before_first_request
 def create_initial_users():
-    # db.create_all()
     initial_users_list = [
         {'name': 'admin', 'description': 'administrator', 'email': 'admin@admin.com', 'password': 'admin'},
         {'name': 'guest', 'description': 'guest', 'email': 'guest@guest.com', 'password': 'guest'},
@@ -83,7 +82,6 @@ def index():
         os.mkdir(os.path.join(user_folders, 'photos'))
         os.mkdir(os.path.join(user_folders, 'tracking_data'))
         copydir(os.path.join('app', 'static', 'user_data', 'avatar'), user_folders)
-        log.debug("User after make folder: %s", user)
 
     remote_addr = request.remote_addr or 'untrackable'
     old_current_login, new_current_login = user.current_login_at, datetime.utcnow()
@@ -97,6 +95,12 @@ def index():
     log.info("User '%s' login with ip '%s'." % (user.username, user.current_login_ip)) 
     return render_template('index.html', user=user)
 
+@app.route('/explore')
+@login_required
+def explore():
+    user = User.query.filter_by(username=current_user.username).first_or_404()
+    return render_template('explore.html', user=user)
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -106,6 +110,7 @@ def login():
         user = User(username='guest', email='guest@guest.com', password='guest')
         form = ExtendedLoginForm(formdata=request.form, obj=user)
         login_user(user)
+        log.info("User '%s' login." % (user.username)) 
         return redirect(url_for('index'))
 
 @app.route('/authorize/<provider>')

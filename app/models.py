@@ -31,6 +31,12 @@ user_tags = db.Table(
     db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'))
 )
 
+post_tags = db.Table(
+    'post_tags', 
+    db.Column('post_id', db.Integer, db.ForeignKey('post.id')),
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'))
+)
+
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True)
@@ -74,6 +80,8 @@ class User(UserMixin, db.Model):
     current_login_ip = db.Column(db.String(255))
     login_count = db.Column(db.Integer, default=0)
 
+    posts = db.relationship('Post', backref='author', lazy='dynamic')
+
     def avatar(self):
         return 'user_data/{}/avatar/avatar.png'.format(self.username + self.timestamp)
  
@@ -82,4 +90,24 @@ class Role(db.Model, RoleMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True)
     description = db.Column(db.String(255))
+#################################
+
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(140))
+    slug = db.Column(db.String(140), unique=True)
+    body = db.Column(db.Text)
+    created = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    tags = db.relationship(
+        'Tag', secondary=post_tags, backref=db.backref('posts_tags', lazy='dynamic'))
+
+    def __init__(self, *args, **kwargs):
+        super(Post, self).__init__(*args, **kwargs)
+        self.generate_slug()
+
+    def generate_slug(self):
+        if self.title:
+            self.slug = slugify(self.title + str(int(time())))
 
