@@ -1,14 +1,6 @@
 from flask import Blueprint
-from flask import render_template
-from flask import flash, redirect
-from flask import redirect
-from flask import url_for
-from flask import request
-
-from flask_login import login_user
-from flask_login import logout_user
-from flask_login import current_user
-from flask_login import login_required
+from flask import render_template, flash, redirect, url_for, request, send_from_directory
+from flask_security import login_required, login_user, logout_user, current_user, roles_accepted
 
 from .forms import PostForm
 
@@ -21,6 +13,7 @@ posts = Blueprint('posts', __name__, template_folder='templates')
 
 @posts.route('/<slug>/edit', methods=['GET', 'POST'])
 @login_required
+@roles_accepted('admin', 'user')
 def edit_post(slug):
     post = Post.query.filter(Post.slug==slug).first()
     form = PostForm(formdata=request.form, obj=post)

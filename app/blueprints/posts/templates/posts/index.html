@@ -47,7 +47,9 @@
             <span style="color: red;">[{{ error }}]</span> {% endfor %} {{ form.tags.label(class='control-label') }}<br> {{ form.tags() }}<br> {% for error in form.tags.errors %}
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
         </p>
+        {% if current_user.has_role('admin') or current_user.has_role('user')%}
         <p>{{ form.submit() }}</p>
+        {% endif %}
     </form>
     {% endif %}
 </div>
