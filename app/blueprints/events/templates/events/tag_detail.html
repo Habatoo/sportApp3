@@ -1,0 +1,9 @@
+{% extends 'base.html' %} {% block title %} {{ tag.name }} events {% endblock %} {% block content_title %} All events for "{{ tag.name }}" tag: {% endblock %} {% block content %} {% for event in events %}
+<div class="event">
+    <a href="{{ url_for('events.event_detail', slug=event.slug) }}">{{ event.event_title }}</a>
+</div>
+{% endfor %}
+
+<div class="main-content">
+</div>
+{% endblock %}

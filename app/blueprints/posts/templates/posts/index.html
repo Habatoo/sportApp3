@@ -1,10 +1,11 @@
-{% extends 'base.html' %} {% block title %} Blueprint post title {% endblock %} {% block content_title %}
-<h3>Posts</h3>
+{% extends 'base.html' %} {% block title %} Messages {% endblock %} {% block content_title %}
+<h3>Messages</h3>
 {% endblock %} {% block content %} {% for post in pages.items %}
 <div class="main-content">
     <table>
         <tr>
-            <td><img src="{{ url_for('static', filename=post.author.avatar()) }}" width="30" height="30" alt="avatar"></td>
+            <td>
+                <img src="{{ url_for('static', filename=post.author.avatar()) }}" width="30" height="30" alt="avatar"></td>
             <td><a href="{{ url_for('user', username=post.author.username) }}">
                 {{ post.author.username }}</a> {{ post.created }} says :
                 <br>
@@ -35,7 +36,7 @@
         </li>
     </ul>
 </nav>
-<hr> Create post
+<hr> Create message
 <div>
     {% if form %}
     <form action="" method="post">
@@ -48,7 +49,7 @@
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
         </p>
         {% if current_user.has_role('admin') or current_user.has_role('user')%}
-        <p>{{ form.submit() }}</p>
+        <p>{{ form.submit(class='btn btn-success') }}</p>
         {% endif %}
     </form>
     {% endif %}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %} {% block title %} Blueprint event title {% endblock %} {% block content_title %} New event {% endblock %} {% block content %}
+<br> New event search place:
+<form id="upload-form" action="{{ url_for('events.event_new') }}" method="GET">
+    <input type="search" name="search" placeholder="Find here..." class="form-control"><br>
+    <input type="submit" value="Send" class="btn btn-success">
+</form>
+<hr>
+
+<div>
+    {% if form %}
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.event_title.label(class='control-label') }}
+            <br> {{ form.event_title(class='form-control') }}
+            <br> {% for error in form.event_title.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+            <br> {{ form.event_body.label(class='control-label') }}
+            <br> {{ form.event_body(class='form-control') }}
+            <br> {% for error in form.event_body.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
+
+            <br> {{ form.event_time.label(class='control-label') }}
+            <br> {{ form.event_time(type="datetime-local", class='form-control') }}
+            <br> {% for error in form.event_time.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
+            <br> {{ form.event_place.label(class='control-label') }} {{ form.event_place(class='form-control') }}
+            <br> {% for error in form.event_place.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
+            <br> {{ form.event_geo.label(class='control-label') }} {{ form.event_geo(class='form-control') }}
+            <br>
+            <br> {% for error in form.event_geo.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+            <br> {{ form.event_level.label(class='control-label') }}<br> {{ form.event_level(class='form-control') }}<br> {% for error in form.event_level.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+            <br> {{ form.tags.label(class='control-label') }}<br> {{ form.tags() }}<br> {% for error in form.tags.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+        </p>
+        <p>{{ form.submit(class='btn btn-success') }}</p>
+    </form>
+    {% endif %}
+</div>
+{% endblock %}

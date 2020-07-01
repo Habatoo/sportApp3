@@ -1,0 +1,47 @@
+{% extends 'base.html' %} {% block title %} Edit post {% endblock %} {% block content_title %}
+<h3>Edit event: {{form.event_title.data}}</h3>
+{% endblock %} {% block content %} {% if form %}
+<div>
+    <form action="" method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            <br>{{ form.event_title.label(class='control-label') }}
+            <br> {{ form.event_title(class='form-control') }}
+            <br> {% for error in form.event_title.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
+            <br> {{ form.event_body.label(class='control-label') }}
+            <br> {{ form.event_body(class='form-control') }}
+            <br> {% for error in form.event_body.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
+            <br>{{ form.tags.label(class='control-label') }}
+            <br> {{ form.tags() }}<br> {% for error in form.tags.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
+            <br> {{ form.event_time.label(class='control-label') }}
+            <br> {{ form.event_time(class='form-control') }}
+            <br> {% for error in form.event_time.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
+            <br> {{ form.event_place.label(class='control-label') }}
+            <br> {{ form.event_place(class='form-control') }}
+            <br> {% for error in form.event_place.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
+            <br> {{ form.event_geo.label(class='control-label') }}
+            <br> {{ form.event_geo(class='form-control') }}
+            <br> {% for error in form.event_geo.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
+            <br> {{ form.event_level.label(class='control-label') }}
+            <br> {{ form.event_level(class='form-control') }}
+            <br> {% for error in form.event_level.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
+        </div>
+        {{ form.submit(class="btn btn-success") }}
+    </form>
+
+</div>
+{% endif %} {% endblock %}

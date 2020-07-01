@@ -37,6 +37,18 @@ post_tags = db.Table(
     db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'))
 )
 
+event_tags = db.Table(
+    'event_tags', 
+    db.Column('event_id', db.Integer, db.ForeignKey('event.id')),
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'))
+)
+
+photo_tags = db.Table(
+    'photo_tags', 
+    db.Column('photo_id', db.Integer, db.ForeignKey('photo.id')),
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'))
+)
+
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True)
@@ -81,6 +93,8 @@ class User(UserMixin, db.Model):
     login_count = db.Column(db.Integer, default=0)
 
     posts = db.relationship('Post', backref='author', lazy='dynamic')
+    events = db.relationship('Event', backref='event_author', lazy='dynamic')
+    photos = db.relationship('Photo', backref='photo_author', lazy='dynamic')
 
     def avatar(self):
         return 'user_data/{}/avatar/avatar.png'.format(self.username + self.timestamp)
@@ -111,3 +125,50 @@ class Post(db.Model):
         if self.title:
             self.slug = slugify(self.title + str(int(time())))
 
+class Event(db.Model):
+    # https://overpass.openstreetmap.ru/api/interpreter
+    # https://overpass.openstreetmap.fr/api/interpreter no attic
+    # https://overpass-api.de/api/interpreter
+    id = db.Column(db.Integer, primary_key=True)
+    event_title = db.Column(db.String(140))
+    event_body = db.Column(db.Text)
+    slug = db.Column(db.String(140), unique=True)
+    created = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    
+    event_time = db.Column(db.DateTime)
+    event_place = db.Column(db.Text)
+    event_geo = db.Column(db.Text)
+
+    event_starter = db.Column(db.Integer, db.ForeignKey('user.id'))
+    event_crew = db.Column(db.Text)
+    event_level = db.Column(db.Integer)
+
+    tags = db.relationship(
+        'Tag', secondary=event_tags, backref=db.backref('events_tags', lazy='dynamic'))
+
+    def __init__(self, *args, **kwargs):
+        super(Event, self).__init__(*args, **kwargs)
+        self.generate_slug()
+
+    def generate_slug(self):
+        if self.event_title:
+            self.slug = slugify(self.event_title + str(int(time())))
+
+    def check_date(self, *args, **kwargs):
+        pass
+    #     if not self.event_time:
+    #         raise ValidationError("Event time missing. Please check the data")
+    #     if not self.created >= self.event_time:
+    #         raise ValidationError("Event time must be greater than now")
+    #     super().check_date(*args, **kwargs)
+
+class Photo(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    photo_title = db.Column(db.String(100))
+    photo_description = db.Column(db.String(255))
+    slug = db.Column(db.String(140), unique=True)
+    created = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    tags = db.relationship(
+        'Tag', secondary=photo_tags, backref=db.backref('photos_tags', lazy='dynamic'))

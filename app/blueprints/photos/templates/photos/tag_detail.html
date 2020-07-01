@@ -1,0 +1,9 @@
+{% extends 'base.html' %} {% block title %} {{ tag.name }} photos {% endblock %} {% block content_title %} Photo for "{{ tag.name }}" tag: {% endblock %} {% block content %} {% for photo in photos %}
+<div class="photo">
+    <a href="{{ url_for('photos.photo_detail', slug=photo.id) }}">{{ photo.photo_title }}</a>
+</div>
+{% endfor %}
+
+<div class="main-content">
+</div>
+{% endblock %}

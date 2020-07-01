@@ -56,11 +56,15 @@ from app import view
 from app.security import *
 from app import errors
 
-from .blueprints.users.blueprint import users
 from .blueprints.posts.blueprint import posts
+from .blueprints.users.blueprint import users
+from .blueprints.events.blueprint import events
+from .blueprints.photos.blueprint import photos
 
-app.register_blueprint(users, url_prefix='/user')
 app.register_blueprint(posts, url_prefix='/post')
+app.register_blueprint(users, url_prefix='/user')
+app.register_blueprint(events, url_prefix='/event')
+app.register_blueprint(photos, url_prefix='/photo')
 
 # #### ADMIN ####
 class AdminMixin:
@@ -90,3 +94,5 @@ admin.add_view(AdminView(User, db.session))
 admin.add_view(ModelView(Role, db.session))
 admin.add_view(ModelView(Tag, db.session))
 admin.add_view(ModelView(Post, db.session))
+admin.add_view(ModelView(Event, db.session))
+admin.add_view(ModelView(Photo, db.session))

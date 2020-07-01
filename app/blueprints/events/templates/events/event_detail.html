@@ -1,0 +1,22 @@
+{% extends 'base.html' %} {% block title %} {{ event.event_title }} {% endblock %} {% block content_title %} {{ event.event_title }} {% endblock %} {% block content %}
+
+<div class="main-content">
+    {{ event.event_body }}
+</div>
+<div class="tags">
+    {% for tag in tags %}
+    <a href="{{ url_for('events.tag_detail', slug=tag.slug) }}">
+        <span class="label label-primary">{{ tag.name }}</span></a> {% endfor %}
+</div>
+<div>
+    event start at: {{ event.event_time }} <br>
+    <hr> event adress: {{ event.event_place }} <br>
+    <hr> event geo: {{ event.event_geo }} <br>
+    <hr> event level: {{ event.event_level }} <br>
+    <hr> event author: {{ event.event_starter }} <br> event crew: {{ event.event_crew }}
+
+</div>
+
+<hr> {% if event.event_starter==current_user.id %}
+<a href="{{ url_for('events.edit_event', slug=event.slug)}}">
+    Edit event</a> {% endif %} {% endblock %}

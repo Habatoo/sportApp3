@@ -6,7 +6,6 @@
         {% block title %} {% endblock %} | sportApp
     </title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-
 </head>
 
 <body onload="GetMap();">
@@ -38,8 +37,8 @@
                     <li class="nav-item "><a class="nav-link " href="{{ url_for('filter') }}">Filter</a></li>
                     <li class="nav-item "><a class="nav-link " href="{{ url_for('user', username=current_user.username) }}">Profile</a></li>
                     <li class="nav-item "><a class="nav-link " href="{{ url_for('posts.index') }}">Messages</a></li>
-                    <li class="nav-item "><a class="nav-link " href="">Events</a></li>
-                    <li class="nav-item "><a class="nav-link " href="">Photos</a></li>
+                    <li class="nav-item "><a class="nav-link " href="{{ url_for('events.index') }}">Events</a></li>
+                    <li class="nav-item "><a class="nav-link " href="{{ url_for('photos.index') }}">Photos</a></li>
                     <li class="nav-item "><a class="nav-link " href="">Saved</a></li>
                     <li class="nav-item "><a class="nav-link " href="">Notifications</a></li>
                     <li class="nav-item "><a class="nav-link " href="{{ url_for_security('logout') }}">Logout</a></li>

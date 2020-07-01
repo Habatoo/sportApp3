@@ -1,0 +1,18 @@
+{% extends 'base.html' %} {% block title %} Photos title {% endblock %} {% block content_title %}
+<h3>Photo detail</h3>
+{% endblock %} {% block content %} {{photo.photo_title}}
+<div class="main-content">
+    <img src="{{ url_for('static', filename=photo.slug) }}" width="240" height="240" alt="photo" />
+</div>
+<div class="main-content">
+    {{photo.photo_description}}
+</div>
+
+<div class="tags">
+    {% for tag in tags %}
+    <a href="{{ url_for('photos.tag_detail', slug=tag.slug) }}">
+        <span class="label label-primary">{{ tag.name }}</span></a> {% endfor %}
+</div>
+<hr> {% if photo.user_id==current_user.id %}
+<a href="{{ url_for('photos.edit_info', slug=photo.id)}}">
+        Edit photo info</a> {% endif %} {% endblock %}

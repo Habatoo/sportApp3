@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% block title %} Edit photo {% endblock %} {% block content_title %}
+<h3>Edit photo info:</h3>
+{% endblock %} {% block content %} {% if form %}
+<div>
+    <form action="" method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            <br>{{ form.photo_title.label(class='control-label') }}
+            <br> {{ form.photo_title(class='form-control') }}
+            <br> {% for error in form.photo_title.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
+            <br> {{ form.photo_description.label(class='control-label') }}
+            <br> {{ form.photo_description(class='form-control') }}
+            <br> {% for error in form.photo_description.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
+            <br>{{ form.tags.label(class='control-label') }}
+            <br> {{ form.tags() }}
+            <br> {% for error in form.tags.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+        </div>
+        {{ form.submit(class="btn btn-success") }}
+    </form>
+</div>
+{% endif %} {% endblock %}

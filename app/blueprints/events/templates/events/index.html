@@ -1,0 +1,40 @@
+{% extends 'base.html' %} {% block title %} Blueprint event title {% endblock %} {% block content_title %} All events page {% endblock %} {% block content %}
+<br> <a href="{{ url_for('events.event_new') }}">make a New event</a>
+<hr> {% for event in pages.items %}
+<div class="main-content">
+    <table>
+        <tr>
+            <td><img src="{{ url_for('static', filename=event.event_author.avatar()) }}" width="30" height="30" alt="avatar"></td>
+            <td><a href="{{ url_for('user', username=event.event_author.username) }}">
+                {{ event.event_author.username }}</a> {{ event.created }} make event :
+                <br>
+                <a href="{{ url_for('events.event_detail', slug=event.slug) }}">{{ event.event_title }}</a>
+                <br> {{ event.event_body }}
+                <br> {{ event.event_level }}
+
+                <div class="tags">
+                    tags: {% for tag in event.tags %}
+                    <a href="{{ url_for('events.tag_detail', slug=tag.slug) }}">
+                        <span class="label label-primary">{{ tag.name }}</span></a> {% endfor %}
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<br> {% endfor %}
+<nav>
+    <ul class="pagination">
+        <li {% if not pages.has_prev %} class="disabled" {% endif %}>
+            <a href="./?page={{ pages.prev_num }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span></a>
+        </li>
+        {% for page in pages.iter_pages() %}
+        <li {% if page==pages.page %} class="active" {% endif %}><a href="./?page={{ page }}">{{page}} <span class="sr-only">(current)</span></a></li>
+        {% endfor %}
+        <li {% if not pages.has_next %} class="disabled" {% endif %}>
+            <a href="./?page={{ pages.next_num }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span></a>
+        </li>
+    </ul>
+</nav>
+{% endblock %}

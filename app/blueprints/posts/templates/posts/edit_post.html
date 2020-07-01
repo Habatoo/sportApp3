@@ -1,5 +1,5 @@
-{% extends 'base.html' %} {% block title %} Edit post {% endblock %} {% block content_title %}
-<h3>Edit post: {{form.title.data}}</h3>
+{% extends 'base.html' %} {% block title %} Edit message {% endblock %} {% block content_title %}
+<h3>Edit message: {{form.title.data}}</h3>
 {% endblock %} {% block content %} {% if form %}
 <div>
     <form action="" method="POST">
@@ -13,6 +13,5 @@
         </div>
         {{ form.submit(class="btn btn-success") }}
     </form>
-
 </div>
 {% endif %} {% endblock %}
