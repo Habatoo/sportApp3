@@ -22,7 +22,7 @@
 
 
             <br> {{ form.event_time.label(class='control-label') }}
-            <br> {{ form.event_time(type="datetime-local", class='form-control') }}
+            <br> {{ form.event_time(class='form-control') }}
             <br> {% for error in form.event_time.errors %}
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
 

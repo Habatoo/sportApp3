@@ -36,33 +36,39 @@ def edit_post(slug):
 @posts.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
-    form = PostForm()
-    if form.validate_on_submit():
-        post = Post(
-            title=form.title.data, 
-            body=form.body.data, 
-            author=current_user, 
-            )
-        try:
-            post.tags.append(Tag.query.filter_by(name=form.tags.data).first())
-            db.session.add(post)
-            db.session.commit()
-            flash('Your post is now live!')
-            return redirect(url_for('posts.index'))
-        except:
-            redirect('posts.index') 
+    users = User.query.all()
+    return render_template('posts/index.html', users=users)
 
-    q = request.args.get('q')
-    page = request.args.get('page')
-    page = request.args.get('page', 1, type=int)
-    if q:
-        posts = Post.query.filter(Post.title.contains(q) | Post.body.contains(q).all())
-    else:
-        posts = Post.query.order_by(Post.created.desc())
+# @posts.route('/', methods=['GET', 'POST'])
+# @login_required
+# def index():
+#     form = PostForm()
+#     if form.validate_on_submit():
+#         post = Post(
+#             title=form.title.data, 
+#             body=form.body.data, 
+#             author=current_user, 
+#             )
+#         try:
+#             post.tags.append(Tag.query.filter_by(name=form.tags.data).first())
+#             db.session.add(post)
+#             db.session.commit()
+#             flash('Your post is now live!')
+#             return redirect(url_for('posts.index'))
+#         except:
+#             redirect('posts.index') 
+
+#     q = request.args.get('q')
+#     page = request.args.get('page')
+#     page = request.args.get('page', 1, type=int)
+#     if q:
+#         posts = Post.query.filter(Post.title.contains(q) | Post.body.contains(q).all())
+#     else:
+#         posts = Post.query.order_by(Post.created.desc())
         
-    pages = posts.paginate(page=page, per_page=app.config['POSTS_PER_PAGE'])
-    # max pages = posts.count() or 404
-    return render_template('posts/index.html', form=form, pages=pages)
+#     pages = posts.paginate(page=page, per_page=app.config['POSTS_PER_PAGE'])
+#     # max pages = posts.count() or 404
+#     return render_template('posts/index.html', form=form, pages=pages)
 
 @posts.route('/<slug>')
 @login_required

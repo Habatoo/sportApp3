@@ -48,12 +48,12 @@ def event_new():
         else:
             print('no search')
             return redirect('')          
-    
+
     if form.validate_on_submit():
         event = Event(
             event_title=form.event_title.data, 
             event_body=form.event_body.data, 
-            event_time= form.event_time.data,
+            event_time= str(form.event_time.raw_data[0].replace('T', ' ')), #form.event_time.data,
             event_place = form.event_place.data,
             event_geo = form.event_geo.data,
             event_level = form.event_level.data,
