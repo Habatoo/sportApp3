@@ -60,3 +60,7 @@
 2020-07-02 23:23:07,154 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.
 2020-07-02 23:40:21,293 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.
 2020-07-02 23:40:37,338 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.
+2020-07-03 11:53:09,979 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.
+2020-07-03 11:54:24,123 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.
+2020-07-03 11:55:03,493 [INFO] - btb_Api:User 'user' login with ip '127.0.0.1'.
+2020-07-03 11:56:52,762 [INFO] - btb_Api:User 'user' edit profile.

@@ -31,6 +31,12 @@ user_tags = db.Table(
     db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'))
 )
 
+user_clubs = db.Table(
+    'user_clubs', 
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('club_id', db.Integer, db.ForeignKey('club.id'))
+)
+
 post_tags = db.Table(
     'post_tags', 
     db.Column('post_id', db.Integer, db.ForeignKey('post.id')),
@@ -48,6 +54,23 @@ photo_tags = db.Table(
     db.Column('photo_id', db.Integer, db.ForeignKey('photo.id')),
     db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'))
 )
+
+class Club(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), unique=True)
+    slug = db.Column(db.String(100))
+    register_at = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    club_address = db.Column(db.Text)
+    club_webpage = db.Column(db.Text)
+    about_club = db.Column(db.String(255))
+
+    def __init__(self, *args, **kwargs):
+        super(Club, self).__init__(*args, **kwargs)
+        self.slug = slugify(self.name)
+
+    def __repr__(self):
+        return '{}'.format(self.name)
 
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -82,9 +105,10 @@ class User(UserMixin, db.Model):
     
     roles = db.relationship(
         'Role', secondary=roles_users, backref=db.backref('users_roles', lazy='dynamic'))
-
     tags = db.relationship(
         'Tag', secondary=user_tags, backref=db.backref('users_tags', lazy='dynamic'))
+    clubs = db.relationship(
+        'Club', secondary=user_clubs, backref=db.backref('users_clubs', lazy='dynamic'))
 
     last_login_at = db.Column(db.DateTime, default=datetime.now)
     current_login_at = db.Column(db.DateTime, default=datetime.now)
