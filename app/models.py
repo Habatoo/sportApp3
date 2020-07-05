@@ -102,6 +102,9 @@ class User(UserMixin, db.Model):
 
     mentor = db.Column(db.Boolean, default=False)
     level = db.Column(db.Integer, default=0)
+
+    # define relationship
+    cabinet = db.relationship('Cabinet', backref='user', lazy='dynamic')
     
     roles = db.relationship(
         'Role', secondary=roles_users, backref=db.backref('users_roles', lazy='dynamic'))
@@ -196,3 +199,59 @@ class Photo(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     tags = db.relationship(
         'Tag', secondary=photo_tags, backref=db.backref('photos_tags', lazy='dynamic'))
+
+class Cabinet(db.Model):
+    cabinet_id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(140))
+    description = db.Column(db.Text)
+    cover_url = db.Column(db.String(120), unique=True)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    # sponsor_tier = db.relationship('SponsorTier', backref='tier', lazy='dynamic')
+    # content = db.relationship('Content', backref='contents', lazy='dynamic')
+
+    def __init__(self, *args, **kwargs):
+        super(Cabinet, self).__init__(*args, **kwargs)
+        self.generate_slug()
+
+    def generate_slug(self):
+        if self.title:
+            self.cover_url = slugify(self.title + str(int(time())))
+
+# class Tier(db.Model):
+#     tier_id = db.Column(db.Integer, primary_key=True)
+#     title = db.Column(db.String(140))
+#     description = db.Column(db.Text)
+#     price = db.Column(db.Float)
+
+#     cabinet_id = db.Column(db.Integer, db.ForeignKey('cabinet.cabinet_id'))
+    # define relationship
+    # content = db.relationship('Content', uselist=False, backref='tier')
+
+# class Content(db.Model):
+#     content_id = db.Column(db.Integer, primary_key=True)  
+#     title = db.Column(db.String(140))
+#     body = db.Column(db.Text)
+#     created = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+#     tier_id = db.Column(db.Integer, db.ForeignKey('tier.tier_id'))
+
+#     slug = db.Column(db.String(140), unique=True) # text url
+#     file_url = db.Column(db.String(140), unique=True) # files url
+
+#     # user_reader_id = db.Column(db.Integer, db.ForeignKey('user.id')) id users who can
+
+#     tags = db.relationship(
+#         'Tag', secondary=content_tags, backref=db.backref('content_tags', lazy='dynamic'))
+
+#     def __init__(self, *args, **kwargs):
+#         super(Content, self).__init__(*args, **kwargs)
+#         self.generate_slug()
+
+#     def generate_slug(self):
+#         if self.title:
+#             self.slug = slugify(self.title + str(int(time())))
+    
+    # def generate_url(self):
+    #     if self.title:
+    #         self.file_url = slugify(self.user_id + str(int(time())))

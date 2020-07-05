@@ -22,6 +22,8 @@ from app.models import *
 from app.copydir import copydir
 from app.security import user_datastore, security
 
+import git
+
 
 @app.before_first_request
 def create_initial_users():
@@ -73,6 +75,16 @@ def before_request():
         user = User.query.filter_by(username=current_user.username).first()
         user_datastore.add_role_to_user(user, role)
         db.session.commit()
+
+@app.route('/update_server', methods=['POST'])
+def webhook():
+    if request.method == 'POST':
+        repo = git.Repo('path/to/git_repo')
+        origin = repo.remotes.origin
+        origin.pull()
+        return 'Updated PythonAnywhere successfully', 200
+    else:
+        return 'Wrong event type', 400
 
 @app.route('/')
 @app.route('/index')
