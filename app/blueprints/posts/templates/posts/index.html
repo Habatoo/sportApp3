@@ -8,10 +8,10 @@
             <td>
                 <img style='border:1px solid #000000' src="{{ url_for('static', filename=user.avatar()) }}" width="30" height="30" alt="avatar" /></td>
             <td>
-                {{user.username}}
+                <a href="{{ url_for('user', username=user.username) }}">{{user.username}}</a>
                 <br>
-                <a href="{{ url_for('user', username=user.username) }}">
-                            chat with</a>
+                <a href="{{ url_for('posts.user_posts') }}">
+                            chat with {{ user.username }}</a>
             </td>
         </tr>
     </table>

@@ -1,6 +1,7 @@
 from flask import Blueprint
 from flask import render_template, flash, redirect, url_for, request, send_from_directory
 from flask_security import login_required, login_user, logout_user, current_user, roles_accepted
+from werkzeug.utils import secure_filename
 
 from .forms import PhotoForm
 

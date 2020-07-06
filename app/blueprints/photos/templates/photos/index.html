@@ -13,9 +13,10 @@
     </div>
     <hr> {% endfor %}
     <hr> {% if current_user.has_role('admin') or current_user.has_role('user') %}
-    <br> Photo uploader
+    <br> Photo uploader<br><br>
     <form id="uload-form" action="{{ url_for('photos.index') }}" method="POST" enctype="multipart/form-data">
         <input type="file" name="file" accept="image/*" multiple>
+        <br>
         <input type="submit" value="Send" class="btn btn-success">
     </form>
     {% endif %}
