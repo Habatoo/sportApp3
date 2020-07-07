@@ -90,6 +90,8 @@ def webhook():
 @app.route('/index')
 @login_required
 def index():
+    # <!-- <div id="mydiv" data-geocode='{{ geocode }}'>{{ geocode.event_title}}</div> -->
+    events = Event.query.all() # 37.62, 55.75
     user = User.query.filter_by(username=current_user.username).first_or_404()
     
     user_dir = user.username + user.timestamp
@@ -111,7 +113,7 @@ def index():
     user.login_count = user.login_count + 1 if user.login_count else 1
     db.session.commit()
     log.info("User '%s' login with ip '%s'." % (user.username, user.current_login_ip)) 
-    return render_template('index.html', user=user)
+    return render_template('index.html', user=user, events=events)
 
 @app.route('/explore')
 @login_required
@@ -127,6 +129,7 @@ def filter():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    geocode = 37.62#, 55.75
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     form = ExtendedLoginForm()
@@ -135,7 +138,7 @@ def login():
         form = ExtendedLoginForm(formdata=request.form, obj=user)
         login_user(user)
         log.info("User '%s' login." % (user.username)) 
-        return redirect(url_for('index'))
+        return redirect(url_for('index'), geocode=geocode)
 
 @app.route('/authorize/<provider>')
 def oauth_authorize(provider):

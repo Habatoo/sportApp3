@@ -231,13 +231,18 @@ class Photo(db.Model):
         'Tag', secondary=photo_tags, backref=db.backref('photos_tags', lazy='dynamic'))
 
 class Cabinet(db.Model):
+    user_name = db.Column(db.String(100))
+    user_age = db.Column(db.Integer)
+    user_phone = db.Column(db.String(100))
+    user_address = db.Column(db.String(255))
+
     cabinet_id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(140))
     description = db.Column(db.Text)
     cover_url = db.Column(db.String(120), unique=True)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    # sponsor_tier = db.relationship('SponsorTier', backref='tier', lazy='dynamic')
+    sponsor_tier = db.relationship('Tier', backref='tier', lazy='dynamic')
     # content = db.relationship('Content', backref='contents', lazy='dynamic')
 
     def __init__(self, *args, **kwargs):
@@ -248,13 +253,13 @@ class Cabinet(db.Model):
         if self.title:
             self.cover_url = slugify(self.title + str(int(time())))
 
-# class Tier(db.Model):
-#     tier_id = db.Column(db.Integer, primary_key=True)
-#     title = db.Column(db.String(140))
-#     description = db.Column(db.Text)
-#     price = db.Column(db.Float)
+class Tier(db.Model):
+    tier_id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(140))
+    description = db.Column(db.Text)
+    price = db.Column(db.Float)
 
-#     cabinet_id = db.Column(db.Integer, db.ForeignKey('cabinet.cabinet_id'))
+    cabinet_id = db.Column(db.Integer, db.ForeignKey('cabinet.cabinet_id'))
     # define relationship
     # content = db.relationship('Content', uselist=False, backref='tier')
 
