@@ -57,6 +57,12 @@ def create_initial_users():
             db.session.add(club)
             db.session.commit()
 
+    for level in range(1, 11):
+        if not Level.query.filter(Level.number==level).first():
+            level = Level(number=level)
+            db.session.add(level)
+            db.session.commit()
+
 @app.before_request
 def before_request():
     if request.path.startswith('/admin'):
@@ -90,7 +96,6 @@ def webhook():
 @app.route('/index')
 @login_required
 def index():
-    # <!-- <div id="mydiv" data-geocode='{{ geocode }}'>{{ geocode.event_title}}</div> -->
     events = Event.query.all() # 37.62, 55.75
     user = User.query.filter_by(username=current_user.username).first_or_404()
     

@@ -10,9 +10,9 @@
 <br>My interests: {% for tag in user.tags %}
 <a href="{{ url_for('users.tag_detail', slug=tag.slug) }}">
     <span class="label label-primary">
-        {{ tag.name }}
+        {{ tag.name }}: {{ level.description }} 
     </span>
-</a> {% endfor %}
+</a>{% endfor %}
 <hr>
 <p>{{ user.followers.count() }} followers ({%for user in user.followers %} <a href="{{ url_for('user', username=user.username) }}">{{user.username}}</a> {% endfor %}),
     <br>{{ user.followed.count() }} following ( {%for user in user.followed %} <a href="{{ url_for('user', username=user.username) }}">{{user.username}}</a> {% endfor %} ).</p>

@@ -13,8 +13,9 @@ users = Blueprint('users', __name__, template_folder='templates')
 @app.route('/user/<username>')
 @login_required
 def user(username):
+    level = Level.query.filter_by(number=1).first()
     user = User.query.filter_by(username=username).first_or_404()
-    return render_template('users/index.html', user=user)
+    return render_template('users/index.html', user=user, level=level)
 
 @users.route('/tag/<slug>')
 @login_required
@@ -33,6 +34,7 @@ def edit_profile():
         current_user.username = form.username.data
         current_user.about_me = form.about_me.data
         current_user.city = form.city.data
+        level = Level.query.filter_by(number=1).first()
         current_user.tags.append(Tag.query.filter_by(name=form.tags.data).first())
         db.session.commit()
         flash('Your changes have been saved.')

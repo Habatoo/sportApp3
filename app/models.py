@@ -82,12 +82,18 @@ class Tag(db.Model):
     name = db.Column(db.String(100), unique=True)
     slug = db.Column(db.String(100))
 
+    level = db.relationship('Level', backref='tag_level', lazy='dynamic')
+
     def __init__(self, *args, **kwargs):
         super(Tag, self).__init__(*args, **kwargs)
         self.slug = slugify(self.name)
 
-    def __repr__(self):
-        return '{}'.format(self.name)
+class Level(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    number = db.Column(db.Integer, unique=True)
+    description = db.Column(db.String(100))
+
+    tags = db.Column(db.Integer, db.ForeignKey('tag.id'))
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
