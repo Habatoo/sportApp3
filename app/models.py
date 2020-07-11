@@ -133,6 +133,7 @@ class User(UserMixin, db.Model):
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     events = db.relationship('Event', backref='event_author', lazy='dynamic')
     photos = db.relationship('Photo', backref='photo_author', lazy='dynamic')
+    events_user = db.relationship('Crew', backref='event_user', lazy='dynamic')
 
     def avatar(self):
         return 'user_data/{}/avatar/avatar.png'.format(self.username + self.timestamp)
@@ -188,6 +189,12 @@ class Post(db.Model):
         if self.title:
             self.slug = slugify(self.title + str(int(time())))
 
+class Crew(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    event_id = db.Column(db.Integer, db.ForeignKey('event.id'))
+    confirmed = db.Column(db.Boolean, default=False)
+
 class Event(db.Model):
     # https://overpass.openstreetmap.ru/api/interpreter
     # https://overpass.openstreetmap.fr/api/interpreter no attic
@@ -205,6 +212,8 @@ class Event(db.Model):
     event_starter = db.Column(db.Integer, db.ForeignKey('user.id'))
     event_crew = db.Column(db.Text)
     event_level = db.Column(db.Integer)
+
+    events_crew = db.relationship('Crew', backref='event_crew', lazy='dynamic')
 
     tags = db.relationship(
         'Tag', secondary=event_tags, backref=db.backref('events_tags', lazy='dynamic'))

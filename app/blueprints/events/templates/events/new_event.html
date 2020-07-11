@@ -38,6 +38,12 @@
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
             <br> {{ form.tags.label(class='control-label') }}<br> {{ form.tags() }}<br> {% for error in form.tags.errors %}
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
+            <br> {{ form.events_crew.label(class='control-label') }}
+            <br> {{ form.events_crew() }}
+            <br> {% for error in form.events_crew.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
         </p>
         <p>{{ form.submit(class='btn btn-success') }}</p>
     </form>

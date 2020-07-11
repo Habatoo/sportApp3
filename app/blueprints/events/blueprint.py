@@ -20,6 +20,7 @@ events = Blueprint('events', __name__, template_folder='templates')
 @events.route('/event_new', methods=['GET', 'POST'])
 @login_required
 def event_new():
+    users = User.query.all()
     form = EventForm()
     if request.args == '':
         return redirect('')
@@ -44,7 +45,7 @@ def event_new():
             event_author=current_user)
             form = EventForm(
                 formdata=request.form, obj=event)
-            return render_template('events/new_event.html', form=form)
+            return render_template('events/new_event.html', form=form, users=users)
         else:
             print('no search')
             return redirect('')          
@@ -60,13 +61,15 @@ def event_new():
             event_level = form.event_level.data,
             event_author=current_user)
         event.tags.append(Tag.query.filter_by(name=form.tags.data).first())
-        #try:
+        
+        event.events_crew.append(Crew.query.filter_by(id=form.events_crew.data).first())
+
         db.session.commit()
         flash('Your cane make event!')
         return redirect(url_for('events.index'))
         #except:
         #    redirect('index') # create!!!
-    return render_template('events/new_event.html', form=form)
+    return render_template('events/new_event.html', form=form, users=users)
 
 @events.route('/<slug>/edit', methods=['GET', 'POST'])
 @login_required

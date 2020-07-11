@@ -10,7 +10,7 @@ from app import app
 from app.models import *
 
 tag_choices = [(tag.name, tag.slug)  for tag in Tag.query.all()]
-
+user_choices = [(user.username, user.id)  for user in User.query.all()]
 
 class EventForm(FlaskForm):
     event_title = StringField('Title', validators=[DataRequired()])
@@ -20,7 +20,7 @@ class EventForm(FlaskForm):
     event_place = TextAreaField('Place, address', validators=[DataRequired()])
     event_geo = TextAreaField('GEO, long, lat', validators=[DataRequired()])
     event_level = StringField('Event level', validators=[DataRequired()])
-    tags = RadioField(
-        'Select tags', choices=tag_choices)
-    # event_crew = db.Column(db.Integer, db.ForeignKey('user.id'))
+    tags = RadioField('Select tags', choices=tag_choices)
+
+    events_crew = SelectField('Select users', choices=user_choices, default=None) 
     submit = SubmitField('Submit')
