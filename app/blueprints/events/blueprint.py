@@ -48,12 +48,13 @@ def event_new():
         else:
             print('no search')
             return redirect('')          
-
+    # print(form.event_time.raw_data[0].replace('-', '.').replace('T', ' ')+'.0')
     if form.validate_on_submit():
         event = Event(
             event_title=form.event_title.data, 
             event_body=form.event_body.data, 
-            event_time= str(form.event_time.raw_data[0].replace('T', ' ')), #form.event_time.data,
+            # event_time= form.event_time.raw_data[0].replace('-', '.').replace('T', ' ')+'.0', 
+            event_time = form.event_time.data,
             event_place = form.event_place.data,
             event_geo = form.event_geo.data,
             event_level = form.event_level.data,
@@ -100,11 +101,10 @@ def index():
     if q:
         events = Event.query.filter(Event.event_title.contains(q) | Event.event_body.contains(q).all())
     else:
-        events = Event.query.order_by(Event.created.desc())
-        
+        events = Event.query.order_by(Event.created.desc())    
     pages = events.paginate(page=page, per_page=app.config['POSTS_PER_PAGE'])
-
-    return render_template('events/index.html', pages=pages)
+    levels = Level.query.all()
+    return render_template('events/index.html', pages=pages, levels=levels)
 
 
 @events.route('/<slug>')

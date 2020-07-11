@@ -6,16 +6,21 @@
         <tr>
             <td><img src="{{ url_for('static', filename=event.event_author.avatar()) }}" width="30" height="30" alt="avatar"></td>
             <td><a href="{{ url_for('user', username=event.event_author.username) }}">
-                {{ event.event_author.username }}</a> {{ event.created }} make event :
+                {{ event.event_author.username }}</a><br> {{ event.created }} make event :
                 <br>
-                <a href="{{ url_for('events.event_detail', slug=event.slug) }}">{{ event.event_title }}</a>
-                <br> {{ event.event_body }}
-                <br> {{ event.event_level }}
+                <a href="{{ url_for('events.event_detail', slug=event.slug) }}">Event title: {{ event.event_title }}</a>
+                <br> Event description: {{ event.event_body }}
 
                 <div class="tags">
-                    tags: {% for tag in event.tags %}
+                    Event theme: {% for tag in event.tags %}
                     <a href="{{ url_for('events.tag_detail', slug=tag.slug) }}">
-                        <span class="label label-primary">{{ tag.name }}</span></a> {% endfor %}
+                        <span class="label label-primary">{{ tag.name }}: 
+                            {% for level in levels %}
+                            {% if level.number == event.event_level %}
+                            {{ level.description }} 
+                            {% endif %}
+                            {% endfor %}
+                        </span></a> {% endfor %}
                 </div>
             </td>
         </tr>
