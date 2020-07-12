@@ -61,14 +61,17 @@ def event_new():
             event_level = form.event_level.data,
             event_author=current_user)
         event.tags.append(Tag.query.filter_by(name=form.tags.data).first())
-        
-        event.events_crew.append(Crew.query.filter_by(id=form.events_crew.data).first())
+        db.session.commit()
 
+        user = User.query.filter_by(username=form.events_crew.raw_data[0]).first()
+        crew = Crew(
+            user_id=user.id
+            )
+        db.session.commit()    
+        event.events_crew.append(Crew.query.filter_by(id=user.id).first())
         db.session.commit()
         flash('Your cane make event!')
         return redirect(url_for('events.index'))
-        #except:
-        #    redirect('index') # create!!!
     return render_template('events/new_event.html', form=form, users=users)
 
 @events.route('/<slug>/edit', methods=['GET', 'POST'])
