@@ -62,15 +62,17 @@ def event_new():
             event_author=current_user)
         event.tags.append(Tag.query.filter_by(name=form.tags.data).first())
         user = User.query.filter_by(username=form.events_crew.raw_data[0]).first()
-        db.session.commit()
+        #print('0000000000000', event.id)
+        # db.session.commit()
         # event_new = Event.query.filter_by(event_title=form.event_title.data).first()
 
-        #crew = Crew(
-        #    event_user = user.id,
-        #    event_crew = event.id
-        #    ) 
-        #event.events_crew.append(crew)
-        #db.session.commit()
+        crew = Crew(
+            event_user = user,
+            event_crew = event
+            ) 
+        #print('99999999999', crew)
+        event.events_crew.append(crew)
+        db.session.commit()
         flash('Your cane make event!')
         return redirect(url_for('events.index'))
     return render_template('events/new_event.html', form=form, users=users)
@@ -102,6 +104,7 @@ def edit_event(slug):
 @events.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
+    users = User.query.all()
     q = request.args.get('q')
     page = request.args.get('page')
     page = request.args.get('page', 1, type=int)
@@ -111,7 +114,7 @@ def index():
         events = Event.query.order_by(Event.created.desc())    
     pages = events.paginate(page=page, per_page=app.config['POSTS_PER_PAGE'])
     levels = Level.query.all()
-    return render_template('events/index.html', pages=pages, levels=levels)
+    return render_template('events/index.html', pages=pages, levels=levels, users=users)
 
 
 @events.route('/<slug>')
