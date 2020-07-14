@@ -22,10 +22,9 @@
                             {% endfor %}
                         </span></a> {% endfor %}
                 </div>
-                <br>Event crew: {% for user in event.events_crew %} {% for u in users %} {% if u.id == user.user_id %}
-
+                <br>Event crew: {% for user in event.events_crew %} {% for u in users %} {% if u.id == user.user_id %} {% if user.confirmed %}
                 <a href="{{ url_for('user', username=u.username) }}">
-                    {{ u.username }}</a> {% endif %}
+                    {{ u.username }}</a> {% else %}{{ u.username }}{% endif %} {% endif %}
                 </a> {% endfor %}{% endfor %}
             </td>
         </tr>
