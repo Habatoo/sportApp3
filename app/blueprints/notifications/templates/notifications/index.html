@@ -1,24 +1,16 @@
-{% extends 'base.html' %} {% block title %} Photos title {% endblock %} {% block content_title %}
-<h3>Photos</h3>
+{% extends 'base.html' %} {% block title %} Notifications titles {% endblock %} {% block content_title %}
+<h3>Notifications</h3>
 {% endblock %} {% block content %}
 <div class="main-content">
-    {{ current_user.username }} photos:<br> {% for photo in photos %}
-    <a href="{{ url_for('photos.photo_detail', slug=photo.id) }}">
-        <img src="{{ url_for('static', filename=photo.slug) }}" width="240" height="240" alt="photo" />
-    </a><br> {{photo.photo_title}}
-    <div class="tags">
-        tags: {% for tag in photo.tags %}
-        <a href="{{ url_for('photos.tag_detail', slug=tag.slug) }}">
-            <span class="label label-primary">{{ tag.name }}</span></a> {% endfor %}
-    </div>
-    <hr> {% endfor %}
-    <hr> {% if current_user.has_role('admin') or current_user.has_role('user') %}
-    <br> Photo uploader<br><br>
-    <form id="uload-form" action="{{ url_for('photos.index') }}" method="POST" enctype="multipart/form-data">
-        <input type="file" name="file" accept="image/*" multiple>
-        <br>
-        <input type="submit" value="Send" class="btn btn-success">
-    </form>
-    {% endif %}
+    <a href="{{ url_for('user', username=current_user.username) }}">{{ current_user.username }} </a> notifications:
+    <br> {% for notification in notifications %} {% if notification.user_id==current_user.id and not notification.confirmed %}
+    <br> {% for event in events %} {% if event.id==notification.event_id %}
+    <a href="{{ url_for('events.event_detail', slug=event.slug) }}">{{ event.event_title }} </a>
+    <br><br><a href=""><span class="label label-primary">accept event</span> </a>
+    <br><br><a href=""><span class="label label-primary">refuse event </span></a> {% endif %} {% endfor %} {% else %} There are no notifications... {% endif %} {% endfor %}
+</div>
+
+<hr> {% if current_user.has_role('admin') or current_user.has_role('user') %}
+<br> {% endif %}
 </div>
 {% endblock %}

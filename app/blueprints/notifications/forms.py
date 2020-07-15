@@ -10,9 +10,10 @@ from app.models import *
 cities = app.config['CITIES']
 tag_choices = [(tag.name, tag.slug)  for tag in Tag.query.all()]
 
-class PostForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()])
-    body = TextAreaField('Say something', validators=[DataRequired()])
-    tags = RadioField(
-        'Select tags', choices=tag_choices, validators=[DataRequired()])
-    submit = SubmitField('Submit')
+class NotificationForm(FlaskForm):
+    # title = StringField('Title', validators=[DataRequired()])
+    # body = TextAreaField('Say something', validators=[DataRequired()])
+    # tags = RadioField(
+    #     'Select tags', choices=tag_choices, validators=[DataRequired()])
+    # submit = SubmitField('Submit')
+    pass
