@@ -49,6 +49,12 @@ event_tags = db.Table(
     db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'))
 )
 
+event_theme = db.Table(
+    'event_theme', 
+    db.Column('event_id', db.Integer, db.ForeignKey('event.id')),
+    db.Column('theme_id', db.Integer, db.ForeignKey('theme.id'))
+)
+
 photo_tags = db.Table(
     'photo_tags', 
     db.Column('photo_id', db.Integer, db.ForeignKey('photo.id')),
@@ -194,6 +200,17 @@ class Crew(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     event_id = db.Column(db.Integer, db.ForeignKey('event.id'))
     confirmed = db.Column(db.Boolean, default=False)
+    refused = db.Column(db.Boolean)
+
+class Theme(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), unique=True)
+    slug = db.Column(db.String(100))
+    theme_description = db.Column(db.Text)
+
+    def __init__(self, *args, **kwargs):
+        super(Theme, self).__init__(*args, **kwargs)
+        self.slug = slugify(self.name)    
 
 class Event(db.Model):
     # https://overpass.openstreetmap.ru/api/interpreter
@@ -217,6 +234,8 @@ class Event(db.Model):
 
     tags = db.relationship(
         'Tag', secondary=event_tags, backref=db.backref('events_tags', lazy='dynamic'))
+    theme = db.relationship(
+        'Theme', secondary=event_theme, backref=db.backref('events_theme', lazy='dynamic'))
 
     def __init__(self, *args, **kwargs):
         super(Event, self).__init__(*args, **kwargs)

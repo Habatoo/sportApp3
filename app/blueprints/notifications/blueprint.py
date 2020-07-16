@@ -21,9 +21,28 @@ def index():
     return render_template(
         'notifications/index.html', users=users, notifications=notifications, user=current_user, events=events)
 
-# @posts.route('/user_posts', methods=['GET', 'POST'])
+@notifications.route('/accept', methods=['GET', 'POST'])
+@login_required
+def accept():
+    crew = Crew.query.filter(Crew.user_id==current_user.id).first()
+    crew.confirmed = 1
+    crew.refused = 0
+    db.session.commit()
+    return redirect(url_for('notifications.index'))
+
+@notifications.route('/refuse', methods=['GET', 'POST'])
+@login_required
+def refuse():
+    crew = Crew.query.filter(Crew.user_id==current_user.id).first()
+    crew.confirmed = 0
+    crew.refused = 1
+    db.session.commit()
+    return redirect(url_for('notifications.index'))
+
+
+# @notifications.route('/accept', methods=['GET', 'POST'])
 # @login_required
-# def user_posts():
+# def accept():
 #     form = PostForm()
 #     if form.validate_on_submit():
 #         post = Post(

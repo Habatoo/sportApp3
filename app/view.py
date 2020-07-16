@@ -63,6 +63,12 @@ def create_initial_users():
             db.session.add(level)
             db.session.commit()
 
+    for theme in ['sport', 'charity', 'party']:
+        if not Theme.query.filter(Theme.name==theme).first():
+            theme = Theme(name=theme)
+            db.session.add(theme)
+            db.session.commit()
+
 @app.before_request
 def before_request():
     if request.path.startswith('/admin'):

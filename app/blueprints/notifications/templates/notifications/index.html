@@ -6,8 +6,9 @@
     <br> {% for notification in notifications %} {% if notification.user_id==current_user.id and not notification.confirmed %}
     <br> {% for event in events %} {% if event.id==notification.event_id %}
     <a href="{{ url_for('events.event_detail', slug=event.slug) }}">{{ event.event_title }} </a>
-    <br><br><a href=""><span class="label label-primary">accept event</span> </a>
-    <br><br><a href=""><span class="label label-primary">refuse event </span></a> {% endif %} {% endfor %} {% else %} There are no notifications... {% endif %} {% endfor %}
+    <br><br><a href="{{ url_for('notifications.accept' ) }}"><span class="label label-primary">accept event</span> </a>
+    <br><br><a href="{{ url_for('notifications.accept' ) }}"><span class="label label-primary">refuse event </span></a> {% endif %} {% endfor %} {% endif %} {% endfor %}
+    <br><br>There are no more notifications...
 </div>
 
 <hr> {% if current_user.has_role('admin') or current_user.has_role('user') %}

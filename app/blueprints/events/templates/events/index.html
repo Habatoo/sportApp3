@@ -6,13 +6,14 @@
         <tr>
             <td><img src="{{ url_for('static', filename=event.event_author.avatar()) }}" width="30" height="30" alt="avatar"></td>
             <td><a href="{{ url_for('user', username=event.event_author.username) }}">
-                {{ event.event_author.username }}</a><br> {{ event.created }} make event :
+                {{ event.event_author.username }}</a><br> {{ event.created }} make
+                <a href="">{{ event.events_theme}}</a> event :
                 <br>
                 <a href="{{ url_for('events.event_detail', slug=event.slug) }}">Event title: {{ event.event_title }}</a>
                 <br> Event description: {{ event.event_body }}
 
                 <div class="tags">
-                    Event theme: {% for tag in event.tags %}
+                    Event action: {% for tag in event.tags %}
                     <a href="{{ url_for('events.tag_detail', slug=tag.slug) }}">
                         <span class="label label-primary">{{ tag.name }}: 
                             {% for level in levels %}
@@ -24,7 +25,7 @@
                 </div>
                 <br>Event crew: {% for user in event.events_crew %} {% for u in users %} {% if u.id == user.user_id %} {% if user.confirmed %}
                 <a href="{{ url_for('user', username=u.username) }}">
-                    {{ u.username }}</a> {% else %}{{ u.username }}{% endif %} {% endif %}
+                    {{ u.username }}</a> {% elif not user.confirmed and not user.refused %}{{ u.username }}{% endif %} {% endif %}
                 </a> {% endfor %}{% endfor %}
             </td>
         </tr>
