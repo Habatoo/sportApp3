@@ -13,8 +13,8 @@
     <hr> event adress: {{ event.event_place }} <br>
     <hr> event geo: {{ event.event_geo }} <br>
     <hr> event level: {{ event.event_level }} <br>
-    <hr> event author: {{ event.event_starter }} <br> event crew: {{ event.event_crew }}
-
+    <hr> event author: {{ event.event_starter }}
+    <br> event crew: {% for user in event.events_crew %} {% for u in users %} {% if u.id==user.user_id %} {{ u.username }} {% endif %} {% endfor %} {% endfor %}
 </div>
 
 <hr> {% if event.event_starter==current_user.id %}

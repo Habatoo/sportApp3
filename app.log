@@ -33,3 +33,8 @@
 2020-07-17 21:13:31,193 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.
 2020-07-17 21:13:32,127 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.
 2020-07-17 21:18:21,853 [INFO] - btb_Api:User 'user' login with ip '127.0.0.1'.
+2020-07-17 21:43:49,215 [INFO] - btb_Api:User 'user' login with ip '127.0.0.1'.
+2020-07-17 22:18:26,682 [INFO] - btb_Api:User 'user' edit event 'user bassein'.
+2020-07-17 22:33:42,358 [INFO] - btb_Api:User 'user' edit profile.
+2020-07-17 22:33:59,843 [INFO] - btb_Api:User 'user' following user 'admin'.
+2020-07-17 22:34:23,251 [INFO] - btb_Api:User 'user' following user 'guest'.

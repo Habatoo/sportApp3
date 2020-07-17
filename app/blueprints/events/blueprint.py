@@ -49,12 +49,11 @@ def event_new():
         else:
             print('no search')
             return redirect('')          
-    # print(form.event_time.raw_data[0].replace('-', '.').replace('T', ' ')+'.0')
+
     if form.validate_on_submit():
         event = Event(
             event_title=form.event_title.data, 
-            event_body=form.event_body.data, 
-            # event_time= form.event_time.raw_data[0].replace('-', '.').replace('T', ' ')+'.0', 
+            event_body=form.event_body.data,
             event_time = form.event_time.data,
             event_place = form.event_place.data,
             event_geo = form.event_geo.data,
@@ -62,15 +61,12 @@ def event_new():
             event_author=current_user)
         event.tags.append(Tag.query.filter_by(name=form.tags.data).first())
         user = User.query.filter_by(username=form.events_crew.raw_data[0]).first()
-        #print('0000000000000', event.id)
-        # db.session.commit()
-        # event_new = Event.query.filter_by(event_title=form.event_title.data).first()
 
         crew = Crew(
             event_user = user,
             event_crew = event
             ) 
-        #print('99999999999', crew)
+        
         event.events_crew.append(crew)
         db.session.commit()
         flash('Your cane make event!')
@@ -81,6 +77,7 @@ def event_new():
 @login_required
 def edit_event(slug):
     event = Event.query.filter(Event.slug==slug).first()
+    users = User.query.all()
     form = EventForm(formdata=request.form, obj=event)
 
     if form.validate_on_submit():
@@ -99,7 +96,7 @@ def edit_event(slug):
         except:
            redirect('events.index') 
     form = EventForm(obj=event)
-    return render_template('events/edit_event.html', form=form)
+    return render_template('events/edit_event.html', form=form, users=users)
 
 @events.route('/', methods=['GET', 'POST'])
 @login_required
@@ -120,9 +117,10 @@ def index():
 @events.route('/<slug>')
 @login_required
 def event_detail(slug):
+    users = User.query.all()
     event = Event.query.filter(Event.slug==slug).first()
     tags = event.tags
-    return render_template('events/event_detail.html', event=event, tags=tags)
+    return render_template('events/event_detail.html', event=event, tags=tags, users=users)
 
 @events.route('/tag/<slug>')
 @login_required
