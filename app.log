@@ -38,3 +38,5 @@
 2020-07-17 22:33:42,358 [INFO] - btb_Api:User 'user' edit profile.
 2020-07-17 22:33:59,843 [INFO] - btb_Api:User 'user' following user 'admin'.
 2020-07-17 22:34:23,251 [INFO] - btb_Api:User 'user' following user 'guest'.
+2020-07-18 20:48:56,177 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.
+2020-07-18 20:49:28,413 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.

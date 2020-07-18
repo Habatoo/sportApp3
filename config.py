@@ -1,6 +1,6 @@
 import os
 import urllib
-import psycopg2
+# import psycopg2
 import logging
 
 basedir = os.path.abspath(os.path.dirname(__file__))
