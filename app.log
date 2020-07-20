@@ -1,42 +1,14 @@
-2020-07-10 22:31:14,040 [INFO] - btb_Api:User 'guest' register.
-2020-07-10 22:31:14,072 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.
-2020-07-10 22:31:55,861 [INFO] - btb_Api:User 'admin' register.
-2020-07-10 22:31:55,892 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
-2020-07-10 22:35:47,683 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
-2020-07-10 22:55:53,304 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
-2020-07-10 22:56:42,302 [INFO] - btb_Api:User 'admin' edit profile.
-2020-07-10 23:04:30,999 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
-2020-07-10 23:13:36,565 [INFO] - btb_Api:User 'admin' edit profile.
-2020-07-11 11:46:18,092 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
-2020-07-11 12:08:57,512 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
-2020-07-11 22:58:23,593 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
-2020-07-11 22:58:24,929 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
-2020-07-12 00:37:50,651 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
-2020-07-12 18:16:29,350 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
-2020-07-12 22:11:18,789 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
-2020-07-14 21:37:53,653 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
-2020-07-15 22:33:14,924 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
-2020-07-15 22:33:14,924 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
-2020-07-15 22:33:14,924 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
-2020-07-15 23:07:45,286 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.
-2020-07-15 23:08:27,020 [INFO] - btb_Api:User 'user' register.
-2020-07-15 23:08:27,070 [INFO] - btb_Api:User 'user' login with ip '127.0.0.1'.
-2020-07-15 23:09:38,017 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.
-2020-07-16 21:57:05,093 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.
-2020-07-16 21:57:06,893 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.
-2020-07-16 21:59:30,543 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.
-2020-07-16 21:59:38,020 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.
-2020-07-16 22:29:39,960 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
-2020-07-16 22:30:45,607 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
-2020-07-16 22:43:01,840 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
-2020-07-16 22:44:48,155 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.
-2020-07-17 21:13:31,193 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.
-2020-07-17 21:13:32,127 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.
-2020-07-17 21:18:21,853 [INFO] - btb_Api:User 'user' login with ip '127.0.0.1'.
-2020-07-17 21:43:49,215 [INFO] - btb_Api:User 'user' login with ip '127.0.0.1'.
-2020-07-17 22:18:26,682 [INFO] - btb_Api:User 'user' edit event 'user bassein'.
-2020-07-17 22:33:42,358 [INFO] - btb_Api:User 'user' edit profile.
-2020-07-17 22:33:59,843 [INFO] - btb_Api:User 'user' following user 'admin'.
-2020-07-17 22:34:23,251 [INFO] - btb_Api:User 'user' following user 'guest'.
-2020-07-18 20:48:56,177 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.
-2020-07-18 20:49:28,413 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
+2020-07-20 21:29:55,872 [INFO] - btb_Api:User 'admin' register.
+2020-07-20 21:29:55,962 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
+2020-07-20 21:30:36,642 [INFO] - btb_Api:User 'guest' register.
+2020-07-20 21:30:36,732 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.
+2020-07-20 21:32:13,105 [INFO] - btb_Api:User 'user' register.
+2020-07-20 21:32:13,197 [INFO] - btb_Api:User 'user' login with ip '127.0.0.1'.
+2020-07-20 21:33:39,363 [INFO] - btb_Api:User 'user' edit profile.
+2020-07-20 21:33:52,559 [INFO] - btb_Api:User 'user' edit profile.
+2020-07-20 21:34:01,119 [INFO] - btb_Api:User 'user' following user 'admin'.
+2020-07-20 21:34:06,395 [INFO] - btb_Api:User 'user' following user 'guest'.
+2020-07-20 22:24:42,372 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.
+2020-07-20 22:30:42,487 [INFO] - btb_Api:User 'guest' edit event 'user event'.
+2020-07-20 22:33:56,403 [INFO] - btb_Api:User 'guest' edit event 'user event'.
+2020-07-20 22:40:26,508 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.

@@ -23,6 +23,7 @@
                             {% endfor %}
                         </span></a> {% endfor %}
                 </div>
+                <br>This event is {% if event.event_private %} private {% else %} public {% endif %}
                 <br>Event crew: {% for user in event.events_crew %} {% for u in users %} {% if u.id == user.user_id %} {% if user.confirmed and not user.refused %}
                 <a href="{{ url_for('user', username=u.username) }}">
                     {{ u.username }}</a> {% elif not user.confirmed and not user.refused %} {{ u.username }} {% else %} {% endif %} {% endif %}

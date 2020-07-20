@@ -42,7 +42,8 @@ def event_new():
             event_place = address,
             event_geo = newLocation,
             event_level = None,
-            event_author=current_user)
+            event_private = False,
+            event_author = current_user)
             form = EventForm(
                 formdata=request.form, obj=event)
             return render_template('events/new_event.html', form=form, users=users)
@@ -58,6 +59,7 @@ def event_new():
             event_place = form.event_place.data,
             event_geo = form.event_geo.data,
             event_level = form.event_level.data,
+            event_private = True if form.event_private.data else False,
             event_author=current_user)
         event.tags.append(Tag.query.filter_by(name=form.tags.data).first())
         user = User.query.filter_by(username=form.events_crew.raw_data[0]).first()
@@ -87,6 +89,7 @@ def edit_event(slug):
         event.event_place = form.event_place.data
         event.event_geo = form.event_geo.data
         event.event_level = form.event_level.data
+        event.event_private = True if form.event_private.data else False
         try:
             event.tags.append(Tag.query.filter_by(name=form.tags.data).first())
             db.session.commit()

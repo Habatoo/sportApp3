@@ -227,7 +227,7 @@ class Event(db.Model):
     event_geo = db.Column(db.Text)
 
     event_starter = db.Column(db.Integer, db.ForeignKey('user.id'))
-    event_crew = db.Column(db.Text)
+    event_private = db.Column(db.Boolean, default=False)
     event_level = db.Column(db.Integer)
 
     events_crew = db.relationship('Crew', backref='event_crew', lazy='dynamic')
