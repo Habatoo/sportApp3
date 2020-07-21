@@ -10,7 +10,7 @@
 <br>My interests: {% for tag in user.tags %}
 <a href="{{ url_for('users.tag_detail', slug=tag.slug) }}">
     <span class="label label-primary">
-        {{ tag.name }}: {{ level.description }} 
+        {{ tag.name }}: {{ level.description }}
     </span>
 </a>{% endfor %}
 <hr>
