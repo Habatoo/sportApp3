@@ -57,9 +57,10 @@ def create_initial_users():
             db.session.add(club)
             db.session.commit()
 
+    descriptions = ['1-st', '2-nd', '3-d', '4-th', '5-th', '6-th', '7-th', '8-th', '9-th', '10-th']
     for level in range(1, 11):
         if not Level.query.filter(Level.number==level).first():
-            level = Level(number=level)
+            level = Level(number=level, description=descriptions[level - 1] + ' level')
             db.session.add(level)
             db.session.commit()
 
