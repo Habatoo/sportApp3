@@ -6,7 +6,7 @@
 <a href="">
         {{ club }}
 </a> {% endfor %} {% if not user.clubs %} no clubs <a href="">(join clubs)</a>{% endif %}
-<br>I`m a trainer: {% if user.mentor %} Yes {% else %} No <a href="">(become a trainer)</a>{% endif %}
+<br>I`m a trainer: {% if user.mentor %} Yes {% else %} No <a href="{{ url_for('cabinets.index', username=user.username) }}">(become a trainer)</a>{% endif %}
 <br>My interests: {% for tag in user.tags %}
 <a href="{{ url_for('users.tag_detail', slug=tag.slug) }}">
     <span class="label label-primary">

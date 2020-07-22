@@ -61,12 +61,14 @@ from .blueprints.users.blueprint import users
 from .blueprints.events.blueprint import events
 from .blueprints.photos.blueprint import photos
 from .blueprints.notifications.blueprint import notifications
+from .blueprints.cabinets.blueprint import cabinets
 
 app.register_blueprint(posts, url_prefix='/post')
 app.register_blueprint(users, url_prefix='/user')
 app.register_blueprint(events, url_prefix='/event')
 app.register_blueprint(photos, url_prefix='/photo')
 app.register_blueprint(notifications, url_prefix='/notifications')
+app.register_blueprint(cabinets, url_prefix='/cabinets')
 
 # #### ADMIN ####
 class AdminMixin:
@@ -102,3 +104,4 @@ admin.add_view(ModelView(Club, db.session))
 admin.add_view(ModelView(Tier, db.session))
 admin.add_view(ModelView(Level, db.session))
 admin.add_view(ModelView(Theme, db.session))
+admin.add_view(ModelView(Cabinet, db.session))
