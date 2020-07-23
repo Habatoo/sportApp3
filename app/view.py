@@ -70,6 +70,12 @@ def create_initial_users():
             db.session.add(theme)
             db.session.commit()
 
+    for tier in [(1.0, '1$', 'base'), (2.0, '2$', 'base'), (5.0, '5$', 'medium'), (10.0, '10$', 'medium'), (15.0, '15$', 'big'), (20.0, '20$', 'big')]:
+        if not Tier.query.filter(Tier.price==tier[0]).first():
+            tier = Tier(price=tier[0], title=tier[1], description=tier[2])
+            db.session.add(tier)
+            db.session.commit()
+
 @app.before_request
 def before_request():
     if request.path.startswith('/admin'):

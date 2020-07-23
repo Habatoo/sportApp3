@@ -265,7 +265,8 @@ class Photo(db.Model):
         'Tag', secondary=photo_tags, backref=db.backref('photos_tags', lazy='dynamic'))
 
 class Cabinet(db.Model):
-    user_name = db.Column(db.String(100))
+    user_firstname = db.Column(db.String(100))
+    user_lastname = db.Column(db.String(100))
     user_age = db.Column(db.Integer)
     user_phone = db.Column(db.String(100))
     user_address = db.Column(db.String(255))

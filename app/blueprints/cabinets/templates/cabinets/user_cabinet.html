@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {% block title %} Cabinet titles {% endblock %} {% block content_title %}
+<h3>Cabinet</h3>
+{% endblock %} {% block content %}
+<div class="main-content">
+    <a href="{{ url_for('user', username=current_user.username) }}">{{ current_user.username }} </a> cabinet:
+    <br>User name: {{ cabinet.user_firstname }} {{ cabinet.user_lastname }}
+    <br>User age: {{ cabinet.user_age }}
+    <br>User phone: {{ cabinet.user_phone }}
+    <br>User address: {{ cabinet.user_address }}
+    <br>title: {{ cabinet.title }}
+    <br>description: {{ cabinet.description }}
+    <br>tiers: {{ cabinet.sponsor_tier }}
+</div>
+
+{% endblock %}
