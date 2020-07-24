@@ -41,7 +41,10 @@
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
             <br> {{ form.event_level.label(class='control-label') }}<br> {{ form.event_level(class='form-control') }}<br> {% for error in form.event_level.errors %}
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
-            <br> {{ form.tags.label(class='control-label') }}<br> {{ form.tags() }}<br> {% for error in form.tags.errors %}
+
+            <br> {{ form.tags.label(class='control-label') }}
+            <br> {{ form.tags() }}
+            <br> {% for error in form.tags.errors %}
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
 
             <br> {{ form.events_crew.label(class='control-label') }}

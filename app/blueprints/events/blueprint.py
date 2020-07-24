@@ -55,18 +55,18 @@ def event_new():
         event = Event(
             event_title=form.event_title.data, 
             event_body=form.event_body.data,
-            event_time = form.event_time.data,
-            event_place = form.event_place.data,
-            event_geo = form.event_geo.data,
-            event_level = form.event_level.data,
-            event_private = True if form.event_private.data else False,
+            event_time=form.event_time.data,
+            event_place=form.event_place.data,
+            event_geo=form.event_geo.data,
+            event_level=form.event_level.data,
+            event_private=True if form.event_private.data else False,
             event_author=current_user)
         event.tags.append(Tag.query.filter_by(name=form.tags.data).first())
-        user = User.query.filter_by(username=form.events_crew.raw_data[0]).first()
 
+        user = User.query.filter_by(username=form.events_crew.raw_data[0]).first()
         crew = Crew(
-            event_user = user,
-            event_crew = event
+            event_user=user,
+            event_crew=event
             ) 
         
         event.events_crew.append(crew)

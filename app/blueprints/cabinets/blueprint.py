@@ -20,7 +20,7 @@ def index(username):
 
     if user.mentor:
         return render_template(
-        'cabinets/user_cabinet.html', cabinet=cabinet, user=current_user, events=events)
+            'cabinets/user_cabinet.html', cabinet=cabinet, user=current_user, events=events)
 
     form = CabinetForm()
     if form.validate_on_submit():
@@ -34,15 +34,20 @@ def index(username):
             description=form.user_address.data,
             user=current_user,
             )
-        try:
-            #sponsor_tier = db.relationship('Tier', backref='tier', lazy='dynamic')
-            cabinet.sponsor_tier.append(Tier.query.filter_by(title=form.sponsor_tier.data).first())
-            #db.session.add(post)
-            #db.session.commit()
-            flash('Your cabinet is now live!')
-            return redirect(url_for('cabinets.index'))
-        except:
-            redirect('index')
+        print(form.sponsor_tier.raw_data[0])
+        #user = User.query.filter_by(username=form.events_crew.raw_data[0]).first()
+        #try:
+        user.mentor = True
+        #sponsor_tier = db.relationship('Tier', backref='tier', lazy='dynamic')
+        #cabinet.sponsor_tier.append(Tier.query.filter_by(title=form.sponsor_tier.data).first())
+        #db.session.add(post)
+        #db.session.commit()
+        flash('Your cabinet is now live!')
+        #return redirect(url_for('cabinets.index'))
+
+        #except:
+        return render_template(
+            'cabinets/user_cabinet.html', cabinet=cabinet, user=current_user, events=events)
 
     return render_template(
         'cabinets/index.html', cabinet=cabinet, user=current_user, events=events, form=form)

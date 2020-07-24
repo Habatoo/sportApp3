@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block title %} Cabinet titles {% endblock %} {% block content_title %}
-<h3>Cabinet</h3>
+<h3>Create cabinet</h3>
 {% endblock %} {% block content %}
-<hr> Create cabinet
+<hr>
 <div>
     {% if form %}
     <form action="" method="post">
@@ -42,10 +42,6 @@
             <br> {% for error in form.description.errors %}
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
 
-            <br> {{ form.sponsor_tier.label(class='control-label') }}
-            <br> {{ form.sponsor_tier() }}
-            <br> {% for error in form.sponsor_tier.errors %}
-            <span style="color: red;">[{{ error }}]</span> {% endfor %}
         </p>
         {% if current_user.has_role('admin') or current_user.has_role('user')%}
         <p>{{ form.submit(class='btn btn-success') }}</p>

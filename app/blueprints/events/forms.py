@@ -9,8 +9,8 @@ from flask_wtf import FlaskForm
 from app import app
 from app.models import *
 
-tag_choices = [(tag.name, tag.slug)  for tag in Tag.query.all()]
-user_choices = [(user.username, user.id)  for user in User.query.all()]
+tag_choices = [(tag.name, tag.slug) for tag in Tag.query.all()]
+user_choices = [(user.username, user.id) for user in User.query.all()]
 
 string_of_files = ['private', 'public']
 list_of_files = string_of_files[0].split()
@@ -28,6 +28,6 @@ class EventForm(FlaskForm):
     tags = RadioField('Select tags', choices=tag_choices)
 
     events_crew = SelectField('Select users', choices=user_choices, default=None)
-    # event_private = BooleanField('Private/public event')
-    event_private = BooleanField()
+    event_private = BooleanField('Private/public event')
+
     submit = SubmitField('Submit')
