@@ -72,6 +72,24 @@ followers = db.Table('followers',
     db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
 )
 
+saved_post = db.Table(
+    'saved_post',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('post_id', db.Integer, db.ForeignKey('post.id'))
+)
+
+saved_event = db.Table(
+    'saved_event',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('event_id', db.Integer, db.ForeignKey('event.id'))
+)
+
+saved_photo = db.Table(
+    'saved_photo',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('photo_id', db.Integer, db.ForeignKey('photo.id'))
+)
+
 class Club(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True)
@@ -146,6 +164,13 @@ class User(UserMixin, db.Model):
     events = db.relationship('Event', backref='event_author', lazy='dynamic')
     photos = db.relationship('Photo', backref='photo_author', lazy='dynamic')
     events_user = db.relationship('Crew', backref='event_user', lazy='dynamic')
+
+    posts = db.relationship(
+        'Post', secondary=saved_post, backref=db.backref('saved_posts', lazy='dynamic'))
+    events = db.relationship(
+        'Event', secondary=saved_event, backref=db.backref('saved_events', lazy='dynamic'))
+    photos = db.relationship(
+        'Photo', secondary=saved_photo, backref=db.backref('saved_photos', lazy='dynamic'))
 
     def avatar(self):
         return 'user_data/{}/avatar/avatar.png'.format(self.username + self.timestamp)

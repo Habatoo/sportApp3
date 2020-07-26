@@ -1,0 +1,14 @@
+{% extends 'base.html' %} {% block title %} Notifications titles {% endblock %} {% block content_title %}
+<h3>Favorites</h3>
+{% endblock %} {% block content %}
+<div class="main-content">
+    <a href="{{ url_for('user', username=current_user.username) }}">{{ current_user.username }} </a> saved:
+    <br>Posts:
+    <br>Events:
+    <br>Photos:
+</div>
+
+<hr> {% if current_user.has_role('admin') or current_user.has_role('user') %}
+<br> {% endif %}
+</div>
+{% endblock %}

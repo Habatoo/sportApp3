@@ -62,6 +62,7 @@ from .blueprints.events.blueprint import events
 from .blueprints.photos.blueprint import photos
 from .blueprints.notifications.blueprint import notifications
 from .blueprints.cabinets.blueprint import cabinets
+from .blueprints.saved.blueprint import saved
 
 app.register_blueprint(posts, url_prefix='/post')
 app.register_blueprint(users, url_prefix='/user')
@@ -69,6 +70,7 @@ app.register_blueprint(events, url_prefix='/event')
 app.register_blueprint(photos, url_prefix='/photo')
 app.register_blueprint(notifications, url_prefix='/notifications')
 app.register_blueprint(cabinets, url_prefix='/cabinets')
+app.register_blueprint(saved, url_prefix='/saved')
 
 # #### ADMIN ####
 class AdminMixin:

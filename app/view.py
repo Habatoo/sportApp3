@@ -133,18 +133,6 @@ def index():
     log.info("User '%s' login with ip '%s'." % (user.username, user.current_login_ip)) 
     return render_template('index.html', user=user, events=events)
 
-@app.route('/explore')
-@login_required
-def explore():
-    user = User.query.filter_by(username=current_user.username).first_or_404()
-    return render_template('explore.html', user=user)
-
-@app.route('/filter')
-@login_required
-def filter():
-    user = User.query.filter_by(username=current_user.username).first_or_404()
-    return render_template('filter.html', user=user)
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     geocode = 37.62#, 55.75

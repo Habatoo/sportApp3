@@ -1,6 +1,32 @@
 {% extends 'base.html' %} {% block title %} Index page title {% endblock %} {% block content_title %}
 <h3>Hi, {{ current_user.username }}!</h3>
-{% endblock %} {% block content %} {% for event in events %} {{ event.event_title }}
-<br>{{ event.event_geo }} {% endfor %}
-<br>
-<hr> {% if user.last_seen %} Last seen on: {{ user.last_seen }} {% endif %} {% endblock %}
+{% endblock %} {% block content %}
+<table>
+    <tr>
+        <td>
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Enter city"><br><br>
+                    <input type="text" class="form-control" placeholder="Date"><br><br>
+                    <input type="text" class="form-control" placeholder="Exercise"><br><br>
+                    <input type="text" class="form-control" placeholder="Level"><br><br>
+                    <input type="text" class="form-control" placeholder="Exercise"><br><br>
+                    <input type="text" class="form-control" placeholder="Sport club"><br><br>
+                    <input type="text" class="form-control" placeholder="Trainer"><br><br>
+                    <input type="checkbox" name="free" value="free" checked>Free
+                    <input type="checkbox" name="nearby" value="nearby">Nearby<br>
+                </div>
+                <br><br>
+                <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <hr>
+            <a href="{{ url_for('index') }}">Back</a>
+        </td>
+    </tr>
+</table>
+
+{% endblock %}
