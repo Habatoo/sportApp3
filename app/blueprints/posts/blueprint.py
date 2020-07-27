@@ -77,10 +77,19 @@ def post_detail(slug):
     tags = post.tags
     return render_template('posts/post_detail.html', post=post, tags=tags, user=current_user)
 
+@posts.route('/<slug>/<username>')
+@login_required
+def save_post(slug, username):
+    post = Post.query.filter(Post.slug==slug).first()
+    tags = post.tags
+    # post.tags.append(Tag.query.filter_by(name=form.tags.data).first())
+    current_user.save_post.append(post)
+    # db.session.commit()
+    return render_template('posts/post_detail.html', post=post, tags=tags, user=current_user)
+
 @posts.route('/tag/<slug>')
 @login_required
 def tag_detail(slug):
     tag = Tag.query.filter(Tag.slug==slug).first()
     posts = tag.posts_tags.all()
     return render_template('posts/tag_detail.html', tag=tag, posts=posts)
-

@@ -165,11 +165,11 @@ class User(UserMixin, db.Model):
     photos = db.relationship('Photo', backref='photo_author', lazy='dynamic')
     events_user = db.relationship('Crew', backref='event_user', lazy='dynamic')
 
-    posts = db.relationship(
+    save_post = db.relationship(
         'Post', secondary=saved_post, backref=db.backref('saved_posts', lazy='dynamic'))
-    events = db.relationship(
+    save_event = db.relationship(
         'Event', secondary=saved_event, backref=db.backref('saved_events', lazy='dynamic'))
-    photos = db.relationship(
+    save_photo = db.relationship(
         'Photo', secondary=saved_photo, backref=db.backref('saved_photos', lazy='dynamic'))
 
     def avatar(self):

@@ -3,6 +3,10 @@
 <div class="main-content">
     {{ post.body }}
 </div>
+{% if post.author.username != current_user.username %}
+<br> <a href="{{ url_for('posts.save_post', slug=post.slug, username=current_user.username) }}">
+                        add to favorite</span></a>
+{% endif %}
 <div class="tags">
     {% for tag in tags %}
     <a href="{{ url_for('posts.tag_detail', slug=tag.slug) }}">
