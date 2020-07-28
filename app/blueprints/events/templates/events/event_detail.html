@@ -3,6 +3,12 @@
 <div class="main-content">
     {{ event.event_body }}
 </div>
+
+{% if event.event_starter != current_user.id and event not in user_events %}
+<br> <a href="{{ url_for('events.save_event', slug=event.slug, username=current_user.username) }}">
+                        add to favorite</span></a>
+{% endif %}
+
 <div class="tags">
     {% for tag in tags %}
     <a href="{{ url_for('events.tag_detail', slug=tag.slug) }}">

@@ -89,6 +89,18 @@ def photo_detail(slug):
     tags = photo.tags
     return render_template('photos/photo_detail.html', photo=photo, tags=tags, user=current_user)
 
+@photos.route('/<slug>/<username>')
+@login_required
+def save_photo(slug, username):
+    photo = Photo.query.filter(Photo.slug==slug).first()
+    tags = photo.tags
+    user = User.query.filter(User.username==username).first()
+    if photo not in user.save_photo:
+        user.save_photo.append(Photo.query.filter(Photo.slug==slug).first())
+    db.session.commit()
+    return render_template(
+        'photos/photo_detail.html', photo=photo, tags=tags, user=user, current_user=current_user, user_photos=user.save_photo)
+
 @photos.route('/tag/<slug>')
 @login_required
 def tag_detail(slug):

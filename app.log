@@ -12,3 +12,7 @@
 2020-07-27 22:14:44,393 [INFO] - btb_Api:User 'user' edit post 'user message'.
 2020-07-27 22:49:07,874 [INFO] - btb_Api:User 'user' login with ip '127.0.0.1'.
 2020-07-27 23:04:06,627 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
+2020-07-28 18:30:58,456 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
+2020-07-28 19:59:59,711 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.
+2020-07-28 20:03:54,192 [INFO] - btb_Api:User 'user' login with ip '127.0.0.1'.
+2020-07-28 20:05:48,406 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.

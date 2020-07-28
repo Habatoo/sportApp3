@@ -3,7 +3,7 @@
 <div class="main-content">
     {{ post.body }}
 </div>
-{% if post.author.username != current_user.username %}
+{% if post.author.username != current_user.username and post not in user.save_post %}
 <br> <a href="{{ url_for('posts.save_post', slug=post.slug, username=current_user.username) }}">
                         add to favorite</span></a>
 {% endif %}

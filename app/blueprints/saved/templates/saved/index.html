@@ -3,9 +3,12 @@
 {% endblock %} {% block content %}
 <div class="main-content">
     <a href="{{ url_for('user', username=current_user.username) }}">{{ current_user.username }} </a> saved:
-    <br>Posts:
-    <br>Events:
-    <br>Photos:
+    <hr>
+    <br>Posts: {% for post in posts %} <br> <a href="{{ url_for('posts.post_detail', slug=post.slug) }}">{{ post.title }}</a> {% endfor %}
+    <hr>
+    <br>Events: {% for event in events %} <br> <a href="{{ url_for('events.event_detail', slug=event.slug) }}">{{ event.title }}</a> {% endfor %}
+    <hr>
+    <br>Photos: {% for photo in photos %} <br> <a href="{{ url_for('photos.photo_detail', slug=photo.slug) }}">{{ photo.title }}</a> {% endfor %}
 </div>
 
 <hr> {% if current_user.has_role('admin') or current_user.has_role('user') %}

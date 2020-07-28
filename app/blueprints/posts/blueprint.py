@@ -82,10 +82,12 @@ def post_detail(slug):
 def save_post(slug, username):
     post = Post.query.filter(Post.slug==slug).first()
     tags = post.tags
-    # post.tags.append(Tag.query.filter_by(name=form.tags.data).first())
-    current_user.save_post.append(post)
-    # db.session.commit()
-    return render_template('posts/post_detail.html', post=post, tags=tags, user=current_user)
+    user = User.query.filter(User.username==username).first()
+    if post not in user.save_post:
+        user.save_post.append(Post.query.filter(Post.slug==slug).first())
+    db.session.commit()
+    return render_template(
+        'posts/post_detail.html', post=post, tags=tags, user=user, current_user=current_user, user_posts=user.save_post)
 
 @posts.route('/tag/<slug>')
 @login_required

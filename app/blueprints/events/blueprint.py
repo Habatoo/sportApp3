@@ -125,6 +125,18 @@ def event_detail(slug):
     tags = event.tags
     return render_template('events/event_detail.html', event=event, tags=tags, users=users)
 
+@events.route('/<slug>/<username>')
+@login_required
+def save_event(slug, username):
+    event = Event.query.filter(Event.slug==slug).first()
+    tags = event.tags
+    user = User.query.filter(User.username==username).first()
+    if event not in user.save_event:
+        user.save_event.append(Event.query.filter(Event.slug==slug).first())
+    db.session.commit()
+    return render_template(
+        'photos/photo_detail.html', event=event, tags=tags, user=user, current_user=current_user, user_events=user.save_event)
+
 @events.route('/tag/<slug>')
 @login_required
 def tag_detail(slug):
