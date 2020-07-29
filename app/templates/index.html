@@ -6,16 +6,59 @@
         <td>
             <form class="navbar-form navbar-left">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Enter city"><br><br>
-                    <input type="text" class="form-control" placeholder="Date"><br><br>
-                    <input type="text" class="form-control" placeholder="Exercise"><br><br>
-                    <input type="text" class="form-control" placeholder="Level"><br><br>
-                    <input type="text" class="form-control" placeholder="Exercise"><br><br>
-                    <input type="text" class="form-control" placeholder="Sport club"><br><br>
-                    <input type="text" class="form-control" placeholder="Trainer"><br><br>
+                    <span class="input-group-addon">Please select city
+                    <select name="comp_select" class="selectpicker form-control">
+                        {% for city in cities %}
+                        <option value="{{ city.value }}">{{ city.value }}</option>
+                        {% endfor %}
+                    </select></span>
+                    <br>
+                    <span class="input-group-addon">Select theme
+                    <select name="comp_select" class="selectpicker form-control">
+                        {% for theme in themes %}
+                        <option value="{{ theme[0] }}">{{ theme[0] }}</option>
+                        {% endfor %}
+                    </select></span>
+                    <br>
+                    <span class="input-group-addon">Select exersise
+                    <select name="comp_select" class="selectpicker form-control">
+                        {% for tag in tag_choices %}
+                        <option value="{{ tag[0] }}">{{ tag[0] }}</option>
+                        {% endfor %}
+                    </select></span>
+                    <br>
+                    <span class="input-group-addon">Select level
+                    <select name="comp_select" class="selectpicker form-control">
+                        {% for level in levels %}
+                        <option value="{{ level[1] }}">{{ level[1] }}</option>
+                        {% endfor %}
+                    </select></span>
+                    <br>
+                    <span class="input-group-addon">Select date
+                    <select name="comp_select" class="selectpicker form-control">
+                        {% for level in levels %}
+                        <option value="{{ level[1] }}">{{ level[1] }}</option>
+                        {% endfor %}
+                    </select></span>
+                    <br>
+                    <span class="input-group-addon">Select sport club
+                    <select name="comp_select" class="selectpicker form-control">
+                        {% for level in levels %}
+                        <option value="{{ level[1] }}">{{ level[1] }}</option>
+                        {% endfor %}
+                    </select></span>
+                    <br>
+                    <span class="input-group-addon">Select sport trainer
+                    <select name="comp_select" class="selectpicker form-control">
+                        {% for level in levels %}
+                        <option value="{{ level[1] }}">{{ level[1] }}</option>
+                        {% endfor %}
+                    </select></span>
+                    <br>
                     <input type="checkbox" name="free" value="free" checked>Free
                     <input type="checkbox" name="nearby" value="nearby">Nearby<br>
                 </div>
+
                 <br><br>
                 <button type="submit" class="btn btn-success">Submit</button>
             </form>

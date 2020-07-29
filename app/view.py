@@ -22,8 +22,9 @@ from app.models import *
 from app.copydir import copydir
 from app.security import user_datastore, security
 
-import git
-
+from app.blueprints.events.forms import EventForm
+from app.blueprints.photos.forms import PhotoForm
+from app.blueprints.posts.forms import PostForm
 
 @app.before_first_request
 def create_initial_users():
@@ -109,6 +110,10 @@ def webhook():
 @app.route('/index')
 @login_required
 def index():
+    events_form = EventForm()
+    photos_form = PhotoForm()
+    posts_form = PostForm()
+
     events = Event.query.all() # 37.62, 55.75
     user = User.query.filter_by(username=current_user.username).first_or_404()
     
@@ -130,8 +135,15 @@ def index():
     user.current_login_ip = new_current_ip
     user.login_count = user.login_count + 1 if user.login_count else 1
     db.session.commit()
-    log.info("User '%s' login with ip '%s'." % (user.username, user.current_login_ip)) 
-    return render_template('index.html', user=user, events=events)
+    log.info("User '%s' login with ip '%s'." % (user.username, user.current_login_ip))
+
+    tag_choices = [(tag.name, tag.slug) for tag in Tag.query.all()]
+    cities = app.config['CITIES']
+    levels = [(level.id, level.description) for level in Level.query.all()]
+    themes = [(theme.name, theme.slug) for theme in Theme.query.all()]
+    print(tag_choices, levels, themes)
+    return render_template(
+        'index.html', user=user, themes=themes, levels=levels, cities=cities, tag_choices=tag_choices)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

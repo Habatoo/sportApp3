@@ -14,7 +14,6 @@ try:
 except:
     redirect('events.index')
 
-
 events = Blueprint('events', __name__, template_folder='templates')
 
 @events.route('/event_new', methods=['GET', 'POST'])
@@ -83,9 +82,9 @@ def edit_event(slug):
     form = EventForm(formdata=request.form, obj=event)
 
     if form.validate_on_submit():
-        event.event_title=form.event_title.data
-        event.event_body=form.event_body.data 
-        event.event_time= form.event_time.data
+        event.event_title = form.event_title.data
+        event.event_body = form.event_body.data
+        event.event_time = form.event_time.data
         event.event_place = form.event_place.data
         event.event_geo = form.event_geo.data
         event.event_level = form.event_level.data
@@ -116,7 +115,6 @@ def index():
     levels = Level.query.all()
     return render_template('events/index.html', pages=pages, levels=levels, users=users)
 
-
 @events.route('/<slug>')
 @login_required
 def event_detail(slug):
@@ -134,8 +132,9 @@ def save_event(slug, username):
     if event not in user.save_event:
         user.save_event.append(Event.query.filter(Event.slug==slug).first())
     db.session.commit()
+    print(User.query.filter(User.username==username).first().save_event)
     return render_template(
-        'photos/photo_detail.html', event=event, tags=tags, user=user, current_user=current_user, user_events=user.save_event)
+        'events/event_detail.html', event=event, tags=tags, user=user, current_user=current_user, user_events=user.save_event)
 
 @events.route('/tag/<slug>')
 @login_required

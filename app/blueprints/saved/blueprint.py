@@ -31,7 +31,7 @@ def index():
         events.append(event)
 
     return render_template(
-        'saved/index.html', user=current_user, posts=posts, photos=photos, events=events)
+        'saved/index.html', user=user, posts=posts, photos=photos, events=events, current_user=current_user)
 
 @saved.route('/unsaved', methods=['GET', 'POST'])
 @login_required

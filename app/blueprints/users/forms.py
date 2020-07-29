@@ -9,7 +9,7 @@ from app import app
 from app.models import *
 
 cities = app.config['CITIES']
-tag_choices = [(tag.name, tag.slug)  for tag in Tag.query.all()]
+tag_choices = [(tag.name, tag.slug) for tag in Tag.query.all()]
 
 
 class EditProfileForm(FlaskForm):

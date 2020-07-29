@@ -199,6 +199,20 @@ class User(UserMixin, db.Model):
                 followers.c.follower_id == self.id)
         own = Post.query.filter_by(user_id=self.id)
         return followed.union(own).order_by(Post.created.desc())
+
+    def followed_photos(self):
+        followed = Photo.query.join(
+            followers, (followers.c.followed_id == Photo.user_id)).filter(
+                followers.c.follower_id == self.id)
+        own = Photo.query.filter_by(user_id=self.id)
+        return followed.union(own).order_by(Photo.created.desc())
+
+    def followed_events(self):
+        followed = Event.query.join(
+            followers, (followers.c.followed_id == Event.user_id)).filter(
+                followers.c.follower_id == self.id)
+        own = Event.query.filter_by(user_id=self.id)
+        return followed.union(own).order_by(Event.created.desc())
  
 #### FLASK SECURITY #############
 class Role(db.Model, RoleMixin):
