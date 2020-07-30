@@ -22,10 +22,6 @@ from app.models import *
 from app.copydir import copydir
 from app.security import user_datastore, security
 
-from app.blueprints.events.forms import EventForm
-from app.blueprints.photos.forms import PhotoForm
-from app.blueprints.posts.forms import PostForm
-
 @app.before_first_request
 def create_initial_users():
     initial_users_list = [
@@ -106,13 +102,14 @@ def webhook():
     else:
         return 'Wrong event type', 400
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-    events_form = EventForm()
-    photos_form = PhotoForm()
-    posts_form = PostForm()
+    form = IndexFindForm()
+    if form.validate_on_submit():
+        #### TODO ADD EVENT CITY
+        return redirect(url_for('index'))
 
     events = Event.query.all() # 37.62, 55.75
     user = User.query.filter_by(username=current_user.username).first_or_404()
@@ -137,13 +134,7 @@ def index():
     db.session.commit()
     log.info("User '%s' login with ip '%s'." % (user.username, user.current_login_ip))
 
-    tag_choices = [(tag.name, tag.slug) for tag in Tag.query.all()]
-    cities = app.config['CITIES']
-    levels = [(level.id, level.description) for level in Level.query.all()]
-    themes = [(theme.name, theme.slug) for theme in Theme.query.all()]
-    print(tag_choices, levels, themes)
-    return render_template(
-        'index.html', user=user, themes=themes, levels=levels, cities=cities, tag_choices=tag_choices)
+    return render_template('index.html', user=user, form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

@@ -1,75 +1,51 @@
 {% extends 'base.html' %} {% block title %} Index page title {% endblock %} {% block content_title %}
 <h3>Hi, {{ current_user.username }}!</h3>
 {% endblock %} {% block content %}
-<table>
-    <tr>
-        <td>
-            <form class="navbar-form navbar-left">
-                <div class="form-group">
-                    <span class="input-group-addon">Please select city
-                    <select name="comp_select" class="selectpicker form-control">
-                        {% for city in cities %}
-                        <option value="{{ city.value }}">{{ city.value }}</option>
-                        {% endfor %}
-                    </select></span>
-                    <br>
-                    <span class="input-group-addon">Select theme
-                    <select name="comp_select" class="selectpicker form-control">
-                        {% for theme in themes %}
-                        <option value="{{ theme[0] }}">{{ theme[0] }}</option>
-                        {% endfor %}
-                    </select></span>
-                    <br>
-                    <span class="input-group-addon">Select exersise
-                    <select name="comp_select" class="selectpicker form-control">
-                        {% for tag in tag_choices %}
-                        <option value="{{ tag[0] }}">{{ tag[0] }}</option>
-                        {% endfor %}
-                    </select></span>
-                    <br>
-                    <span class="input-group-addon">Select level
-                    <select name="comp_select" class="selectpicker form-control">
-                        {% for level in levels %}
-                        <option value="{{ level[1] }}">{{ level[1] }}</option>
-                        {% endfor %}
-                    </select></span>
-                    <br>
-                    <span class="input-group-addon">Select date
-                    <select name="comp_select" class="selectpicker form-control">
-                        {% for level in levels %}
-                        <option value="{{ level[1] }}">{{ level[1] }}</option>
-                        {% endfor %}
-                    </select></span>
-                    <br>
-                    <span class="input-group-addon">Select sport club
-                    <select name="comp_select" class="selectpicker form-control">
-                        {% for level in levels %}
-                        <option value="{{ level[1] }}">{{ level[1] }}</option>
-                        {% endfor %}
-                    </select></span>
-                    <br>
-                    <span class="input-group-addon">Select sport trainer
-                    <select name="comp_select" class="selectpicker form-control">
-                        {% for level in levels %}
-                        <option value="{{ level[1] }}">{{ level[1] }}</option>
-                        {% endfor %}
-                    </select></span>
-                    <br>
-                    <input type="checkbox" name="free" value="free" checked>Free
-                    <input type="checkbox" name="nearby" value="nearby">Nearby<br>
-                </div>
 
-                <br><br>
-                <button type="submit" class="btn btn-success">Submit</button>
-            </form>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <hr>
-            <a href="{{ url_for('index') }}">Back</a>
-        </td>
-    </tr>
-</table>
 
+<div>
+    {% if form %}
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.f_city.label(class='control-label') }}
+            <br> {{ form.f_city(class='form-control') }}
+            <br> {% for error in form.f_city.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
+            <br> {{ form.f_theme.label(class='control-label') }}
+            <br> {{ form.f_theme(class='form-control') }}
+            <br> {% for error in form.f_theme.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
+            <br> {{ form.f_exercise.label(class='control-label') }}
+            <br> {{ form.f_exercise() }}
+            <br> {% for error in form.f_exercise.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
+            <br> {{ form.f_levels.label(class='control-label') }}
+            <br> {{ form.f_levels() }}
+            <br> {% for error in form.f_levels.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
+            <br> {{ form.f_clubs.label(class='control-label') }}
+            <br> {{ form.f_clubs() }}
+            <br> {% for error in form.f_clubs.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
+            <br> {{ form.f_time.label(class='control-label') }}
+            <br> {{ form.f_time() }}
+            <br> {% for error in form.f_time.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
+            <br> {{ form.f_trainers.label(class='control-label') }}
+            <br> {{ form.f_trainers() }}
+            <br> {% for error in form.f_trainers.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
+        </p>
+        <p>{{ form.submit(class='btn btn-success') }}</p>
+    </form>
+    {% endif %}
+</div>
 {% endblock %}
