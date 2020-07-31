@@ -59,6 +59,19 @@ class Configuration(object):
         {'id': '0000', 'secret': 'qqqq'},
         }
 
+    SOCIAL_FACEBOOK = {
+        'consumer_key': 'facebook app id',
+        'consumer_secret': 'facebook app secret'
+    }
+    SOCIAL_GOOGLE = {
+        'consumer_key': 'xxxx',
+        'consumer_secret': 'xxxx'
+    }
+    SOCIAL_VK = {
+        'consumer_key': 'xxxx',
+        'consumer_secret': 'xxxx'
+    }
+
 class DevConfig(Configuration):
     DEBUG = True
     DEVELOPMENT = True

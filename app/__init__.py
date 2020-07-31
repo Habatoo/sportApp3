@@ -17,9 +17,12 @@ import os
 from time import time
 import os.path as op
 
-from flask_security import SQLAlchemyUserDatastore
+# from flask_security import SQLAlchemyUserDatastore
 from flask_security import Security
 from flask_security import current_user
+
+from flask_social import Social
+from flask_social.datastore import SQLAlchemyConnectionDatastore
 
 from flask import request, redirect, url_for
 
@@ -29,10 +32,11 @@ from wtforms.fields import HiddenField
 
 app = Flask(__name__)
 app.config.from_object(config.get('dev'))
+app.config['SECURITY_POST_LOGIN'] = '/profile'
 
 babel = Babel(app)
 
-db  = SQLAlchemy(app)
+db = SQLAlchemy(app)
 mail = Mail(app)
 moment = Moment(app)
 

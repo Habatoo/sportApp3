@@ -20,7 +20,7 @@ from app import log
 
 from app.models import *
 from app.copydir import copydir
-from app.security import user_datastore, security
+from app.security import user_datastore, security, social
 
 @app.before_first_request
 def create_initial_users():
@@ -92,16 +92,6 @@ def before_request():
         user_datastore.add_role_to_user(user, role)
         db.session.commit()
 
-@app.route('/update_server', methods=['POST'])
-def webhook():
-    if request.method == 'POST':
-        repo = git.Repo('path/to/git_repo')
-        origin = repo.remotes.origin
-        origin.pull()
-        return 'Updated PythonAnywhere successfully', 200
-    else:
-        return 'Wrong event type', 400
-
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 @login_required
@@ -138,7 +128,7 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    geocode = 37.62#, 55.75
+    geocode = 37.62 #, 55.75
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     form = ExtendedLoginForm()
@@ -147,7 +137,10 @@ def login():
         form = ExtendedLoginForm(formdata=request.form, obj=user)
         login_user(user)
         log.info("User '%s' login." % (user.username)) 
-        return redirect(url_for('index'), geocode=geocode)
+        return redirect(url_for('index'), geocode=geocode,
+                        google_conn=social.google.get_connection(),
+                        facebook_conn=social.facebook.get_connection(),
+                        vk_conn=social.vk.get_connection())
 
 @app.route('/authorize/<provider>')
 def oauth_authorize(provider):
