@@ -1,14 +1,25 @@
 {% extends 'base.html' %} {% block title %} Notifications titles {% endblock %} {% block content_title %}
-<h3>Favorites</h3>
+<h3>Favorites of user <a href="{{ url_for('user', username=current_user.username) }}">{{ current_user.username }} </a> </h3>
 {% endblock %} {% block content %}
 <div class="main-content">
-    <a href="{{ url_for('user', username=current_user.username) }}">{{ current_user.username }} </a> saved:
     <hr>
-    <br>Posts: {% for post in posts %} <br> <a href="{{ url_for('posts.post_detail', slug=post.slug) }}">{{ post.title }}</a> {% endfor %}
+    <br>Posts: {% for post in posts %}
+    <br> <a href="{{ url_for('posts.post_detail', slug=post.slug) }}">{{ post.title }}</a>
+    <a href="{{ url_for('saved.unsaved', content='Post', slug=post.slug) }}">
+        <span class="label label-primary">(unsaved)</span></a>
+    {% endfor %}
     <hr>
-    <br>Events: {% for event in events %} <br> <a href="{{ url_for('events.event_detail', slug=event.slug) }}">{{ event.title }}</a> {% endfor %}
+    <br>Events: {% for event in events %}
+    <br> <a href="{{ url_for('events.event_detail', slug=event.slug) }}">{{ event.event_title }}</a>
+    <a href="{{ url_for('saved.unsaved', content='Event', slug=event.slug) }}">
+        <span class="label label-primary">(unsaved)</span></a>
+    {% endfor %}
     <hr>
-    <br>Photos: {% for photo in photos %} <br> <a href="{{ url_for('photos.photo_detail', slug=photo.slug) }}">{{ photo.title }}</a> {% endfor %}
+    <br>Photos: {% for photo in photos %}
+    <br> <a href="{{ url_for('photos.photo_detail', slug=photo.slug) }}">{{ photo.photo_title }}</a>
+    <a href="{{ url_for('saved.unsaved', content='Photo', slug=photo.slug) }}">
+        <span class="label label-primary">(unsaved)</span></a>
+    {% endfor %}
 </div>
 
 <hr> {% if current_user.has_role('admin') or current_user.has_role('user') %}

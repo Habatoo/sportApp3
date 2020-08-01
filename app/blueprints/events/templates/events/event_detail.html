@@ -7,7 +7,7 @@
     {{ event.event_body }}
 </div>
 
-{% if event.event_starter != current_user.id and event not in user_events %}
+{% if event.event_starter != current_user.id and event not in current_user.save_event %}
 <br> <a href="{{ url_for('events.save_event', slug=event.slug, username=current_user.username) }}">
                         add to favorite</span></a>
 {% endif %}
@@ -19,7 +19,7 @@
 </div>
 <div>
     event start at: {{ event.event_time }} <br>
-    <hr> event adress: {{ event.event_place }} <br>
+    <hr> event address: {{ event.event_place }} <br>
     <hr> event geo: {{ event.event_geo }} <br>
     <hr> event level: {{ event.event_level }} <br>
     <hr> event author: {{ event.event_starter }}

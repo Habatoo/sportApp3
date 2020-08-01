@@ -29,16 +29,22 @@ def index():
     for event_ in user.save_event:
         event = Event.query.filter(Event.id==event_.id).first()
         events.append(event)
-
     return render_template(
         'saved/index.html', user=user, posts=posts, photos=photos, events=events, current_user=current_user)
 
-@saved.route('/unsaved', methods=['GET', 'POST'])
+@saved.route('/unsaved/<content>/<slug>', methods=['GET', 'POST'])
 @login_required
-def unsaved():
-    # crew = Crew.query.filter(Crew.user_id==current_user.id).first()
-    # crew.confirmed = 1
-    # crew.refused = 0
-    # db.session.commit()
+def unsaved(content, slug):
+    user = User.query.filter(User.username == current_user.username).first()
+    if content == 'Post':
+        post = Post.query.filter(Post.slug == slug).first()
+        user.save_post.remove(post)
+    if content == 'Photo':
+        photo = Photo.query.filter(Photo.slug == slug).first()
+        user.save_photo.remove(photo)
+    if content == 'Event':
+        event = Event.query.filter(Event.slug == slug).first()
+        user.save_event.remove(event)
+    db.session.commit()
     return redirect(url_for('saved.index'))
 

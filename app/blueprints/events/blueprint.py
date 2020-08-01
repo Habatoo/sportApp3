@@ -132,9 +132,8 @@ def save_event(slug, username):
     if event not in user.save_event:
         user.save_event.append(Event.query.filter(Event.slug==slug).first())
     db.session.commit()
-    print(User.query.filter(User.username==username).first().save_event)
     return render_template(
-        'events/event_detail.html', event=event, tags=tags, user=user, current_user=current_user, user_events=user.save_event)
+        'events/event_detail.html', event=event, tags=tags, user=user, current_user=current_user)
 
 @events.route('/tag/<slug>')
 @login_required
