@@ -32,18 +32,19 @@ def index():
     return render_template(
         'saved/index.html', user=user, posts=posts, photos=photos, events=events, current_user=current_user)
 
-@saved.route('/unsaved/<content>/<slug>', methods=['GET', 'POST'])
+@saved.route('/unsaved/<content>/<item>', methods=['GET', 'POST'])
 @login_required
-def unsaved(content, slug):
+def unsaved(content, item):
     user = User.query.filter(User.username == current_user.username).first()
     if content == 'Post':
-        post = Post.query.filter(Post.slug == slug).first()
+        post = Post.query.filter(Post.slug == item).first()
+        print(post, item, content)
         user.save_post.remove(post)
     if content == 'Photo':
-        photo = Photo.query.filter(Photo.slug == slug).first()
+        photo = Photo.query.filter(Photo.id == item).first()
         user.save_photo.remove(photo)
     if content == 'Event':
-        event = Event.query.filter(Event.slug == slug).first()
+        event = Event.query.filter(Event.slug == item).first()
         user.save_event.remove(event)
     db.session.commit()
     return redirect(url_for('saved.index'))

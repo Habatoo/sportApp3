@@ -1,15 +1,16 @@
 {% extends 'base.html' %} {% block title %} Notifications titles {% endblock %} {% block content_title %}
-<h3>Notifications</h3>
+<h3><a href="{{ url_for('user', username=current_user.username) }}">{{ current_user.username }} </a> notifications:</h3>
 {% endblock %} {% block content %}
 <div class="main-content">
-    <a href="{{ url_for('user', username=current_user.username) }}">{{ current_user.username }} </a> notifications:
     <br> {% for notification in notifications %} {% if notification.user_id==current_user.id and not notification.confirmed and not notification.refused %}
     <br> {% for event in events %} {% if event.id==notification.event_id %} Event title: <a href="{{ url_for('events.event_detail', slug=event.slug) }}">{{ event.event_title }} </a>
     <br> Event body: {{ event.event_body}}
     <br><br><a href="{{ url_for('notifications.accept' ) }}"><span class="label label-primary">
         accept event</span> </a>
     <br><br><a href="{{ url_for('notifications.refuse' ) }}"><span class="label label-primary">
-        refuse event </span></a> {% endif %} {% endfor %} {% endif %} {% endfor %}
+        refuse event </span></a> {% endif %} {% endfor %} {% endif %}
+    <hr>
+    {% endfor %}
     <br><br>There are no more notifications...
 </div>
 

@@ -5,19 +5,19 @@
     <hr>
     <br>Posts: {% for post in posts %}
     <br> <a href="{{ url_for('posts.post_detail', slug=post.slug) }}">{{ post.title }}</a>
-    <a href="{{ url_for('saved.unsaved', content='Post', slug=post.slug) }}">
+    <a href="{{ url_for('saved.unsaved', content='Post', item=post.slug) }}">
         <span class="label label-primary">(unsaved)</span></a>
     {% endfor %}
     <hr>
     <br>Events: {% for event in events %}
     <br> <a href="{{ url_for('events.event_detail', slug=event.slug) }}">{{ event.event_title }}</a>
-    <a href="{{ url_for('saved.unsaved', content='Event', slug=event.slug) }}">
+    <a href="{{ url_for('saved.unsaved', content='Event', item=event.slug) }}">
         <span class="label label-primary">(unsaved)</span></a>
     {% endfor %}
     <hr>
     <br>Photos: {% for photo in photos %}
-    <br> <a href="{{ url_for('photos.photo_detail', slug=photo.slug) }}">{{ photo.photo_title }}</a>
-    <a href="{{ url_for('saved.unsaved', content='Photo', slug=photo.slug) }}">
+    <br> <a href="{{ url_for('photos.photo_detail', id=photo.id) }}">{{ photo.photo_title }}</a>
+    <a href="{{ url_for('saved.unsaved', content='Photo', item=photo.id) }}">
         <span class="label label-primary">(unsaved)</span></a>
     {% endfor %}
 </div>

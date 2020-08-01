@@ -7,8 +7,8 @@
 <div class="main-content">
     {{ photo.photo_description }}
 </div>
-{% if photo.photo_author.username != current_user.username and photo not in user_photos %}
-<br> <a href="{{ url_for('photos.save_photo', slug=photo.slug, username=current_user.username) }}">
+{% if photo.photo_author.username != current_user.username and photo not in current_user.save_photo %}
+<br> <a href="{{ url_for('photos.save_photo', id=photo.id, username=current_user.username) }}">
                         add to favorite</span></a>
 {% endif %}
 <div class="tags">

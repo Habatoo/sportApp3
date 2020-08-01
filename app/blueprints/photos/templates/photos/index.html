@@ -3,7 +3,7 @@
 {% endblock %} {% block content %}
 <div class="main-content">
     {{ current_user.username }} photos:<br> {% for photo in photos %}
-    <a href="{{ url_for('photos.photo_detail', slug=photo.id) }}">
+    <a href="{{ url_for('photos.photo_detail', id=photo.id) }}">
         <img src="{{ url_for('static', filename=photo.slug) }}" width="240" height="240" alt="photo" />
     </a><br> {{photo.photo_title}}
     <div class="tags">
@@ -12,6 +12,22 @@
             <span class="label label-primary">{{ tag.name }}</span></a> {% endfor %}
     </div>
     <hr> {% endfor %}
+
+    {% for friend_photo in friends_photo %}
+    {% for photo in friend_photo %}
+    <a href="{{ url_for('photos.photo_detail', id=photo.id) }}">
+        <img src="{{ url_for('static', filename=photo.slug) }}" width="240" height="240" alt="photo" />
+    </a><br> {{photo.photo_title}}
+    <div class="tags">
+        tags:
+        {% for tag in photo.tags %}
+        <a href="{{ url_for('photos.tag_detail', slug=tag.slug) }}">
+            <span class="label label-primary">{{ tag.name }}</span></a>
+        {% endfor %}
+    </div>
+    {% endfor %}
+    {% endfor %}
+
     <hr> {% if current_user.has_role('admin') or current_user.has_role('user') %}
     <br> Photo uploader<br><br>
     <form id="uload-form" action="{{ url_for('photos.index') }}" method="POST" enctype="multipart/form-data">

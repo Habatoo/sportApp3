@@ -54,7 +54,9 @@ def index():
     user_folders = os.path.join('user_data', user_dir, 'photos')
     photos = Photo.query.filter(Photo.photo_author==current_user).all()
 
-    u = dir(user.followed_posts)
+    friends_photo = []
+    for user_ in user.followers:
+        friends_photo.append(Photo.query.filter(Photo.photo_author==user_).all())
 
     if request.method == 'POST':       
         for file in request.files.getlist('file'):
@@ -80,20 +82,20 @@ def index():
                 flash('Not allowed file extensions')
             return redirect(url_for('photos.index'))
         return redirect(url_for('photos.index'))
-    return render_template('photos/index.html', args=args, photos=photos, user=user, u=u)
+    return render_template('photos/index.html', args=args, photos=photos, user=user, friends_photo=friends_photo)
     
 
-@photos.route('/<slug>')
+@photos.route('/<id>')
 @login_required
-def photo_detail(slug):
-    photo = Photo.query.filter(Photo.id==slug).first()
+def photo_detail(id):
+    photo = Photo.query.filter(Photo.id==id).first()
     tags = photo.tags
     return render_template('photos/photo_detail.html', photo=photo, tags=tags, user=current_user)
 
-@photos.route('/<slug>/<username>')
+@photos.route('/<id>/<username>')
 @login_required
-def save_photo(slug, username):
-    photo = Photo.query.filter(Photo.id==slug).first()
+def save_photo(id, username):
+    photo = Photo.query.filter(Photo.id==id).first()
     tags = photo.tags
     user = User.query.filter(User.username==username).first()
     if photo not in user.save_photo:
