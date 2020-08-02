@@ -40,7 +40,8 @@
                 <span aria-hidden="true">&laquo;</span></a>
         </li>
         {% for page in pages.iter_pages() %}
-        <li {% if page==pages.page %} class="active" {% endif %}><a href="./?page={{ page }}">{{page}} <span class="sr-only">(current)</span></a></li>
+        <li {% if page==pages.page %} class="active" {% endif %}>
+            <a href="./?page={{ page }}">{{page}} <span class="sr-only">(current)</span></a></li>
         {% endfor %}
         <li {% if not pages.has_next %} class="disabled" {% endif %}>
             <a href="./?page={{ pages.next_num }}" aria-label="Next">

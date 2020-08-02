@@ -105,7 +105,6 @@ def edit_event(slug):
 def index():
     users = User.query.all()
     q = request.args.get('q')
-    page = request.args.get('page')
     page = request.args.get('page', 1, type=int)
     if q:
         events = Event.query.filter(Event.event_title.contains(q) | Event.event_body.contains(q).all())

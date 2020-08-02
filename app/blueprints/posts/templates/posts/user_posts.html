@@ -1,6 +1,7 @@
 {% extends 'base.html' %} {% block title %} Messages {% endblock %} {% block content_title %}
 <h3>Messages</h3>
-{% endblock %} {% block content %} {% for post in pages.items %}
+{% endblock %} {% block content %}
+{% for post in pages.items %}
 <div class="main-content">
     <table>
         <tr>
@@ -25,34 +26,18 @@
 <nav>
     <ul class="pagination">
         <li {% if not pages.has_prev %} class="disabled" {% endif %}>
-            <a href="./?page={{ pages.prev_num }}" aria-label="Previous">
+            <a href="./user_posts/?page={{ pages.prev_num }}" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span></a>
         </li>
         {% for page in pages.iter_pages() %}
-        <li {% if page==pages.page %} class="active" {% endif %}><a href="./?page={{ page }}">{{page}} <span class="sr-only">(current)</span></a></li>
+        <li {% if page==pages.page %} class="active" {% endif %}>
+            <a href="./user_posts/?page={{ page }}"> {{page}} <span class="sr-only">(current)</span></a></li>
         {% endfor %}
         <li {% if not pages.has_next %} class="disabled" {% endif %}>
-            <a href="./?page={{ pages.next_num }}" aria-label="Next">
+            <a href="./user_posts/?page={{ pages.next_num }}" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span></a>
         </li>
     </ul>
 </nav>
-<hr> Create message
-<div>
-    {% if form %}
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.title.label(class='control-label') }}<br> {{ form.title(class='form-control') }}<br> {% for error in form.title.errors %}
-            <span style="color: red;">[{{ error }}]</span> {% endfor %}
-            <br> {{ form.body.label(class='control-label') }}<br> {{ form.body(class='form-control') }}<br> {% for error in form.body.errors %}
-            <span style="color: red;">[{{ error }}]</span> {% endfor %} {{ form.tags.label(class='control-label') }}<br> {{ form.tags() }}<br> {% for error in form.tags.errors %}
-            <span style="color: red;">[{{ error }}]</span> {% endfor %}
-        </p>
-        {% if current_user.has_role('admin') or current_user.has_role('user')%}
-        <p>{{ form.submit(class='btn btn-success') }}</p>
-        {% endif %}
-    </form>
-    {% endif %}
-</div>
+<hr>
 {% endblock %}

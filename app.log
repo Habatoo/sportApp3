@@ -66,3 +66,8 @@
 2020-08-01 19:22:05,454 [INFO] - btb_Api:User 'admin' edit photo info 'vg9mx.jpg'.
 2020-08-01 19:24:23,820 [INFO] - btb_Api:User 'admin' following user 'user'.
 2020-08-01 19:37:02,903 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
+2020-08-01 20:39:31,058 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
+2020-08-02 17:41:41,874 [INFO] - btb_Api:User 'cat' register.
+2020-08-02 17:41:42,015 [INFO] - btb_Api:User 'cat' login with ip '127.0.0.1'.
+2020-08-02 18:10:20,853 [INFO] - btb_Api:User 'cat' login with ip '127.0.0.1'.
+2020-08-02 18:20:08,954 [INFO] - btb_Api:User 'cat' login with ip '127.0.0.1'.

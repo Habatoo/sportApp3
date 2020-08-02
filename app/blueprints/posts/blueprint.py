@@ -33,22 +33,31 @@ def edit_post(slug):
     form = PostForm(obj=post)
     return render_template('posts/edit_post.html', form=form)
 
+
+@posts.route('/user_posts/<username>', methods=['GET', 'POST'])
+@login_required
+def user_posts(username):
+    user = User.query.filter(User.username == username).first()
+    posts = Post.query.filter(Post.author == user)
+    q = request.args.get('q')
+    page = request.args.get('page', 1, type=int)
+
+    pages = posts.paginate(page=page, per_page=app.config['POSTS_PER_PAGE'])
+    # max pages = posts.count() or 404
+    return render_template('posts/user_posts.html', pages=pages, user=user)
+
 @posts.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
     users = User.query.all()
-    return render_template('posts/index.html', users=users)
 
-@posts.route('/user_posts', methods=['GET', 'POST'])
-@login_required
-def user_posts():
     form = PostForm()
     if form.validate_on_submit():
         post = Post(
-            title=form.title.data, 
-            body=form.body.data, 
-            author=current_user, 
-            )
+            title=form.title.data,
+            body=form.body.data,
+            author=current_user,
+        )
         try:
             post.tags.append(Tag.query.filter_by(name=form.tags.data).first())
             db.session.add(post)
@@ -56,19 +65,17 @@ def user_posts():
             flash('Your post is now live!')
             return redirect(url_for('posts.user_posts'))
         except:
-            redirect('posts.user_posts') 
+            redirect('posts.user_posts')
 
     q = request.args.get('q')
-    page = request.args.get('page')
     page = request.args.get('page', 1, type=int)
     if q:
         posts = Post.query.filter(Post.title.contains(q) | Post.body.contains(q).all())
     else:
         posts = Post.query.order_by(Post.created.desc())
-        
+
     pages = posts.paginate(page=page, per_page=app.config['POSTS_PER_PAGE'])
-    # max pages = posts.count() or 404
-    return render_template('posts/user_posts.html', form=form, pages=pages)
+    return render_template('posts/index.html', users=users, form=form, pages=pages)
 
 @posts.route('/<slug>')
 @login_required

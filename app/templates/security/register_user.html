@@ -5,4 +5,22 @@
 <form action="{{ url_for_security('register') }}" method="POST" name="register_user_form">
     {{ register_user_form.hidden_tag() }} {{ render_field_with_errors(register_user_form.email, class='form-control') }} {{ render_field_with_errors(register_user_form.password, class='form-control') }} {% if register_user_form.password_confirm %} {{ render_field_with_errors(register_user_form.password_confirm,
     class='form-control')}} {% endif %} {{ render_field_with_errors(register_user_form.username, class='form-control') }} {{ render_field_with_errors(register_user_form.city) }} {{ render_field(register_user_form.submit, class='btn btn-success') }}
-</form> {% endblock %}
+</form>
+
+{% macro show_provider_button(provider_id, display_name, conn) %}
+    {% if conn %}
+    <form action="{{ url_for('social.remove_connection', provider_id=conn.provider_id, provider_user_id=conn.provider_user_id) }}" method="DELETE">
+      <input type="submit" value="Disconnect {{ display_name }}" />
+    </form>
+    {% else %}
+    <form action="{{ url_for('social.connect', provider_id=provider_id) }}" method="POST">
+      <input type="submit" value="Connect {{ display_name }}" />
+    </form>
+    {% endif %}
+{% endmacro %}
+
+{{ show_provider_button('google', 'Google', google_conn) }}
+{{ show_provider_button('facebook', 'Facebook', facebook_conn) }}
+{{ show_provider_button('vk', 'VK', vk_conn) }}
+
+{% endblock %}
