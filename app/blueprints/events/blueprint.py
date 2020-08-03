@@ -67,7 +67,11 @@ def event_new():
             event_user=user,
             event_crew=event
             ) 
-        
+        if Crew.query.filter(Crew.event_user==current_user).first():
+            crew = Crew(
+                event_user=current_user,
+                event_crew=event
+            )
         event.events_crew.append(crew)
         db.session.commit()
         flash('Your cane make event!')
@@ -96,7 +100,7 @@ def edit_event(slug):
             log.info("User '%s' edit event '%s'." % (current_user.username, event.event_title))
             return redirect(url_for('events.event_detail', slug=event.slug))
         except:
-           redirect('events.index') 
+           return redirect('events.index')
     form = EventForm(obj=event)
     return render_template('events/edit_event.html', form=form, users=users)
 
@@ -122,6 +126,7 @@ def event_detail(slug):
     tags = event.tags
     return render_template('events/event_detail.html', event=event, tags=tags, users=users)
 
+
 @events.route('/<slug>/<username>')
 @login_required
 def save_event(slug, username):
@@ -133,6 +138,21 @@ def save_event(slug, username):
     db.session.commit()
     return render_template(
         'events/event_detail.html', event=event, tags=tags, user=user, current_user=current_user)
+
+@events.route('/<slug>/<username>')
+@login_required
+def join_event(slug, username):
+    event = Event.query.filter(Event.slug==slug).first()
+    tags = event.tags
+    user = User.query.filter(User.username==username).first()
+    if Crew.query.filter(Crew.event_user == user).first():
+        crew = Crew(
+            event_user=user,
+            event_crew=event
+        )
+        event.events_crew.append(crew)
+        db.session.commit()
+    return redirect('events.event_detail')
 
 @events.route('/tag/<slug>')
 @login_required
