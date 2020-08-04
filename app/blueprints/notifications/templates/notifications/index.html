@@ -3,7 +3,9 @@
 {% endblock %} {% block content %}
 <div class="main-content">
     <br> {% for notification in notifications %} {% if notification.user_id==current_user.id and not notification.confirmed and not notification.refused %}
-    <br> {% for event in events %} {% if event.id==notification.event_id %} Event title: <a href="{{ url_for('events.event_detail', slug=event.slug) }}">{{ event.event_title }} </a>
+    <br> {% for event in events %}
+    {% if event.id==notification.event_id and notification.refused !=1%}
+    Event title: <a href="{{ url_for('events.event_detail', slug=event.slug) }}">{{ event.event_title }} </a>
     <br> Event body: {{ event.event_body}}
     <br><br><a href="{{ url_for('notifications.accept' ) }}"><span class="label label-primary">
         accept event</span> </a>

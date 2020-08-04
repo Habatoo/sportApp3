@@ -99,7 +99,7 @@ class AdminUserView(ModelView):
     column_exclude_list = ('password')
     form_overrides = dict(password=HiddenField)
 
-admin = Admin(app, 'sportApp', url='/', index_view=HomeAdminView(name='Home'))
+admin = Admin(app, 'sportApp', url='/_', index_view=HomeAdminView(name='Home'))
 admin.add_view(AdminView(User, db.session))
 admin.add_view(ModelView(Role, db.session))
 admin.add_view(ModelView(Tag, db.session))
@@ -111,3 +111,4 @@ admin.add_view(ModelView(Tier, db.session))
 admin.add_view(ModelView(Level, db.session))
 admin.add_view(ModelView(Theme, db.session))
 admin.add_view(ModelView(Cabinet, db.session))
+admin.add_view(ModelView(Crew, db.session))

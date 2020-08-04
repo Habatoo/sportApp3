@@ -17,7 +17,6 @@ def index():
     users = User.query.all()
     notifications = Crew.query.all()
     events = Event.query.all()
-    # Device.query.filter(DeviceGroup.type != ModelType.TYPE_BLADE_SERVER).all()
     return render_template(
         'notifications/index.html', users=users, notifications=notifications, user=current_user, events=events)
 

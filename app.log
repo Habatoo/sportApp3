@@ -72,3 +72,9 @@
 2020-08-02 18:10:20,853 [INFO] - btb_Api:User 'cat' login with ip '127.0.0.1'.
 2020-08-02 18:20:08,954 [INFO] - btb_Api:User 'cat' login with ip '127.0.0.1'.
 2020-08-03 22:02:29,715 [INFO] - btb_Api:User 'cat' edit post 'new message'.
+2020-08-04 22:34:52,570 [INFO] - btb_Api:User 'guest' login with ip '127.0.0.1'.
+2020-08-04 22:58:27,641 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
+2020-08-04 22:59:53,699 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
+2020-08-04 23:01:05,287 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
+2020-08-04 23:03:19,235 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
+2020-08-04 23:06:00,070 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
