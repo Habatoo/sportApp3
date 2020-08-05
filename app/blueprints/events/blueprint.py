@@ -1,6 +1,7 @@
 from flask import Blueprint
 from flask import render_template, flash, redirect, url_for, request, send_from_directory
 from flask_security import login_required, login_user, logout_user, current_user, roles_accepted
+from wtforms_components import read_only
 
 from .forms import EventForm
 
@@ -21,25 +22,33 @@ events = Blueprint('events', __name__, template_folder='templates')
 def event_new():
     users = User.query.all()
     form = EventForm()
+    read_only(form.event_geo)
+    read_only(form.event_body)
+    read_only(form.event_country)
+    read_only(form.event_city)
     if request.args == '':
         return redirect('')
     if request.method == 'GET':
         place = request.args
         geolocator = Nominatim(user_agent='habatoo@yandex.ru') 
         try:
-            location = geolocator.geocode(place.get('search', default = None))
+            location = geolocator.geocode(place.get('search', default=None))
         except:
             location = None
         if location:
             newLocation = str(location.latitude) + str(", ") + str(location.longitude)  
             location_geo = geolocator.reverse([location.latitude, location.longitude]) # 37.62, 55.75
             address = location_geo.address
+            event_country = location_geo.raw['address'].get('country')
+            event_city = location_geo.raw['address'].get('city')
             event = Event(
             event_title=None, 
             event_body=None, 
             event_time=None,
             event_place = address,
             event_geo = newLocation,
+            event_country = event_country,
+            event_city = event_city,
             event_level = None,
             event_private = False,
             event_author = current_user)
@@ -51,6 +60,7 @@ def event_new():
             return redirect('')          
 
     if form.validate_on_submit():
+
         event = Event(
             event_title=form.event_title.data, 
             event_body=form.event_body.data,
@@ -59,6 +69,8 @@ def event_new():
             event_geo=form.event_geo.data,
             event_level=form.event_level.data,
             event_private=True if form.event_private.data else False,
+            event_country=form.event_country.data,
+            event_city=form.event_city.data,
             event_author=current_user)
         event.tags.append(Tag.query.filter_by(name=form.tags.data).first())
 

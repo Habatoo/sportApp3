@@ -283,6 +283,9 @@ class Event(db.Model):
     event_place = db.Column(db.Text)
     event_geo = db.Column(db.Text)
 
+    event_country = db.Column(db.Text)
+    event_city = db.Column(db.Text)
+
     event_starter = db.Column(db.Integer, db.ForeignKey('user.id'))
     event_private = db.Column(db.Boolean, default=False)
     event_level = db.Column(db.Integer)

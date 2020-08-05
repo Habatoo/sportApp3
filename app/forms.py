@@ -7,8 +7,9 @@ from flask_security.forms import RegisterForm, ConfirmRegisterForm, LoginForm
 from app import app
 from app.models import *
 
+
 tag_choices = [(tag.name, tag.slug) for tag in Tag.query.all()]
-cities = app.config['CITIES']
+cities = [(event.id, event.event_city) for event in Event.query.all()]
 levels = [(level.id, level.description) for level in Level.query.all()]
 themes = [(theme.name, theme.slug) for theme in Theme.query.all()]
 clubs = [(club.name, club.slug) for club in Club.query.all()]
@@ -31,7 +32,7 @@ class ExtendedConfirmRegisterForm(ExtendedRegisterForm, ConfirmRegisterForm):
 
 class IndexFindForm(FlaskForm):
     f_city = SelectField('Select your city', validators=[DataRequired()],
-                    choices=[(city['label'], city['value']) for city in cities])
+                    choices=set(cities))
     f_theme = SelectField('Select theme', choices=themes, default=None)
     f_exercise = SelectField('Select your hobby', choices=tag_choices, default=None)
     f_levels = SelectField('Select hobby levels', choices=levels, default=None)

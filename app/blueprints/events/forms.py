@@ -4,6 +4,7 @@ from wtforms import TextAreaField
 from wtforms.fields.html5 import DateTimeField # DateTimeLocalField
 
 
+
 from flask_wtf import FlaskForm
 
 from app import app
@@ -23,11 +24,13 @@ class EventForm(FlaskForm):
     # event_time = DateTimeField('Select date and time of event', format='%d.%m.%Y %H:%M')
     event_time = DateTimeField('Select date and time of event')
     event_place = TextAreaField('Place, address', validators=[DataRequired()])
+    event_country = TextAreaField('Country', validators=[DataRequired()])
+    event_city = TextAreaField('City', validators=[DataRequired()])
     event_geo = TextAreaField('GEO, long, lat', validators=[DataRequired()])
     event_level = StringField('Event level', validators=[DataRequired()])
     tags = RadioField('Select tags', choices=tag_choices)
 
-    events_crew = SelectField('Select users', choices=user_choices, default=None)
+    events_crew = RadioField('Select users', choices=user_choices, default=None)
     event_private = BooleanField('Private/public event')
 
     submit = SubmitField('Submit')

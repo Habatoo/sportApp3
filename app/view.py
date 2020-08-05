@@ -48,7 +48,7 @@ def create_initial_users():
             db.session.add(tag)
             db.session.commit()
 
-    for sportclub in ['testclub']:
+    for sportclub in ['testclub', 'No club']:
         if not Club.query.filter(Club.name==sportclub).first():
             club = Club(name=sportclub, slug=slugify(sportclub))
             db.session.add(club)

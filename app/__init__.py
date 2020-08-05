@@ -18,11 +18,11 @@ from time import time
 import os.path as op
 
 # from flask_security import SQLAlchemyUserDatastore
-from flask_security import Security
+# from flask_security import Security
 from flask_security import current_user
 
-from flask_social import Social
-from flask_social.datastore import SQLAlchemyConnectionDatastore
+# from flask_social import Social
+# from flask_social.datastore import SQLAlchemyConnectionDatastore
 
 from flask import request, redirect, url_for
 

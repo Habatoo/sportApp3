@@ -1,6 +1,8 @@
 from app.models import *
 from app.forms import *
 from flask_social import Social
+from flask_security import Security
+from flask_security import SQLAlchemyUserDatastore
 from flask_social.datastore import SQLAlchemyConnectionDatastore
 
 ######## Flask-security ###########
