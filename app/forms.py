@@ -8,13 +8,13 @@ from app import app
 from app.models import *
 
 
-tag_choices = [(tag.name, tag.slug) for tag in Tag.query.all()]
-cities = [(event.id, event.event_city) for event in Event.query.all()]
-levels = [(level.id, level.description) for level in Level.query.all()]
-themes = [(theme.name, theme.slug) for theme in Theme.query.all()]
-clubs = [(club.name, club.slug) for club in Club.query.all()]
+tag_choices = [(tag.name, tag.name) for tag in Tag.query.all()]
+cities = [(event.event_city, event.event_city) for event in Event.query.all()]
+levels = [(level.description, level.description) for level in Level.query.all()]
+themes = [(theme.name, theme.name) for theme in Theme.query.all()]
+clubs = [(club.name, club.name) for club in Club.query.all()]
 ############################# TODO - change to ==True
-trainers = [(trainer.id, trainer.username) for trainer in User.query.filter(User.mentor!=True)]
+trainers = [(trainer.username, trainer.username) for trainer in User.query.filter(User.mentor!=True)]
 
 class ExtendedLoginForm(LoginForm, FlaskForm):
     email = StringField('Email', validators=[DataRequired()], default='guest@guest.com')
@@ -37,7 +37,7 @@ class IndexFindForm(FlaskForm):
     f_exercise = SelectField('Select your hobby', choices=tag_choices, default=None)
     f_levels = SelectField('Select hobby levels', choices=levels, default=None)
     f_clubs = SelectField('Select clubs', choices=clubs, default=None)
-    f_time = DateTimeField('Select date and time', format='%d.%m.%Y %H:%M')
+    f_time = DateTimeField('Select date and time')
     f_trainers = SelectField('Select trainer', choices=trainers, default=None)
 
     submit = SubmitField('Submit')

@@ -1,0 +1,53 @@
+{% extends "base.html" %} {% block content %}
+<h3>Your search result</h3>
+<hr> {% for event in pages.items %}
+<div class="main-content">
+    <table>
+        <tr>
+            <td><img src="{{ url_for('static', filename=event.event_author.avatar()) }}" width="30" height="30" alt="avatar"></td>
+            <td><a href="{{ url_for('user', username=event.event_author.username) }}">
+                {{ event.event_author.username }}</a><br> {{ event.created }} make
+                <a href="">{{ event.events_theme}}</a> event :
+                <br>
+                <a href="{{ url_for('events.event_detail', slug=event.slug) }}">Event title: {{ event.event_title }}</a>
+                <br> Event description: {{ event.event_body }}
+
+                <div class="tags">
+                    Event action: {% for tag in event.tags %}
+                    <a href="{{ url_for('events.tag_detail', slug=tag.slug) }}">
+                        <span class="label label-primary">{{ tag.name }}:
+                            {% for level in levels %}
+                            {% if level.number == event.event_level %}
+                            {{ level.description }}
+                            {% endif %}
+                            {% endfor %}
+                        </span></a> {% endfor %}
+                </div>
+                <br>This event is {% if event.event_private %} private {% else %} public {% endif %}
+                <br>Event crew: {% for user in event.events_crew %} {% for u in users %} {% if u.id == user.user_id %} {% if user.confirmed and not user.refused %}
+                <a href="{{ url_for('user', username=u.username) }}">
+                    {{ u.username }}</a> {% elif not user.confirmed and not user.refused %} {{ u.username }} {% else %} {% endif %} {% endif %}
+                </a> {% endfor %}{% endfor %}
+            </td>
+        </tr>
+    </table>
+</div>
+<hr> {% endfor %}
+<nav>
+    <ul class="pagination">
+        <li {% if not pages.has_prev %} class="disabled" {% endif %}>
+            <a href="./?page={{ pages.prev_num }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span></a>
+        </li>
+        {% for page in pages.iter_pages() %}
+        <li {% if page==pages.page %} class="active" {% endif %}>
+            <a href="./?page={{ page }}">{{page}} <span class="sr-only">(current)</span></a></li>
+        {% endfor %}
+        <li {% if not pages.has_next %} class="disabled" {% endif %}>
+            <a href="./?page={{ pages.next_num }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span></a>
+        </li>
+    </ul>
+</nav>
+<p><a href="{{ url_for('index') }}">Back</a></p>
+{% endblock %}

@@ -23,7 +23,7 @@ def event_new():
     users = User.query.all()
     form = EventForm()
     read_only(form.event_geo)
-    read_only(form.event_body)
+    read_only(form.event_place)
     read_only(form.event_country)
     read_only(form.event_city)
     if request.args == '':
@@ -104,6 +104,8 @@ def edit_event(slug):
         event.event_place = form.event_place.data
         event.event_geo = form.event_geo.data
         event.event_level = form.event_level.data
+        event.event_country = form.event_country.data
+        event.event_city = form.event_city.data
         event.event_private = True if form.event_private.data else False
         try:
             event.tags.append(Tag.query.filter_by(name=form.tags.data).first())

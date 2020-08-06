@@ -98,12 +98,19 @@ def before_request():
 def index():
     form = IndexFindForm()
     if form.validate_on_submit():
-        #### TODO ADD EVENT CITY
-        return redirect(url_for('index'))
+
+        q = request.args.get('q')
+        page = request.args.get('page', 1, type=int)
+        events = Event.query.filter(Event.event_city == form.f_city.data)#.all()
+        # if q:
+        #     events = Event.query.filter(Event.event_title.contains(q) | Event.event_body.contains(q).all())
+        # else:
+        #     events = Event.query.order_by(Event.created.desc())
+        pages = events.paginate(page=page, per_page=app.config['POSTS_PER_PAGE'])
+        return render_template('search_result.html', pages=pages)
 
     events = Event.query.all() # 37.62, 55.75
     user = User.query.filter_by(username=current_user.username).first_or_404()
-    
     user_dir = user.username + user.timestamp
     user_folders = os.path.join('app', 'static', 'user_data', user_dir)
     if not os.path.isdir(user_folders):
