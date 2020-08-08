@@ -61,14 +61,14 @@ def create_initial_users():
             db.session.add(level)
             db.session.commit()
 
-    for theme in ['sport', 'charity', 'party']:
-        if not Theme.query.filter(Theme.name==theme).first():
+    for theme in ['sport', 'charity', 'party', 'No theme']:
+        if not Theme.query.filter(Theme.name == theme).first():
             theme = Theme(name=theme)
             db.session.add(theme)
             db.session.commit()
 
     for tier in [(1.0, '1$', 'base'), (2.0, '2$', 'base'), (5.0, '5$', 'medium'), (10.0, '10$', 'medium'), (15.0, '15$', 'big'), (20.0, '20$', 'big')]:
-        if not Tier.query.filter(Tier.price==tier[0]).first():
+        if not Tier.query.filter(Tier.price == tier[0]).first():
             tier = Tier(price=tier[0], title=tier[1], description=tier[2])
             db.session.add(tier)
             db.session.commit()
@@ -101,15 +101,24 @@ def index():
 
         q = request.args.get('q')
         page = request.args.get('page', 1, type=int)
-        events = Event.query.filter(Event.event_city == form.f_city.data)#.all()
-        # if q:
-        #     events = Event.query.filter(Event.event_title.contains(q) | Event.event_body.contains(q).all())
-        # else:
-        #     events = Event.query.order_by(Event.created.desc())
-        pages = events.paginate(page=page, per_page=app.config['POSTS_PER_PAGE'])
-        return render_template('search_result.html', pages=pages)
 
-    events = Event.query.all() # 37.62, 55.75
+        users = User.query.all()
+        level = Level.query.filter(Level.description == form.f_levels.data).first()
+        tag = Tag.query.filter(Tag.name == form.f_exercise.data).first()
+        trainer = User.query.filter(User.username == form.f_trainers.data).first()
+
+        events = Event.query.filter(
+            (Event.event_city == form.f_city.data)
+            & (Event.event_level == level.number)
+            & (Event.tags.contains(tag))
+            & (Event.event_time >= form.f_time.data)
+            & (Event.event_starter == trainer.id)
+        )
+
+        pages = events.paginate(page=page, per_page=app.config['POSTS_PER_PAGE'])
+        return render_template('search_result.html', pages=pages, events=events, level=level, users=users)
+
+    # events = Event.query.all() # 37.62, 55.75
     user = User.query.filter_by(username=current_user.username).first_or_404()
     user_dir = user.username + user.timestamp
     user_folders = os.path.join('app', 'static', 'user_data', user_dir)

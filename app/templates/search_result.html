@@ -1,5 +1,10 @@
 {% extends "base.html" %} {% block content %}
 <h3>Your search result</h3>
+{% for tag in events.tags %}
+{{ tag.name }}
+{% endfor %}
+
+{{events.theme}}
 <hr> {% for event in pages.items %}
 <div class="main-content">
     <table>
@@ -15,19 +20,24 @@
                 <div class="tags">
                     Event action: {% for tag in event.tags %}
                     <a href="{{ url_for('events.tag_detail', slug=tag.slug) }}">
-                        <span class="label label-primary">{{ tag.name }}:
-                            {% for level in levels %}
-                            {% if level.number == event.event_level %}
-                            {{ level.description }}
-                            {% endif %}
-                            {% endfor %}
+                        <span class="label label-primary">{{ tag.name }}: {{ level.description }}
                         </span></a> {% endfor %}
                 </div>
                 <br>This event is {% if event.event_private %} private {% else %} public {% endif %}
-                <br>Event crew: {% for user in event.events_crew %} {% for u in users %} {% if u.id == user.user_id %} {% if user.confirmed and not user.refused %}
+                <br>Event crew:
+                {% for user in event.events_crew %}
+                {% for u in users %}
+                {% if u.id == user.user_id %}
+                {% if user.confirmed and not user.refused %}
                 <a href="{{ url_for('user', username=u.username) }}">
-                    {{ u.username }}</a> {% elif not user.confirmed and not user.refused %} {{ u.username }} {% else %} {% endif %} {% endif %}
-                </a> {% endfor %}{% endfor %}
+                    {{ u.username }}</a>
+                {% elif not user.confirmed and not user.refused %}
+                {{ u.username }}
+                {% else %}
+                {% endif %}
+                {% endif %}
+                </a> {% endfor %}
+                {% endfor %}
             </td>
         </tr>
     </table>
