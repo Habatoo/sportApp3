@@ -15,24 +15,14 @@
             <br> {% for error in form.f_city.errors %}
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
 
-            <br> {{ form.f_theme.label(class='control-label') }}
-            <br> {{ form.f_theme(class='form-control') }}
-            <br> {% for error in form.f_theme.errors %}
-            <span style="color: red;">[{{ error }}]</span> {% endfor %}
-
             <br> {{ form.f_exercise.label(class='control-label') }}
-            <br> {{ form.f_exercise() }}
+            <br> {{ form.f_exercise(class='form-control') }}
             <br> {% for error in form.f_exercise.errors %}
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
 
             <br> {{ form.f_levels.label(class='control-label') }}
-            <br> {{ form.f_levels() }}
+            <br> {{ form.f_levels(class='form-control') }}
             <br> {% for error in form.f_levels.errors %}
-            <span style="color: red;">[{{ error }}]</span> {% endfor %}
-
-            <br> {{ form.f_clubs.label(class='control-label') }}
-            <br> {{ form.f_clubs() }}
-            <br> {% for error in form.f_clubs.errors %}
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
 
             <br> {{ form.f_time.label(class='control-label') }}
@@ -41,7 +31,7 @@
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
 
             <br> {{ form.f_trainers.label(class='control-label') }}
-            <br> {{ form.f_trainers() }}
+            <br> {{ form.f_trainers(class='form-control') }}
             <br> {% for error in form.f_trainers.errors %}
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
 

@@ -15,7 +15,8 @@ notifications = Blueprint('notifications', __name__, template_folder='templates'
 @login_required
 def index():
     users = User.query.all()
-    notifications = Crew.query.all()
+    # notifications = Crew.query.all()
+    notifications = Crew.query.filter(Crew.user_id == current_user.id)
     events = Event.query.all()
     return render_template(
         'notifications/index.html', users=users, notifications=notifications, user=current_user, events=events)

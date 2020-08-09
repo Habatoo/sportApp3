@@ -113,6 +113,7 @@ def index():
             & (Event.tags.contains(tag))
             & (Event.event_time >= form.f_time.data)
             & (Event.event_starter == trainer.id)
+            & (Event.event_private == 0)
         )
 
         pages = events.paginate(page=page, per_page=app.config['POSTS_PER_PAGE'])

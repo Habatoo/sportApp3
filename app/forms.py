@@ -35,10 +35,10 @@ class ExtendedConfirmRegisterForm(ExtendedRegisterForm, ConfirmRegisterForm):
 class IndexFindForm(FlaskForm):
     f_city = SelectField('Select your city', validators=[DataRequired()],
                     choices=set(cities))
-    f_theme = SelectField('Select theme', choices=themes, default=None)
+    # f_theme = SelectField('Select theme', choices=themes, default=None)
     f_exercise = SelectField('Select your hobby', choices=tag_choices, default=None)
     f_levels = SelectField('Select hobby levels', choices=levels, default=None)
-    f_clubs = SelectField('Select clubs', choices=clubs, default=None)
+    # f_clubs = SelectField('Select clubs', choices=clubs, default=None)
     f_time = DateTimeField('Select date from current to ...', default=datetime.now)
     f_trainers = SelectField('Select trainer', choices=trainers, default=None)
 
