@@ -3,6 +3,7 @@ from flask import render_template, flash, redirect, url_for, request, send_from_
 from flask_security import login_required, login_user, logout_user, current_user, roles_accepted
 
 from .forms import NotificationForm
+from datetime import datetime
 
 from app import app
 from app import db
@@ -18,8 +19,20 @@ def index():
     # notifications = Crew.query.all()
     notifications = Crew.query.filter(Crew.user_id == current_user.id)
     events = Event.query.all()
+
+    # for notification in notifications:
+    #     if notification.user_id == current_user.id and not notification.confirmed and not notification.refused:
+    #         for event in events:
+    #             if event.id == notification.event_id and notification.refused != 1:
+    #                 pass
     return render_template(
-        'notifications/index.html', users=users, notifications=notifications, user=current_user, events=events)
+        'notifications/index.html',
+        users=users,
+        notifications=notifications,
+        user=current_user,
+        events=events,
+        times=datetime.now(),
+    )
 
 @notifications.route('/accept', methods=['GET', 'POST'])
 @login_required

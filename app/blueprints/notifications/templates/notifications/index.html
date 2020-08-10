@@ -2,9 +2,10 @@
 <h3><a href="{{ url_for('user', username=current_user.username) }}">{{ current_user.username }} </a> notifications:</h3>
 {% endblock %} {% block content %}
 <div class="main-content">
-    <br> {% for notification in notifications %} {% if notification.user_id==current_user.id and not notification.confirmed and not notification.refused %}
+    <br> {% for notification in notifications %}
+    {% if notification.user_id==current_user.id and not notification.confirmed and not notification.refused %}
     <br> {% for event in events %}
-    {% if event.id==notification.event_id and notification.refused !=1%}
+    {% if event.id==notification.event_id and notification.refused !=1 %}
     Event title: <a href="{{ url_for('events.event_detail', slug=event.slug) }}">{{ event.event_title }} </a>
     <br> Event body: {{ event.event_body}}
     <br><br><a href="{{ url_for('notifications.accept' ) }}"><span class="label label-primary">
@@ -13,6 +14,20 @@
         refuse event </span></a> {% endif %} {% endfor %} {% endif %}
     <hr>
     {% endfor %}
+
+    <br> {% for notification in notifications %}
+    {% if notification.user_id==current_user.id and not notification.confirmed and not notification.refused %}
+    <br> {% for event in events %}
+    {% if event.id==notification.event_id and notification.confirmed == 1 and notification.refused !=1 %}
+    {% if (event.event_time - time).day < 1 and (event.event_time - time).day > 0 %}
+    Event title: <a href="{{ url_for('events.event_detail', slug=event.slug) }}">{{ event.event_title }} </a>
+    <br> Event body: {{ event.event_body}}
+    {% endif %}
+    {% endif %}
+    {% endfor %} {% endif %}
+    <hr>
+    {% endfor %}
+
     <br><br>There are no more notifications...
 </div>
 
