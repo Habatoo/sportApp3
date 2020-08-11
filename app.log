@@ -216,3 +216,24 @@
 2020-08-10 23:32:36,979 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
 2020-08-10 23:41:10,596 [INFO] - btb_Api:User 'admin' edit event 'novgorod event'.
 2020-08-10 23:42:11,089 [INFO] - btb_Api:User 'cat' login with ip '127.0.0.1'.
+2020-08-11 20:17:09,478 [INFO] - btb_Api:User 'cat' login with ip '127.0.0.1'.
+2020-08-11 20:17:33,689 [INFO] - btb_Api:User 'cat' login with ip '127.0.0.1'.
+2020-08-11 20:17:50,603 [INFO] - btb_Api:User 'cat' login with ip '127.0.0.1'.
+2020-08-11 20:17:58,740 [INFO] - btb_Api:User 'cat' login with ip '127.0.0.1'.
+2020-08-11 20:18:14,560 [INFO] - btb_Api:User 'cat' login with ip '127.0.0.1'.
+2020-08-11 20:18:57,200 [INFO] - btb_Api:User 'cat' login with ip '127.0.0.1'.
+2020-08-11 20:38:06,755 [INFO] - btb_Api:User 'cat' login with ip '127.0.0.1'.
+2020-08-11 20:38:06,755 [INFO] - btb_Api:User 'cat' login with ip '127.0.0.1'.
+2020-08-11 20:38:09,177 [INFO] - btb_Api:User 'cat' login with ip '127.0.0.1'.
+2020-08-11 20:38:09,177 [INFO] - btb_Api:User 'cat' login with ip '127.0.0.1'.
+2020-08-11 20:39:43,527 [INFO] - btb_Api:User 'cat' edit profile.
+2020-08-11 20:39:43,527 [INFO] - btb_Api:User 'cat' edit profile.
+2020-08-11 20:53:04,950 [INFO] - btb_Api:User 'cat' login with ip '127.0.0.1'.
+2020-08-11 20:54:25,259 [DEBUG] - btb_Api:Photo before db '<Photo 1>'.
+2020-08-11 20:54:25,342 [DEBUG] - btb_Api:Photo after db '<Photo 1>'.
+2020-08-11 20:54:25,344 [INFO] - btb_Api:User 'cat' edit photo info 'vg9mx.jpg'.
+2020-08-11 20:54:49,938 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
+2020-08-11 20:57:07,274 [INFO] - btb_Api:User 'admin' following user 'cat'.
+2020-08-11 20:57:29,790 [INFO] - btb_Api:User 'cat' login with ip '127.0.0.1'.
+2020-08-11 20:57:37,328 [INFO] - btb_Api:User 'cat' following user 'admin'.
+2020-08-11 20:58:18,444 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.

@@ -29,14 +29,13 @@
                 {% for u in users %}
                 {% if u.id == user.user_id %}
                 {% if user.confirmed and not user.refused %}
-                <a href="{{ url_for('user', username=u.username) }}">
-                    {{ u.username }}</a>
+                <a href="{{ url_for('user', username=u.username) }}"> {{ u.username }} </a>
                 {% elif not user.confirmed and not user.refused %}
                 {{ u.username }}
                 {% else %}
                 {% endif %}
                 {% endif %}
-                </a> {% endfor %}
+                {% endfor %}
                 {% endfor %}
             </td>
         </tr>

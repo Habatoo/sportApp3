@@ -14,8 +14,10 @@
     </span>
 </a>{% endfor %}
 <hr>
-<p>{{ user.followers.count() }} followers ({%for user in user.followers %} <a href="{{ url_for('user', username=user.username) }}">{{user.username}}</a> {% endfor %}),
-    <br>{{ user.followed.count() }} following ( {%for user in user.followed %} <a href="{{ url_for('user', username=user.username) }}">{{user.username}}</a> {% endfor %} ).</p>
+<p>{{ user.followers.count() }} followers ({%for user in user.followers %}
+    <a href="{{ url_for('user', username=user.username) }}">{{user.username}}</a> {% endfor %})
+    <br>{{ user.followed.count() }} following ({% for user in user.followed %}
+    <a href="{{ url_for('user', username=user.username) }}">{{user.username}}</a> {% endfor %})</p>
 {% if user.username == current_user.username %}
 <p></p>
 {% elif not current_user.is_following(user) %}

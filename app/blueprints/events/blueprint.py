@@ -78,13 +78,16 @@ def event_new():
         crew = Crew(
             event_user=user,
             event_crew=event
-            ) 
-        if Crew.query.filter(Crew.event_user==current_user).first():
-            crew = Crew(
-                event_user=current_user,
-                event_crew=event
             )
         event.events_crew.append(crew)
+        # if Crew.query.filter(Crew.event_user == current_user).first():
+        crew_starter = Crew(
+            event_user=current_user,
+            event_crew=event,
+            confirmed=1,
+            refused=0,
+        )
+        event.events_crew.append(crew_starter)
         db.session.commit()
         flash('Your cane make event!')
         return redirect(url_for('events.index'))

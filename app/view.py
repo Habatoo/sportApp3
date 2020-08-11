@@ -116,6 +116,8 @@ def index():
             & (Event.event_private == 0)
         )
 
+
+
         pages = events.paginate(page=page, per_page=app.config['POSTS_PER_PAGE'])
         return render_template('search_result.html', pages=pages, events=events, level=level, users=users)
 
