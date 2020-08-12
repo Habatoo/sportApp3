@@ -16,15 +16,23 @@ notifications = Blueprint('notifications', __name__, template_folder='templates'
 @login_required
 def index():
     users = User.query.all()
-    # notifications = Crew.query.all()
     notifications = Crew.query.filter(Crew.user_id == current_user.id)
     events = Event.query.all()
 
-    # for notification in notifications:
-    #     if notification.user_id == current_user.id and not notification.confirmed and not notification.refused:
-    #         for event in events:
-    #             if event.id == notification.event_id and notification.refused != 1:
-    #                 pass
+    e = []
+    soon = []
+    for notification in notifications:
+        if notification.user_id == current_user.id and not notification.confirmed and not notification.refused:
+            for event in events:
+                if event.id == notification.event_id and notification.refused != 1:
+                    e.append(event)
+                # print(notification.confirmed)
+                # if event.id == notification.event_id and notification.confirmed == 1:# and notification.refused != 1:
+                #     # if (event.event_time - datetime.now()).day < 1 and (event.event_time - datetime.now()).day > 0:
+                #     soon.append(event)
+
+    print(e, soon)
+
     return render_template(
         'notifications/index.html',
         users=users,
@@ -32,6 +40,7 @@ def index():
         user=current_user,
         events=events,
         times=datetime.now(),
+        e=e,
     )
 
 @notifications.route('/accept', methods=['GET', 'POST'])
@@ -51,3 +60,18 @@ def refuse():
     crew.refused = 1
     db.session.commit()
     return redirect(url_for('notifications.index'))
+
+# <!--    <br> {% for notification in notifications %}-->
+# <!--    {% if notification.user_id==current_user.id and not notification.confirmed and not notification.refused %}-->
+# <!--    <br> {% for event in events %}-->
+# <!--    {{ event.event_time - time }}-->
+# <!--    {% if event.id==notification.event_id and notification.confirmed == 1 and notification.refused !=1 %}-->
+#
+# <!--    {% if (event.event_time - time).day < 1 and (event.event_time - time).day > 0 %}-->
+# <!--    Event title: <a href="{{ url_for('events.event_detail', slug=event.slug) }}">{{ event.event_title }} </a>-->
+# <!--    <br> Event body: {{ event.event_body}}-->
+# <!--    {% endif %}-->
+# <!--    {% endif %}-->
+# <!--    {% endfor %} {% endif %}-->
+# <!--    <hr>-->
+# <!--    {% endfor %}-->
