@@ -244,3 +244,10 @@
 2020-08-12 23:29:24,021 [INFO] - btb_Api:User 'user' login with ip '127.0.0.1'.
 2020-08-12 23:30:19,868 [INFO] - btb_Api:User 'user' login with ip '127.0.0.1'.
 2020-08-12 23:39:05,736 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
+2020-08-13 21:07:57,324 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
+2020-08-13 21:08:27,959 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
+2020-08-13 21:09:12,884 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.
+2020-08-13 21:11:11,561 [INFO] - btb_Api:User 'admin' edit post 'admin message2'.
+2020-08-13 21:22:25,923 [INFO] - btb_Api:User 'admin' edit event 'admin event'.
+2020-08-13 21:37:23,817 [INFO] - btb_Api:User 'admin' edit event 'admin event'.
+2020-08-13 22:17:09,908 [INFO] - btb_Api:User 'admin' login with ip '127.0.0.1'.

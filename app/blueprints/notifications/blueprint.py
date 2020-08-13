@@ -15,32 +15,22 @@ notifications = Blueprint('notifications', __name__, template_folder='templates'
 @notifications.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
-    users = User.query.all()
     notifications = Crew.query.filter(Crew.user_id == current_user.id)
-    events = Event.query.all()
 
-    e = []
-    soon = []
+    event_list = []
+    soon_event_list = []
     for notification in notifications:
-        if notification.user_id == current_user.id and not notification.confirmed and not notification.refused:
-            for event in events:
-                if event.id == notification.event_id and notification.refused != 1:
-                    e.append(event)
-                # print(notification.confirmed)
-                # if event.id == notification.event_id and notification.confirmed == 1:# and notification.refused != 1:
-                #     # if (event.event_time - datetime.now()).day < 1 and (event.event_time - datetime.now()).day > 0:
-                #     soon.append(event)
-
-    print(e, soon)
+        event = Event.query.filter(Event.id == notification.event_id).first()
+        if not notification.confirmed:
+            event_list.append(event)
+        if notification.confirmed:
+            # if (event.event_time - datetime.now()).days < 1 and (event.event_time - datetime.now()).days > 0:
+            soon_event_list.append(event)
 
     return render_template(
         'notifications/index.html',
-        users=users,
-        notifications=notifications,
-        user=current_user,
-        events=events,
-        times=datetime.now(),
-        e=e,
+        event_list=event_list,
+        soon_event_list=soon_event_list,
     )
 
 @notifications.route('/accept', methods=['GET', 'POST'])
@@ -49,6 +39,7 @@ def accept():
     crew = Crew.query.filter(Crew.user_id==current_user.id).first()
     crew.confirmed = 1
     crew.refused = 0
+    print(crew.id)
     db.session.commit()
     return redirect(url_for('notifications.index'))
 
