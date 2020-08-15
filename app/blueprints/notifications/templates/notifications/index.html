@@ -13,7 +13,7 @@
         refuse event </span></a>
     <hr>
     {% endfor %}
-    <br> Soon
+    <br> Accepted events:
     <br> {% for event in soon_event_list %}
     Event title: <a href="{{ url_for('events.event_detail', slug=event.slug) }}">{{ event.event_title }} </a>
     <br> Event time: {{ event.event_time}}

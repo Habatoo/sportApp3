@@ -19,7 +19,6 @@ def edit_post(slug):
     form = PostForm(formdata=request.form, obj=post)
     print('edited', form.validate_on_submit())
     if form.validate_on_submit():
-        # form.populate_obj(post)
         post.title = form.title.data
         post.body = form.body.data
         try:
@@ -37,6 +36,24 @@ def edit_post(slug):
 @posts.route('/user_posts/<username>', methods=['GET', 'POST'])
 @login_required
 def user_posts(username):
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(
+            title=form.title.data,
+            body=form.body.data,
+            author=current_user,
+        )
+        try:
+            post.tags.append(Tag.query.filter_by(name=form.tags.data).first())
+            post.post_to_me.append(User.query.filter(User.username == form.post_to_me.data).first())
+
+            db.session.add(post)
+            db.session.commit()
+            flash('Your post is now live!')
+            return redirect(url_for('posts.index'))
+        except:
+            redirect('posts.user_posts')
+
     user = User.query.filter(User.username == username).first()
     posts = Post.query.filter(Post.author == user)
     q = request.args.get('q')
@@ -44,7 +61,7 @@ def user_posts(username):
 
     pages = posts.paginate(page=page, per_page=app.config['POSTS_PER_PAGE'])
     # max pages = posts.count() or 404
-    return render_template('posts/user_posts.html', pages=pages, user=user)
+    return render_template('posts/user_posts.html', pages=pages, user=user, form=form)
 
 @posts.route('/', methods=['GET', 'POST'])
 @login_required
@@ -60,6 +77,9 @@ def index():
         )
         try:
             post.tags.append(Tag.query.filter_by(name=form.tags.data).first())
+            if form.post_to_me.data != 'All':
+                post.post_to_me.append(User.query.filter(User.username==form.post_to_me.data).first())
+
             db.session.add(post)
             db.session.commit()
             flash('Your post is now live!')

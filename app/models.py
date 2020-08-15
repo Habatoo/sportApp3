@@ -90,6 +90,12 @@ saved_photo = db.Table(
     db.Column('photo_id', db.Integer, db.ForeignKey('photo.id'))
 )
 
+post_to_me = db.Table(
+    'post_to_me',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('post_id', db.Integer, db.ForeignKey('post.id'))
+)
+
 class Club(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True)
@@ -241,6 +247,8 @@ class Post(db.Model):
     created = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
+    post_to_me = db.relationship(
+        'User', secondary=post_to_me, backref=db.backref('posts_to_me', lazy='dynamic'))
     tags = db.relationship(
         'Tag', secondary=post_tags, backref=db.backref('posts_tags', lazy='dynamic'))
 

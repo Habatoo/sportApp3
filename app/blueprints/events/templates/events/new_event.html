@@ -32,12 +32,12 @@
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
 
             <br> {{ form.event_place.label(class='control-label') }}
-            {{ form.event_place(class='form-control') }}
+            {{ form.event_place(class='form-control', readonly=true) }}
             <br> {% for error in form.event_place.errors %}
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
 
             <br> {{ form.event_country.label(class='control-label') }}
-            {{ form.event_country(class='form-control') }}
+            {{ form.event_country(class='form-control', readonly=true) }}
             <br> {% for error in form.event_country.errors %}
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
 
@@ -47,10 +47,11 @@
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
 
             <br> {{ form.event_geo.label(class='control-label') }}
-            {{ form.event_geo(class='form-control') }}
+            {{ form.event_geo(class='form-control', readonly=true) }}
             <br>
             <br> {% for error in form.event_geo.errors %}
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
             <br> {{ form.event_level.label(class='control-label') }}<br> {{ form.event_level(class='form-control') }}<br> {% for error in form.event_level.errors %}
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
 

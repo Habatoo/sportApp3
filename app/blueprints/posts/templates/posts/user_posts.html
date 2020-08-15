@@ -39,5 +39,34 @@
         </li>
     </ul>
 </nav>
-<hr>
+
+<hr> Send message to {{ user.username }}:
+<div>
+    {% if form %}
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.title.label(class='control-label') }}<br> {{ form.title(class='form-control') }}<br> {% for error in form.title.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+            <br> {{ form.body.label(class='control-label') }}
+            <br> {{ form.body(class='form-control') }}
+            <br> {% for error in form.body.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
+            {{ form.post_to_me.label(class='control-label') }}
+            <br> {{ form.post_to_me(value=user.username, readonly=true) }}
+            <br> {% for error in form.post_to_me.errors %}
+            <span style="color: red;">[{{ error }}]</span>{% endfor %}
+
+            {{ form.tags.label(class='control-label') }}
+            <br> {{ form.tags() }}
+            <br> {% for error in form.tags.errors %}
+            <span style="color: red;">[{{ error }}]</span>{% endfor %}
+        </p>
+        {% if current_user.has_role('admin') or current_user.has_role('user')%}
+        <p>{{ form.submit(class='btn btn-success') }}</p>
+        {% endif %}
+    </form>
+    {% endif %}
+</div>
 {% endblock %}

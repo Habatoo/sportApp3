@@ -15,4 +15,5 @@ class PostForm(FlaskForm):
     body = TextAreaField('Say something', validators=[DataRequired()])
     tags = RadioField(
         'Select tags', choices=tag_choices, validators=[DataRequired()])
+    post_to_me = StringField('Send to', default='All')
     submit = SubmitField('Submit')
