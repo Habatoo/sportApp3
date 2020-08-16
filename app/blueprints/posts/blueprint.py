@@ -67,7 +67,6 @@ def user_posts(username):
 @login_required
 def index():
     users = User.query.all()
-
     form = PostForm()
     if form.validate_on_submit():
         post = Post(
@@ -90,7 +89,9 @@ def index():
     q = request.args.get('q')
     page = request.args.get('page', 1, type=int)
     if q:
-        posts = Post.query.filter(Post.title.contains(q) | Post.body.contains(q).all())
+        posts = Post.query.filter(
+            ((Post.post_to_me == 'All') | (Post.post_to_me is None) ) & (
+                    Post.title.contains(q) | Post.body.contains(q).all()))
     else:
         posts = Post.query.order_by(Post.created.desc())
 

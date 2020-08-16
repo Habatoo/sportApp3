@@ -2,7 +2,7 @@
 <h3>Messages</h3>
 
 {% endblock %} {% block content %}
-<hr> {% for user in users %}
+<hr> {% for user in current_user.followers%}
 <div class="main-content">
     <table>
         <tr>
