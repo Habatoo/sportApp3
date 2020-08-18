@@ -15,6 +15,12 @@
             <br> {{ form.event_title(class='form-control') }}
             <br> {% for error in form.event_title.errors %}
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
+            <br> {{ form.theme.label(class='control-label') }}
+            <br> {{ form.theme() }}
+            <br> {% for error in form.theme.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
             <br> {{ form.event_body.label(class='control-label') }}
             <br> {{ form.event_body(class='form-control') }}
             <br> {% for error in form.event_body.errors %}

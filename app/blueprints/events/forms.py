@@ -12,7 +12,8 @@ from app.models import *
 
 tag_choices = [(tag.name, tag.slug) for tag in Tag.query.all()]
 user_choices = [(user.username, user.id) for user in User.query.all()]
-
+levels = [(level.description, level.description) for level in Level.query.all()]
+themes = [(theme.name, theme.name) for theme in Theme.query.all()]
 string_of_files = ['private', 'public']
 list_of_files = string_of_files[0].split()
 # create a list of value/description tuples
@@ -27,9 +28,9 @@ class EventForm(FlaskForm):
     event_country = TextAreaField('Country', validators=[DataRequired()])
     event_city = TextAreaField('City', validators=[DataRequired()])
     event_geo = TextAreaField('GEO, long, lat', validators=[DataRequired()])
-    event_level = StringField('Event level', validators=[DataRequired()])
+    event_level = SelectField('Select hobby levels', choices=levels, validators=[DataRequired()])
     tags = RadioField('Select tags', choices=tag_choices)
-
+    theme = SelectField('Select theme', choices=themes, validators=[DataRequired()])
     events_crew = RadioField('Select users', choices=user_choices, default=None)
     event_private = BooleanField('Private/public event')
 

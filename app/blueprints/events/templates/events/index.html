@@ -11,7 +11,9 @@
                 <br>
                 <a href="{{ url_for('events.event_detail', slug=event.slug) }}">Event title: {{ event.event_title }}</a>
                 <br> Event description: {{ event.event_body }}
-
+                <br> Event theme: {% for theme in event.theme %}
+                {{ theme.name }}
+                {% endfor %}
                 <div class="tags">
                     Event action: {% for tag in event.tags %}
                     <a href="{{ url_for('events.tag_detail', slug=tag.slug) }}">

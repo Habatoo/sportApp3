@@ -22,10 +22,7 @@ events = Blueprint('events', __name__, template_folder='templates')
 def event_new():
     users = User.query.all()
     form = EventForm()
-    read_only(form.event_geo)
-    read_only(form.event_place)
-    read_only(form.event_country)
-    read_only(form.event_city)
+
     if request.args == '':
         return redirect('')
     if request.method == 'GET':
@@ -73,6 +70,7 @@ def event_new():
             event_city=form.event_city.data,
             event_author=current_user)
         event.tags.append(Tag.query.filter_by(name=form.tags.data).first())
+        event.theme.append(Theme.query.filter_by(name=form.theme.data).first())
 
         user = User.query.filter_by(username=form.events_crew.raw_data[0]).first()
         crew = Crew(
