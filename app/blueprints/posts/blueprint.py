@@ -32,6 +32,17 @@ def edit_post(slug):
     form = PostForm(obj=post)
     return render_template('posts/edit_post.html', form=form)
 
+@posts.route('/like/<slug>/<action>')
+@login_required
+def like_action(slug, action):
+    post = Post.query.filter_by(slug=slug).first_or_404()
+    if action == 'like':
+        current_user.like_post(post)
+        db.session.commit()
+    if action == 'unlike':
+        current_user.unlike_post(post)
+        db.session.commit()
+    return redirect(request.referrer)
 
 @posts.route('/user_posts/<username>', methods=['GET', 'POST'])
 @login_required

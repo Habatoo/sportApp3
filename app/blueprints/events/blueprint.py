@@ -1,7 +1,6 @@
 from flask import Blueprint
 from flask import render_template, flash, redirect, url_for, request, send_from_directory
 from flask_security import login_required, login_user, logout_user, current_user, roles_accepted
-from wtforms_components import read_only
 
 from .forms import EventForm
 
@@ -42,13 +41,13 @@ def event_new():
             event_title=None, 
             event_body=None, 
             event_time=None,
-            event_place = address,
-            event_geo = newLocation,
-            event_country = event_country,
-            event_city = event_city,
-            event_level = None,
-            event_private = False,
-            event_author = current_user)
+            event_place=address,
+            event_geo=newLocation,
+            event_country=event_country,
+            event_city=event_city,
+            event_level=None,
+            event_private=False,
+            event_author=current_user)
             form = EventForm(
                 formdata=request.form, obj=event)
             return render_template('events/new_event.html', form=form, users=users)
@@ -78,7 +77,6 @@ def event_new():
             event_crew=event
             )
         event.events_crew.append(crew)
-        # if Crew.query.filter(Crew.event_user == current_user).first():
         crew_starter = Crew(
             event_user=current_user,
             event_crew=event,
@@ -94,7 +92,7 @@ def event_new():
 @events.route('/<slug>/edit', methods=['GET', 'POST'])
 @login_required
 def edit_event(slug):
-    event = Event.query.filter(Event.slug==slug).first()
+    event = Event.query.filter(Event.slug == slug).first()
     users = User.query.all()
     form = EventForm(formdata=request.form, obj=event)
 

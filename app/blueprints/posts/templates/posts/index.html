@@ -36,6 +36,14 @@
                         <span class="label label-primary">{{ tag.name }}</span></a> {% endfor %}
                 </div>
             </td>
+            <td>
+                {% if current_user.has_liked_post(post) %}
+                <a href="{{ url_for('posts.like_action', slug=post.slug, action='unlike') }}">Unlike</a>
+                {% else %}
+                <a href="{{ url_for('posts.like_action', slug=post.slug, action='like') }}">Like</a>
+                {% endif %}
+                {{ post.likes.count() }} likes
+            </td>
         </tr>
     </table>
 </div>
