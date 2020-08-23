@@ -240,6 +240,27 @@ class User(UserMixin, db.Model):
         return PostLike.query.filter(
             PostLike.user_id == self.id,
             PostLike.post_id == post.id).count() > 0
+
+    disliked = db.relationship(
+        'PostDislike',
+        foreign_keys='PostDislike.user_id',
+        backref='user', lazy='dynamic')
+
+    def dislike_post(self, post):
+        if not self.has_liked_post(post):
+            dislike = PostDislike(user_id=self.id, post_id=post.id)
+            db.session.add(dislike)
+
+    def undislike_post(self, post):
+        if self.has_disliked_post(post):
+            PostDislike.query.filter_by(
+                user_id=self.id,
+                post_id=post.id).delete()
+
+    def has_disliked_post(self, post):
+        return PostDislike.query.filter(
+            PostDislike.user_id == self.id,
+            PostDislike.post_id == post.id).count() > 0
  
 #### FLASK SECURITY #############
 class Role(db.Model, RoleMixin):
@@ -274,6 +295,7 @@ class Post(db.Model):
         'Tag', secondary=post_tags, backref=db.backref('posts_tags', lazy='dynamic'))
 
     likes = db.relationship('PostLike', backref='post', lazy='dynamic')
+    dislikes = db.relationship('PostDislike', backref='post_', lazy='dynamic')
 
     def __init__(self, *args, **kwargs):
         super(Post, self).__init__(*args, **kwargs)
@@ -284,6 +306,11 @@ class Post(db.Model):
             self.slug = slugify(self.title + str(int(time())))
 
 class PostLike(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+
+class PostDislike(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))

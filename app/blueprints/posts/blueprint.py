@@ -44,6 +44,18 @@ def like_action(slug, action):
         db.session.commit()
     return redirect(request.referrer)
 
+@posts.route('/dislike/<slug>/<action>')
+@login_required
+def dislike_action(slug, action):
+    post = Post.query.filter_by(slug=slug).first_or_404()
+    if action == 'dislike':
+        current_user.dislike_post(post)
+        db.session.commit()
+    if action == 'undislike':
+        current_user.undislike_post(post)
+        db.session.commit()
+    return redirect(request.referrer)
+
 @posts.route('/user_posts/<username>', methods=['GET', 'POST'])
 @login_required
 def user_posts(username):

@@ -43,6 +43,13 @@
                 <a href="{{ url_for('posts.like_action', slug=post.slug, action='like') }}">Like</a>
                 {% endif %}
                 {{ post.likes.count() }} likes
+                <br>
+                {% if current_user.has_disliked_post(post) %}
+                <a href="{{ url_for('posts.dislike_action', slug=post.slug, action='undislike') }}">Undislike</a>
+                {% else %}
+                <a href="{{ url_for('posts.dislike_action', slug=post.slug, action='dislike') }}">Dislike</a>
+                {% endif %}
+                {{ post.dislikes.count() }} dislikes
             </td>
         </tr>
     </table>
